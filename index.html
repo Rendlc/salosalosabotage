@@ -3,12 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#F2D5D0">
 <title>Salo Salo Sabotage — The Filipino Party Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:light only;
+  forced-color-adjust:none;
   --ray:rgba(255,255,255,.055);
   --blush:#F2D5D0;
   --blush-lt:#FBEDE9;
@@ -24,8 +29,9 @@
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+html{background:var(--paper);}
 body{
-  margin:0;background:var(--paper);color:var(--ink);
+  margin:0;background:var(--paper) !important;color:var(--ink) !important;
   font-family:'Nunito Sans',system-ui,sans-serif;
   font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
@@ -80,7 +86,7 @@ h1,h2,h3{font-family:'Baloo 2',cursive;line-height:1.06;margin:0;}
 .cat img{width:100%;height:auto;display:block;}
 .cat-body{padding:18px 18px 22px;}
 .cat .ribbon{font-family:'Baloo 2',cursive;font-weight:800;font-size:.72rem;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--orange-ink);margin:0;}
+  text-transform:uppercase;color:var(--orange-ink);margin:0 0 5px;}
 .cat h3{font-size:1.5rem;margin:2px 0 6px;font-weight:800;}
 .cat p{font-size:.92rem;margin:0;color:#3C565B;font-weight:600;}
 .goal-note{text-align:center;margin-top:34px;font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:700;color:var(--teal);}
@@ -93,9 +99,9 @@ h1,h2,h3{font-family:'Baloo 2',cursive;line-height:1.06;margin:0;}
 .band-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center;}
 .band-card{border-radius:12px;border:4px solid #fff;box-shadow:0 16px 34px rgba(0,0,0,.3);transform:rotate(-2.5deg);max-width:270px;}
 .sab-list{display:grid;gap:11px;}
-.sab{background:rgba(255,255,255,.09);border-left:4px solid var(--sun);padding:13px 18px;border-radius:0 10px 10px 0;}
-.sab strong{font-family:'Baloo 2',cursive;font-size:1.13rem;color:var(--sun);display:block;font-weight:700;}
-.sab span{font-size:.92rem;color:#D2E9EA;}
+.sab{background:rgba(255,255,255,.09);border-left:4px solid var(--sun);padding:15px 18px 16px;border-radius:0 10px 10px 0;}
+.sab strong{font-family:'Baloo 2',cursive;font-size:1.13rem;color:var(--sun);display:block;font-weight:700;margin-bottom:3px;line-height:1.2;}
+.sab span{font-size:.92rem;color:#D2E9EA;display:block;}
 .band-inner{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;}
 
 /* KULTURA */
@@ -103,9 +109,9 @@ h1,h2,h3{font-family:'Baloo 2',cursive;line-height:1.06;margin:0;}
 .kultura-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
 .kultura h2{font-size:clamp(1.9rem,4.5vw,2.5rem);font-weight:800;margin-bottom:14px;}
 .kultura>.wrap>div>p{color:#3C565B;font-weight:600;}
-.k-item{margin:20px 0;}
+.k-item{margin:22px 0;}
 .k-item strong{font-family:'Baloo 2',cursive;font-size:1.22rem;color:var(--orange);display:block;font-weight:700;}
-.k-item span{font-size:.95rem;color:#3C565B;font-weight:600;}
+.k-item span{font-size:.95rem;color:#3C565B;font-weight:600;display:block;}
 .card-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;}
 .card-pair img{border-radius:12px;border:4px solid #fff;box-shadow:0 14px 30px rgba(60,30,30,.2);}
 .card-pair img:first-child{transform:rotate(-3.5deg);}
@@ -192,10 +198,10 @@ h1,h2,h3{font-family:'Baloo 2',cursive;line-height:1.06;margin:0;}
 
 /* CTA */
 .cta{padding:72px 0 82px;text-align:center;background:linear-gradient(168deg,#F2D5D0,#E9C4BD);}
-.cta h2{font-size:clamp(2rem,5vw,2.9rem);font-weight:800;color:var(--teal);}
+.cta h2{font-size:clamp(2rem,5vw,2.9rem);font-weight:800;color:var(--teal);margin-bottom:30px;}
 .cta p{max-width:46ch;margin:14px auto 26px;color:#5A4340;font-weight:600;}
 .pricebox{display:inline-flex;align-items:baseline;gap:10px;background:#fff;border-radius:50px;
-  padding:12px 28px;margin-bottom:22px;box-shadow:0 8px 20px rgba(60,30,30,.14);}
+  padding:12px 28px;margin-bottom:26px;box-shadow:0 8px 20px rgba(60,30,30,.14);}
 .pricebox b{font-family:'Baloo 2',cursive;font-size:2.1rem;color:var(--orange);font-weight:800;}
 .pricebox span{font-size:.84rem;color:#7A8E90;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
 footer{background:var(--ink);color:#9FB6BA;text-align:center;padding:26px 22px;font-size:.85rem;font-weight:600;}
@@ -253,6 +259,11 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
 .specs{--ray:rgba(18,48,56,.055);}
 .cta{--ray:rgba(28,110,120,.06);}
 .gallery{--ray:rgba(28,110,120,.05);}
+
+footer a{color:#CFE2E4;text-decoration:none;border-bottom:1px solid rgba(207,226,228,.35);}
+footer a:hover{color:#fff;border-color:#fff;}
+footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;color:#6E888D;
+  border-top:1px solid rgba(255,255,255,.09);max-width:640px;margin-left:auto;margin-right:auto;}
 </style>
 </head>
 <body>
@@ -403,7 +414,7 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
     <p class="eyebrow">First printing</p>
     <h2>Bring it to your next party.</h2>
     <div class="pricebox"><b>$30</b><span>per game</span></div>
-    <p>Printed in a small first run in California. Catch us at Pamilya Play on September 19 at Kubo LB, and at Seven Syllables Coffee in Cerritos on October 3 for Filipino American History Month — play a round before you buy.</p>
+    <p><b style="display:block;margin-bottom:10px;">Printed in a small first run in California.</b>Catch us at Pamilya Play on September 19 at Kubo LB, and at Seven Syllables Coffee in Cerritos on October 3 for Filipino American History Month — play a round before you buy.</p>
     <div class="btn-row" style="justify-content:center;">
       <a class="btn btn-primary" href="reserve.html">Reserve a copy</a>
       <a class="btn btn-ghost" href="how-to-play.html">Read the rules</a>
@@ -413,7 +424,10 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
 
 <footer>
   <b>SALITA</b><br>
-  salita.la &nbsp;&middot;&nbsp; @hellosalita &nbsp;&middot;&nbsp; art + design by @ren.dlc
+  <a href="https://www.instagram.com/hellosalita/" target="_blank" rel="noopener">@hellosalita</a>
+  &nbsp;&middot;&nbsp;
+  art + design by <a href="https://www.instagram.com/ren.dlc/" target="_blank" rel="noopener">@ren.dlc</a>
+  <span class="legal">Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
 </footer>
 
 </body>

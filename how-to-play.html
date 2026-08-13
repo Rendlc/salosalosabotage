@@ -3,12 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#F2D5D0">
 <title>How to Play — Salo Salo Sabotage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:light only;
+  forced-color-adjust:none;
   --ray:rgba(255,255,255,.055);
   --blush:#F2D5D0;--blush-lt:#FBEDE9;--sun:#F6C445;
   --teal:#1C6E78;--teal-dk:#12525A;--ink:#123038;
@@ -17,7 +22,8 @@
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{margin:0;background:var(--paper);color:var(--ink);
+html{background:var(--paper);}
+body{margin:0;background:var(--paper) !important;color:var(--ink) !important;
   font-family:'Nunito Sans',system-ui,sans-serif;font-size:16px;line-height:1.62;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;}
 img{max-width:100%;display:block;}
@@ -73,10 +79,10 @@ section{padding:60px 0;}
   border:3px solid rgba(0,0,0,.05);}
 .wincard img{width:100%;height:auto;}
 .wincard div{padding:14px 16px 18px;}
-.wincard b{font-family:'Baloo 2',cursive;font-size:1.3rem;display:block;font-weight:800;}
+.wincard b{font-family:'Baloo 2',cursive;font-size:1.3rem;display:block;font-weight:800;margin-bottom:5px;}
 .wincard em{font-style:normal;font-family:'Baloo 2',cursive;font-size:.7rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--orange-ink);font-weight:800;}
-.wincard span{font-size:.88rem;color:#3C565B;font-weight:600;display:block;margin-top:4px;}
+  text-transform:uppercase;color:var(--orange-ink);font-weight:800;display:block;margin-bottom:6px;}
+.wincard span{font-size:.88rem;color:#3C565B;font-weight:600;display:block;}
 .shout{text-align:center;margin-top:30px;font-family:'Baloo 2',cursive;font-size:1.45rem;
   font-weight:800;color:var(--teal);}
 .shout span{color:var(--orange-ink);}
@@ -102,31 +108,37 @@ section{padding:60px 0;}
 .turn-note{margin-top:22px;text-align:center;font-family:'Baloo 2',cursive;font-size:1.1rem;color:#fff;font-weight:700;}
 
 /* CARD TYPES */
-.types{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.types{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
 .type{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 6px 18px rgba(60,30,30,.09);}
-.type b{font-family:'Baloo 2',cursive;font-size:1.2rem;display:block;color:var(--orange-ink);font-weight:800;}
-.type span{font-size:.93rem;color:#3C565B;font-weight:600;}
+.type b{font-family:'Baloo 2',cursive;font-size:1.2rem;display:block;color:var(--orange-ink);font-weight:800;margin-bottom:5px;line-height:1.2;}
+.type span{font-size:.93rem;color:#3C565B;font-weight:600;display:block;}
 
 /* CARD SPOTLIGHT */
 .spot{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:center;margin:34px 0;}
 .spot.flip{grid-template-columns:1fr 230px;}
 .spot.flip .spot-img{order:2;}
 .spot-img img{border-radius:12px;border:4px solid #fff;box-shadow:0 14px 30px rgba(60,30,30,.2);}
-.spot h3{font-size:1.5rem;font-weight:800;margin-bottom:8px;}
+.spot h3{font-size:1.5rem;font-weight:800;margin-bottom:12px;}
 .spot p{margin:0 0 10px;font-size:.97rem;font-weight:600;}
 .tagline{display:inline-block;font-family:'Baloo 2',cursive;font-size:.72rem;letter-spacing:.16em;
-  text-transform:uppercase;background:var(--sun);color:var(--ink);padding:4px 12px;border-radius:20px;font-weight:800;}
+  text-transform:uppercase;background:var(--sun);color:var(--ink);padding:5px 13px;border-radius:20px;
+  font-weight:800;margin-bottom:14px;}
 
 /* GLOSSARY */
-.gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 30px;}
-.gl{border-bottom:1px dashed #D9C3BD;padding:11px 0;}
-.gl b{font-family:'Baloo 2',cursive;font-size:1.08rem;color:var(--teal);font-weight:700;}
+.gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 34px;}
+.gl{border-bottom:1px dashed #D9C3BD;padding:13px 0 15px;}
+.gl b{font-family:'Baloo 2',cursive;font-size:1.08rem;color:var(--teal);font-weight:700;display:block;margin-bottom:3px;line-height:1.2;}
 .gl span{font-size:.9rem;color:#3C565B;font-weight:600;display:block;}
 
 /* CALLOUT */
 .callout{background:var(--sun);border-radius:14px;padding:24px 26px;margin-top:26px;}
-.callout b{font-family:'Baloo 2',cursive;font-size:1.15rem;display:block;margin-bottom:5px;font-weight:800;}
-.callout span{font-size:.95rem;font-weight:600;color:#5C4710;}
+.callout b{font-family:'Baloo 2',cursive;font-size:1.15rem;display:block;margin-bottom:12px;font-weight:800;}
+.callout span{font-size:.95rem;font-weight:600;color:#5C4710;display:block;}
+.tagdefs{display:grid;gap:14px;margin-top:2px;}
+.tagdef{display:block;}
+.tagdef code{display:block;font-family:'Baloo 2',cursive;font-size:.78rem;letter-spacing:.13em;
+  text-transform:uppercase;color:#4A390C;font-weight:800;margin-bottom:3px;}
+.tagdef em{font-style:normal;font-size:.94rem;color:#5C4710;font-weight:600;}
 
 /* FOOTER CTA */
 .endcta{background:linear-gradient(168deg,#F2D5D0,#E9C4BD);text-align:center;padding:66px 0 74px;}
@@ -184,6 +196,11 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
 .zig.z-toc::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2218%22%20height%3D%2211%22%20viewBox%3D%220%200%2018%2011%22%3E%3Cpath%20d%3D%22M0%2011%20L9%200%20L18%2011%20Z%22%20fill%3D%22%231C6E78%22%2F%3E%3C%2Fsvg%3E");}
 .alt{--ray:rgba(28,110,120,.05);}
 .endcta{--ray:rgba(28,110,120,.06);}
+
+footer a{color:#CFE2E4;text-decoration:none;border-bottom:1px solid rgba(207,226,228,.35);}
+footer a:hover{color:#fff;border-color:#fff;}
+footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;color:#6E888D;
+  border-top:1px solid rgba(255,255,255,.09);max-width:640px;margin-left:auto;margin-right:auto;}
 </style>
 </head>
 <body>
@@ -386,7 +403,12 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
 
     <div class="callout">
       <b>Read the bottom of the card</b>
-      <span>Every card tells you how it behaves. <b>Passive &ndash; Collection</b> means it just sits in your party. <b>Passive &ndash; Ability &ndash; Collection</b> means it does something when it lands. <b>Play on turn &ndash; Block</b> means you're aiming it at somebody.</span>
+      <span>Every card tells you how it behaves.</span>
+      <div class="tagdefs">
+        <div class="tagdef"><code>Passive &ndash; Collection</code><em>It just sits in your party and counts toward your nine.</em></div>
+        <div class="tagdef"><code>Passive &ndash; Ability &ndash; Collection</code><em>It counts toward your nine and does something the moment it lands.</em></div>
+        <div class="tagdef"><code>Play on turn &ndash; Block</code><em>You're aiming it at somebody, and it can be countered.</em></div>
+      </div>
     </div>
   </div>
 </section>
@@ -524,14 +546,17 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
   <div class="wrap">
     <p class="eyebrow">Mabuhay</p>
     <h2>May the best host win.</h2>
-    <p>Spot a typo or have a question about a ruling? Tell us &mdash; the rules get better every time somebody plays.</p>
+    <p><b style="display:block;margin-bottom:8px;">Spot a typo or have a question about a ruling?</b>Tell us &mdash; the rules get better every time somebody plays.</p>
     <a class="btn btn-primary" href="index.html">Back to the game</a>
   </div>
 </section>
 
 <footer>
   <b>SALITA</b><br>
-  salita.la &nbsp;&middot;&nbsp; @hellosalita &nbsp;&middot;&nbsp; art + design by @ren.dlc
+  <a href="https://www.instagram.com/hellosalita/" target="_blank" rel="noopener">@hellosalita</a>
+  &nbsp;&middot;&nbsp;
+  art + design by <a href="https://www.instagram.com/ren.dlc/" target="_blank" rel="noopener">@ren.dlc</a>
+  <span class="legal">Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
 </footer>
 
 </body>
