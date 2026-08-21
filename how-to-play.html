@@ -118,6 +118,27 @@ section{padding:60px 0;}
 .step ul{margin:8px 0 0;padding-left:18px;font-size:.93rem;color:#3C565B;font-weight:600;}
 .step li{margin:4px 0;}
 
+
+.tablefig{margin:34px 0 0;padding:0;}
+.tablefig figcaption{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;
+  color:var(--teal-dk);text-align:center;margin-bottom:14px;}
+.tablefig svg{width:100%;height:auto;display:block;max-width:660px;margin:0 auto;
+  filter:drop-shadow(0 8px 20px rgba(60,30,30,.10));}
+.tablefig .lbl-sm{font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:700;fill:#7A6560;}
+.tablefig .lbl-hd{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;fill:#C1541F;letter-spacing:1.6px;}
+.tablefig .cat{font-family:'Baloo 2',cursive;font-size:19px;font-weight:800;fill:#123038;letter-spacing:.6px;}
+.tablefig .zone{font-family:'Baloo 2',cursive;font-size:15px;font-weight:800;fill:#FFFBF6;letter-spacing:1.4px;}
+.tablefig .pile-w{font-family:'Baloo 2',cursive;font-size:21px;font-weight:800;fill:#FBEDE9;letter-spacing:1px;}
+.tablefig .pile-o{font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;fill:#C1541F;letter-spacing:.8px;}
+.tablefig .pile-t{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;fill:#9C8A85;letter-spacing:.8px;}
+.tablefig .pile-x{font-family:'Baloo 2',cursive;font-size:34px;font-weight:800;fill:#C9B4AE;}
+.figtip{text-align:center;font-size:.92rem;color:#3C565B;font-weight:600;
+  max-width:52ch;margin:16px auto 0;}
+@media(max-width:820px){
+  .tablefig .lbl-sm{font-size:17px;}
+  .tablefig .cat{font-size:21px;}
+}
+
 /* TURN */
 .turn{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .turnbox{background:rgba(255,255,255,.07);border-radius:12px;padding:22px;border-top:4px solid var(--sun);}
@@ -130,6 +151,26 @@ section{padding:60px 0;}
 .type{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 6px 18px rgba(60,30,30,.09);}
 .type b{font-family:'Baloo 2',cursive;font-size:1.2rem;display:block;color:var(--orange-ink);font-weight:800;margin-bottom:5px;line-height:1.2;}
 .type span{font-size:.93rem;color:#3C565B;font-weight:600;display:block;}
+
+
+.reach{margin-top:34px;background:var(--paper);border-radius:16px;padding:26px 24px 24px;
+  box-shadow:0 8px 22px rgba(60,30,30,.09);}
+.reach h3{font-size:1.4rem;font-weight:800;margin-bottom:8px;}
+.reach-lede{color:#3C565B;font-weight:600;margin:0 0 20px;font-size:.96rem;}
+.reach-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.reach-col{border-radius:12px;padding:18px 18px 16px;}
+.rc-hand{background:#E4F0F1;border:2px dashed #1C6E78;}
+.rc-coll{background:#FBEDE9;border:2px solid #E2703A;}
+.rtag{display:inline-block;font-family:'Baloo 2',cursive;font-weight:800;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:#fff;padding:5px 13px;border-radius:20px;margin-bottom:12px;}
+.rc-hand .rtag{background:var(--teal);}
+.rc-coll .rtag{background:var(--orange);}
+.reach-col p{font-size:.9rem;color:#3C565B;font-weight:600;margin:0 0 12px;}
+.reach-col ul{margin:0;padding-left:17px;}
+.reach-col li{font-size:.9rem;color:#3C565B;font-weight:600;margin:7px 0;}
+.reach-col li b{font-family:'Baloo 2',cursive;font-size:1rem;color:var(--ink);}
+.reach-note{margin:18px 0 0;font-size:.88rem;color:#6E8489;font-weight:600;font-style:italic;}
+@media(max-width:820px){.reach-grid{grid-template-columns:1fr;}}
 
 /* CARD SPOTLIGHT */
 .spot{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:center;margin:34px 0;}
@@ -217,7 +258,7 @@ footer b{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;}
 
 footer a{color:#CFE2E4;text-decoration:none;border-bottom:1px solid rgba(207,226,228,.35);}
 footer a:hover{color:#fff;border-color:#fff;}
-footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;color:#6E888D;
+footer .legal{display:block;margin-top:12px;line-height:1.8;padding-top:12px;font-size:.76rem;color:#6E888D;
   border-top:1px solid rgba(255,255,255,.09);max-width:640px;margin-left:auto;margin-right:auto;}
 </style>
 </head>
@@ -318,6 +359,84 @@ footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;co
         <p>Respect the hierarchy. Play passes to the left.</p>
       </div>
     </div>
+
+    <figure class="tablefig">
+      <figcaption>What the table looks like</figcaption>
+      <svg viewBox="0 0 760 800" role="img" aria-label="Table layout: other players at the top, the one-time-use discard, draw pile and regular discard across the middle, your face-up collection of three Food, three Family and three Fun cards below, and the three cards in your hand at the bottom.">
+        <defs>
+          <linearGradient id="tbl" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FBEDE9"/><stop offset="1" stop-color="#F2D5D0"/>
+          </linearGradient>
+          <pattern id="back" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#1C6E78"/>
+            <path d="M0 14 L7 7 L14 14 Z" fill="#12525A" opacity=".55"/>
+          </pattern>
+        </defs>
+
+        <rect x="8" y="8" width="744" height="784" rx="26" fill="url(#tbl)" stroke="#E3C3BC" stroke-width="2"/>
+
+        <g opacity=".45">
+          <rect x="286" y="28" width="34" height="46" rx="5" fill="#fff" stroke="#C9A9A2" stroke-width="2"/>
+          <rect x="326" y="28" width="34" height="46" rx="5" fill="#fff" stroke="#C9A9A2" stroke-width="2"/>
+          <rect x="366" y="28" width="34" height="46" rx="5" fill="#fff" stroke="#C9A9A2" stroke-width="2"/>
+          <rect x="406" y="28" width="34" height="46" rx="5" fill="#fff" stroke="#C9A9A2" stroke-width="2"/>
+        </g>
+        <text x="380" y="94" text-anchor="middle" class="lbl-sm">Other players&#8217; collections</text>
+
+        <rect x="88" y="176" width="118" height="158" rx="10" fill="#FFFBF6" stroke="#C9A9A2" stroke-width="2.5" stroke-dasharray="7 6"/>
+        <text x="147" y="246" text-anchor="middle" class="pile-x">&#10005;</text>
+        <text x="147" y="274" text-anchor="middle" class="pile-t">ONE-TIME</text>
+        <text x="147" y="292" text-anchor="middle" class="pile-t">USE</text>
+        <text x="147" y="358" text-anchor="middle" class="lbl-sm">Never comes back</text>
+
+        <rect x="330" y="168" width="118" height="158" rx="10" fill="url(#back)" stroke="#0E434A" stroke-width="2.5"/>
+        <rect x="324" y="176" width="118" height="158" rx="10" fill="url(#back)" stroke="#0E434A" stroke-width="2.5"/>
+        <text x="383" y="262" text-anchor="middle" class="pile-w">DRAW</text>
+        <text x="383" y="286" text-anchor="middle" class="pile-w">PILE</text>
+        <text x="383" y="358" text-anchor="middle" class="lbl-sm">Everyone draws here</text>
+
+        <rect x="556" y="176" width="118" height="158" rx="10" fill="#FFFBF6" stroke="#E2703A" stroke-width="2.5"/>
+        <text x="615" y="254" text-anchor="middle" class="pile-o">REGULAR</text>
+        <text x="615" y="278" text-anchor="middle" class="pile-o">DISCARD</text>
+        <text x="615" y="358" text-anchor="middle" class="lbl-sm">Reshuffled when empty</text>
+
+        <!-- COLLECTION -->
+        <rect x="52" y="410" width="656" height="180" rx="16" fill="rgba(255,255,255,.5)" stroke="#E2703A" stroke-width="2.5"/>
+        <rect x="196" y="396" width="368" height="28" rx="14" fill="#E2703A"/>
+        <text x="380" y="416" text-anchor="middle" class="zone">YOUR COLLECTION &#183; FACE UP</text>
+
+        <rect x="76" y="440" width="192" height="96" rx="12" fill="#EAF6DE" stroke="#7FB93F" stroke-width="2"/>
+        <rect x="90" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#7FB93F" stroke-width="2"/>
+        <rect x="148" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#7FB93F" stroke-width="2"/>
+        <rect x="206" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#7FB93F" stroke-width="2"/>
+        <text x="172" y="558" text-anchor="middle" class="cat">3 FOOD</text>
+
+        <rect x="284" y="440" width="192" height="96" rx="12" fill="#FCEFD5" stroke="#E0A32F" stroke-width="2"/>
+        <rect x="298" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#E0A32F" stroke-width="2"/>
+        <rect x="356" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#E0A32F" stroke-width="2"/>
+        <rect x="414" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#E0A32F" stroke-width="2"/>
+        <text x="380" y="558" text-anchor="middle" class="cat">3 FAMILY</text>
+
+        <rect x="492" y="440" width="192" height="96" rx="12" fill="#E2EFF0" stroke="#4E9AA3" stroke-width="2"/>
+        <rect x="506" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#4E9AA3" stroke-width="2"/>
+        <rect x="564" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#4E9AA3" stroke-width="2"/>
+        <rect x="622" y="452" width="48" height="62" rx="5" fill="#fff" stroke="#4E9AA3" stroke-width="2"/>
+        <text x="578" y="558" text-anchor="middle" class="cat">3 FUN</text>
+
+        <text x="380" y="580" text-anchor="middle" class="lbl-sm">Nine cards. Everyone can see them &#8212; and target them.</text>
+
+        <!-- HAND -->
+        <rect x="222" y="646" width="316" height="122" rx="16" fill="rgba(255,255,255,.5)" stroke="#1C6E78" stroke-width="2.5" stroke-dasharray="8 6"/>
+        <rect x="288" y="632" width="184" height="28" rx="14" fill="#1C6E78"/>
+        <text x="380" y="652" text-anchor="middle" class="zone">YOUR HAND &#183; HIDDEN</text>
+        <rect x="252" y="676" width="52" height="70" rx="6" fill="url(#back)" stroke="#0E434A" stroke-width="2" transform="rotate(-7 278 711)"/>
+        <rect x="354" y="672" width="52" height="70" rx="6" fill="url(#back)" stroke="#0E434A" stroke-width="2"/>
+        <rect x="456" y="676" width="52" height="70" rx="6" fill="url(#back)" stroke="#0E434A" stroke-width="2" transform="rotate(7 482 711)"/>
+        <text x="380" y="784" text-anchor="middle" class="lbl-sm">Always three cards</text>
+      </svg>
+      <p class="figtip">Two different places, two different kinds of attack. Read any Action card carefully &mdash; it will tell you which one it&#8217;s reaching into.</p>
+    </figure>
+
   </div>
 </section>
 
@@ -352,6 +471,31 @@ footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;co
       <div class="type"><b>Kultura</b><span>Filipino values as mechanics. They bend the rules in ways nothing else can.</span></div>
       <div class="type"><b>Counter</b><span>Defense. Playable the instant something targets you, even off-turn.</span></div>
       <div class="type"><b>Chamba!</b><span>Bad luck. Usually triggers the moment you draw it and only hurts you &mdash; but an Unexpected Guest Chamba gets played at someone else.</span></div>
+    </div>
+
+    <div class="reach">
+      <h3>Hand or collection?</h3>
+      <p class="reach-lede">Action and Sabotage cards don&rsquo;t all hit the same place. Before you play one, check which it names &mdash; and before you panic, check which one of yours is actually exposed.</p>
+      <div class="reach-grid">
+        <div class="reach-col rc-hand">
+          <span class="rtag">Reaches into your hand</span>
+          <p>The three cards nobody can see. Nothing here is safe just because it&rsquo;s hidden &mdash; a card that takes at random doesn&rsquo;t care what you&rsquo;re holding.</p>
+          <ul>
+            <li><b>Palit</b> &mdash; take one card at random from another player&rsquo;s hand and swap it with one of yours.</li>
+          </ul>
+        </div>
+        <div class="reach-col rc-coll">
+          <span class="rtag">Reaches into your collection</span>
+          <p>The face-up nine you&rsquo;re building. Most attacks land here, because this is the part everyone can see you&rsquo;re winning with.</p>
+          <ul>
+            <li><b>Hingi</b> &mdash; take one card from another player&rsquo;s displayed collection.</li>
+            <li><b>Agaw</b> &mdash; take one or more cards of the same category to finish a set of your own.</li>
+            <li><b>Tita&rsquo;s Tea</b> &mdash; target player discards a Guest.</li>
+            <li><b>Unexpected Guest</b> &mdash; plant one in someone&rsquo;s Guest collection so it can&rsquo;t be completed.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="reach-note">Chamba cards are the odd ones out: most fire on the person who drew them, and they take from the collection, not the hand.</p>
     </div>
 
     <div class="spot">
@@ -574,7 +718,7 @@ footer .legal{display:block;margin-top:12px;padding-top:12px;font-size:.76rem;co
   <a href="https://www.instagram.com/hellosalita/" target="_blank" rel="noopener">@hellosalita</a>
   &nbsp;&middot;&nbsp;
   art + design by <a href="https://www.instagram.com/ren.dlc/" target="_blank" rel="noopener">@ren.dlc</a>
-  <span class="legal">Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
+  <span class="legal">Bantayog typeface by <a href="https://jadmaza.com/typefaces/bantayog" target="_blank" rel="noopener">Jad Maza</a><br>Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
 </footer>
 
 </body>
