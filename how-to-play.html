@@ -272,6 +272,16 @@ footer a{color:#CFE2E4;text-decoration:none;border-bottom:1px solid rgba(207,226
 footer a:hover{color:#fff;border-color:#fff;}
 footer .legal{display:block;margin-top:12px;line-height:1.8;padding-top:12px;font-size:.76rem;color:#6E888D;
   border-top:1px solid rgba(255,255,255,.09);max-width:640px;margin-left:auto;margin-right:auto;}
+
+
+footer .social{display:flex;gap:12px;justify-content:center;align-items:center;margin:16px 0 10px;flex-wrap:wrap;}
+footer .sicon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border-radius:50%;border:2px solid rgba(255,255,255,.26);color:#EAF6F6;transition:.16s;}
+footer .sicon svg{width:22px;height:22px;display:block;}
+footer .sicon:hover{background:var(--sun);border-color:var(--sun);color:var(--ink);}
+footer .handle{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;
+  font-size:1.02rem;color:#EAF6F6;letter-spacing:.01em;}
+footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
 </style>
 </head>
 <body>
@@ -726,11 +736,16 @@ footer .legal{display:block;margin-top:12px;line-height:1.8;padding-top:12px;fon
 </section>
 
 <footer>
-  <b>SALITA</b><br>
-  <a href="https://www.instagram.com/hellosalita/" target="_blank" rel="noopener">@hellosalita</a>
-  &nbsp;&middot;&nbsp;
-  art + design by <a href="https://www.instagram.com/ren.dlc/" target="_blank" rel="noopener">@ren.dlc</a>
-  <span class="legal">Bantayog typeface by <a href="https://jadmaza.com/typefaces/bantayog" target="_blank" rel="noopener">Jad Maza</a><br>Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
+  <b>SALO SALO SABOTAGE</b>
+  <div class="social">
+    <a class="sicon" href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.4" cy="6.6" r="1.35" fill="currentColor"/></svg></a>
+    <a class="sicon" href="https://www.tiktok.com/@salosalosabotage" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.9 2.4h-3.2v13.1a2.9 2.9 0 1 1-2.2-2.8V9.4a6.2 6.2 0 1 0 5.4 6.1V9.1a8.3 8.3 0 0 0 4.5 1.4V7.3a5.2 5.2 0 0 1-4.5-4.9z"/></svg></a>
+    <span class="handle">@salosalosabotage</span>
+  </div>
+  <p class="followline">Follow along for the next pop-up date.</p>
+  <span class="legal">A game by <a href="https://www.instagram.com/hellosalita/" target="_blank" rel="noopener">@hellosalita</a> &nbsp;&middot;&nbsp; art + design by <a href="https://www.instagram.com/ren.dlc/" target="_blank" rel="noopener">@ren.dlc</a><br>
+  Bantayog typeface by <a href="https://jadmaza.com/typefaces/bantayog" target="_blank" rel="noopener">Jad Maza</a><br>
+  Salo Salo Sabotage&trade; &nbsp;&middot;&nbsp; &copy; 2026 Salita Digital Publishing, LLC. All rights reserved.</span>
 </footer>
 
 </body>
