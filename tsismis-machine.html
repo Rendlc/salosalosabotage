@@ -424,6 +424,7 @@
   .cta-inner{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;}
   .cta-copy p{margin:0; font-size:.95rem; color:#C9DADC;}
   .cta-copy .cta-h{font-family:"Baloo 2", sans-serif; font-weight:800; font-size:1.3rem; color:#fff; margin-bottom:6px;}
+  .cta-copy a{color:#fff; text-decoration:underline; text-underline-offset:2px;}
   .foot-note{
     max-width:1180px; margin:0 auto; padding:16px 24px 40px; font-size:.78rem; color:#8FA8AC;
     display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; background:var(--ink);
@@ -588,8 +589,8 @@
 <div class="cta-band">
   <div class="wrap cta-inner">
     <div class="cta-copy">
-      <p class="cta-h">The real cards ship this month.</p>
-      <p>2&ndash;5 players &middot; Ages 8+ &middot; 30&ndash;45 minutes &middot; $35 USD limited first printing.</p>
+      <p class="cta-h">The real cards ship this month &mdash; and we're taking them on the road.</p>
+      <p>2&ndash;5 players &middot; Ages 8+ &middot; 30&ndash;45 minutes &middot; $35 USD limited first printing. Catch us at an upcoming pop-up &mdash; follow <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">@salosalosabotage</a> for dates and locations.</p>
     </div>
     <a class="btn btn-ghost" href="reserve.html">Reserve a copy</a>
   </div>
@@ -1160,11 +1161,34 @@
           lctx.fillStyle = "#C1541F";
           lctx.textAlign = "center";
           lctx.textBaseline = "alphabetic";
-          fillFittedText(lctx, "STARRING", size / 2, size / 2 - size * 0.06, size * 0.86, size * 0.089, "700", '"Baloo 2", sans-serif');
 
+          // Same trap as the photo badge's name plate: the old fixed
+          // maxWidth (size*0.86) was sized against the nominal box, not the
+          // smaller circle drawClippedBadgeContent actually masks to below,
+          // so a long name could overflow past both edges of the circle
+          // with nothing to catch it (fillFittedText shrinks font size but
+          // never truncates). Found by testing "Clarita Villanueva-Reyes"
+          // through this no-photo "STARRING" layout — the photo-badge fix
+          // covered the name-plate case but not this one. Fixed the same
+          // way: size the available width off the true masked circle, and
+          // fall back to ellipsis truncation if even the smallest allowed
+          // font still doesn't fit.
+          const circleMargin = 12 * K; // must match drawClippedBadgeContent's margin arg
+          const circleR = size / 2 - circleMargin;
+          const circleCenterY = size / 2;
+          const chordMaxWidth = textY => {
+            const dy = Math.abs(circleCenterY - textY);
+            const chordHalf = Math.sqrt(Math.max(circleR ** 2 - dy ** 2, 0));
+            return chordHalf * 2 * 0.88; // small safety margin for antialiasing
+          };
+
+          const starringY = size / 2 - size * 0.06;
+          fillFittedText(lctx, "STARRING", size / 2, starringY, chordMaxWidth(starringY), size * 0.089, "700", '"Baloo 2", sans-serif');
+
+          const nameY = size / 2 + size * 0.14;
           const fontRatio = name.length > 18 ? 0.1046 : name.length > 11 ? 0.1231 : 0.1415;
           lctx.fillStyle = "#123038";
-          fillFittedText(lctx, name, size / 2, size / 2 + size * 0.14, size * 0.86, size * fontRatio, "800", '"Baloo 2", sans-serif');
+          fillFittedTextEllipsis(lctx, name, size / 2, nameY, chordMaxWidth(nameY), size * fontRatio, "800", '"Baloo 2", sans-serif');
         }
       });
 
@@ -1236,10 +1260,39 @@
     const revealCanvas = await buildCardCanvas(VIDEO_RENDER);
     const coverCanvas = await buildCoverFaceCanvas(VIDEO_RENDER);
 
-    const W = revealCanvas.width, H = revealCanvas.height;
+    // The card's own frame size (no margin around it at all).
+    const FRAME_W = revealCanvas.width, FRAME_H = revealCanvas.height;
+
+    // Export onto a standard 9:16 vertical canvas (720x1280 — Reels/TikTok/
+    // Stories shape, comfortably above their stated minimum) with the card
+    // scaled down and centered inside a "safe zone", rather than filling
+    // the frame edge to edge. Both apps draw their own UI over fixed
+    // margins of a 9:16 video — profile pic, follow button and menu icons
+    // up top; caption text, audio title and the like/comment/share/bookmark
+    // icon stack along the bottom and right — and a card with zero margin
+    // gets covered by that chrome. These margins are approximate (neither
+    // platform publishes exact numbers and they shift over time) but
+    // comfortably clear both apps' usual overlay zones as of 2026 — leaves
+    // the card fully visible with room around it rather than tucking it
+    // right up against the edges. (720x1280 rather than a sharper 1080x1920:
+    // compositing the full 1080x1920 canvas 30x/second was heavy enough in
+    // testing to drop frames and shorten the clip again — the same problem
+    // VIDEO_RENDER was introduced to fix above, just re-triggered by a
+    // bigger output canvas instead of a bigger source canvas.)
+    const OUT_W = 720, OUT_H = 1280;
+    const SAFE_TOP = 127;
+    const SAFE_BOTTOM = 227;
+    const SAFE_LEFT = 40;
+    const SAFE_RIGHT = 113;
+    const safeW = OUT_W - SAFE_LEFT - SAFE_RIGHT;
+    const safeH = OUT_H - SAFE_TOP - SAFE_BOTTOM;
+    const fitScale = Math.min(safeW / FRAME_W, safeH / FRAME_H);
+    const drawW = FRAME_W * fitScale, drawH = FRAME_H * fitScale;
+    const drawCx = SAFE_LEFT + (safeW - drawW) / 2 + drawW / 2;
+    const drawCy = SAFE_TOP + (safeH - drawH) / 2 + drawH / 2;
 
     const outCanvas = document.createElement("canvas");
-    outCanvas.width = W; outCanvas.height = H;
+    outCanvas.width = OUT_W; outCanvas.height = OUT_H;
     const octx = outCanvas.getContext("2d");
 
     const FPS = 30;
@@ -1249,9 +1302,9 @@
     const TOTAL_MS = PRE_HOLD_MS + FLIP_MS + POST_HOLD_MS;
 
     function drawFrame(elapsed){
-      octx.clearRect(0, 0, W, H);
+      octx.clearRect(0, 0, OUT_W, OUT_H);
       octx.fillStyle = "#FBEDE9";
-      octx.fillRect(0, 0, W, H);
+      octx.fillRect(0, 0, OUT_W, OUT_H);
 
       let angleDeg;
       if (elapsed < PRE_HOLD_MS) angleDeg = 0;
@@ -1264,9 +1317,9 @@
       const tex = showingCover ? coverCanvas : revealCanvas;
 
       octx.save();
-      octx.translate(W / 2, H / 2);
-      octx.scale(scaleX, 1);
-      octx.drawImage(tex, -W / 2, -H / 2, W, H);
+      octx.translate(drawCx, drawCy);
+      octx.scale(fitScale * scaleX, fitScale);
+      octx.drawImage(tex, -FRAME_W / 2, -FRAME_H / 2, FRAME_W, FRAME_H);
       octx.restore();
     }
 
