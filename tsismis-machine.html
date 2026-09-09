@@ -940,6 +940,31 @@
     ctx.fillText(text, x, y);
   }
 
+  // Same shrink-to-fit as fillFittedText, but for spots where even the
+  // smallest allowed size can still be wider than maxWidth (a name too long
+  // to shrink its way to safety) — falls back to truncating with an
+  // ellipsis, matching the on-page CSS badge's text-overflow:ellipsis
+  // instead of letting the text render oversized and get chopped off by
+  // whatever clips it.
+  function fillFittedTextEllipsis(ctx, text, x, y, maxWidth, fontPx, weight, family){
+    let size = fontPx;
+    ctx.font = `${weight} ${Math.round(size)}px ${family}`;
+    let w = ctx.measureText(text).width;
+    if (w > maxWidth){
+      size = Math.max(size * (maxWidth / w), fontPx * 0.55);
+      ctx.font = `${weight} ${Math.round(size)}px ${family}`;
+      w = ctx.measureText(text).width;
+    }
+    if (w > maxWidth){
+      let t = text;
+      while (t.length > 1 && ctx.measureText(t + "…").width > maxWidth){
+        t = t.slice(0, -1);
+      }
+      text = t + "…";
+    }
+    ctx.fillText(text, x, y);
+  }
+
   // That same clip-vs-fillText bug turned out not to be text-specific: an
   // active circular clip() also failed to reliably contain a plain
   // drawImage() of the uploaded photo (found by isolating the photo from
@@ -1104,13 +1129,30 @@
           } catch(e){ /* leave the circle plain rather than fail the whole download */ }
 
           if (showName){
+            // The badge is masked to a circle whose radius is size/2 MINUS the
+            // margin passed to drawClippedBadgeContent below (12*K) — a good
+            // deal smaller than the badge's own nominal box. The plate and its
+            // text need to be positioned against that true, smaller circle:
+            // anchoring against the full box (as an earlier version did) put
+            // the text almost exactly on the true circle's edge, where the
+            // visible width collapses to nearly nothing and even short names
+            // got clipped off.
+            const circleMargin = 12 * K; // must match drawClippedBadgeContent's margin arg
+            const circleR = size / 2 - circleMargin;
+            const circleCenterY = size / 2;
             const plateH = size * 0.24;
+            const plateBottom = circleCenterY + circleR; // true circle's bottom edge
+            const plateTop = plateBottom - plateH;
             lctx.fillStyle = "rgba(18,48,56,.72)";
-            lctx.fillRect(0, size - plateH, size, plateH);
+            lctx.fillRect(0, plateTop, size, plateH);
             lctx.fillStyle = "#fff";
             lctx.textAlign = "center";
             lctx.textBaseline = "middle";
-            fillFittedText(lctx, name, size / 2, size - plateH / 2 + 1, size * 0.92, size * 0.115, "700", '"Baloo 2", sans-serif');
+            const plateTextY = plateBottom - plateH / 2 + 1;
+            const dyFromCenter = Math.abs(circleCenterY - plateTextY);
+            const chordHalf = Math.sqrt(Math.max(circleR ** 2 - dyFromCenter ** 2, 0));
+            const plateMaxWidth = chordHalf * 2 * 0.88; // small safety margin for antialiasing
+            fillFittedTextEllipsis(lctx, name, size / 2, plateTextY, plateMaxWidth, size * 0.115, "700", '"Baloo 2", sans-serif');
           }
         } else {
           lctx.fillStyle = "#F6C445";
@@ -1300,7 +1342,15 @@
       const slug = (name || activeCard().title).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-+|-+$)/g, "");
       const file = new File([blob], `tsismis-machine-${slug || "card"}.png`, { type: "image/png" });
 
-      const canShareFile = !!(window.navigator && navigator.share && navigator.canShare && navigator.canShare({ files: [file] }));
+      // The OS share sheet (navigator.share/canShare with files) is only worth
+      // using on phones — that's where Facebook is normally registered as a
+      // share target. On desktop (macOS Safari in particular) the API itself
+      // works, but the sheet that pops up is the generic system one (AirDrop,
+      // Mail, Messages, Notes…) with no Facebook entry at all, which makes a
+      // "Share to Facebook" button silently do the wrong thing. So desktop
+      // always goes through the Facebook-specific path below instead.
+      const isMobileUA = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const canShareFile = isMobileUA && !!(window.navigator && navigator.share && navigator.canShare && navigator.canShare({ files: [file] }));
       if (canShareFile){
         await navigator.share({ files: [file], text: shareText });
         shareBtn.textContent = prevLabel;
@@ -1308,11 +1358,22 @@
       } else {
         // Facebook's own share dialog only ever accepts a URL — it can't take an
         // uploaded image or a pre-filled caption from a client-side page like this
-        // one. This opens their share dialog for the tool's link; downloading the
-        // card above and attaching it manually is the only way to include the image.
+        // one. So this does two things at once: starts the PNG download (same
+        // file the Download button makes) and opens Facebook's share dialog for
+        // the tool's link, so the card is already sitting in Downloads, ready to
+        // attach, by the time Facebook's window is in front of you.
+        const url = URL.createObjectURL(file);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+
         const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(TOOL_URL)}`;
         window.open(shareUrl, "_blank", "noopener,width=600,height=640");
-        shareBtn.textContent = "Opened Facebook — attach your downloaded card";
+        shareBtn.textContent = "Card downloaded — attach it on Facebook";
         setTimeout(() => { shareBtn.textContent = prevLabel; }, 4200);
         shareBtn.disabled = false;
       }
