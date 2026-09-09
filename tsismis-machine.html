@@ -1113,7 +1113,20 @@
       // was unreliable here for drawImage too, not only fillText — caught
       // it by isolating the photo from the name plate during testing and
       // finding the same stray pixels either way.
-      await drawClippedBadgeContent(ctx, bx, by, size, 12 * K, async lctx => {
+      //
+      // The margin here (BADGE_MASK_MARGIN) has to stay small: the ink ring
+      // drawn on top afterward is a 3*K-wide stroke centered at radius
+      // size/2 - 1.5*K, so it only actually covers the outer band from
+      // size/2 - 3*K out to size/2. An earlier version used 12*K here,
+      // which pulled the masked content's edge in so far past that band
+      // that a plain, uncovered ring of the badge's own background fill
+      // (white behind a photo) sat visible between the photo and the ink
+      // ring — reported as "a white ring around the photo blocking the
+      // name." Fixed by shrinking the margin so the masked edge sits just
+      // inside where the ring's stroke begins, with a little overlap for
+      // the ring to hide.
+      const BADGE_MASK_MARGIN = 2.5 * K;
+      await drawClippedBadgeContent(ctx, bx, by, size, BADGE_MASK_MARGIN, async lctx => {
         if (hasPhoto){
           lctx.fillStyle = "#fff";
           lctx.fillRect(0, 0, size, size);
@@ -1131,14 +1144,14 @@
 
           if (showName){
             // The badge is masked to a circle whose radius is size/2 MINUS the
-            // margin passed to drawClippedBadgeContent below (12*K) — a good
-            // deal smaller than the badge's own nominal box. The plate and its
-            // text need to be positioned against that true, smaller circle:
+            // margin passed to drawClippedBadgeContent below (BADGE_MASK_MARGIN)
+            // — a bit smaller than the badge's own nominal box. The plate and
+            // its text need to be positioned against that true, smaller circle:
             // anchoring against the full box (as an earlier version did) put
             // the text almost exactly on the true circle's edge, where the
             // visible width collapses to nearly nothing and even short names
             // got clipped off.
-            const circleMargin = 12 * K; // must match drawClippedBadgeContent's margin arg
+            const circleMargin = BADGE_MASK_MARGIN; // must match drawClippedBadgeContent's margin arg
             const circleR = size / 2 - circleMargin;
             const circleCenterY = size / 2;
             const plateH = size * 0.24;
@@ -1173,7 +1186,7 @@
           // way: size the available width off the true masked circle, and
           // fall back to ellipsis truncation if even the smallest allowed
           // font still doesn't fit.
-          const circleMargin = 12 * K; // must match drawClippedBadgeContent's margin arg
+          const circleMargin = BADGE_MASK_MARGIN; // must match drawClippedBadgeContent's margin arg
           const circleR = size / 2 - circleMargin;
           const circleCenterY = size / 2;
           const chordMaxWidth = textY => {
@@ -1260,7 +1273,15 @@
     const revealCanvas = await buildCardCanvas(VIDEO_RENDER);
     const coverCanvas = await buildCoverFaceCanvas(VIDEO_RENDER);
 
-    // The card's own frame size (no margin around it at all).
+    // The full texture canvas — cardGeometry() reserves extra space only on
+    // the TOP and RIGHT of the card's own white frame (see PAD/frameX/frameY
+    // below) so the badge can overhang the corner without clipping. That
+    // means the texture's bounding box is NOT symmetric around the visible
+    // card — centering the whole texture (as an earlier version of this did)
+    // visibly shifted the card off-center, toward the bottom-left, inside
+    // the safe zone. Fix: center the card's actual white-frame rect, and let
+    // the lopsided badge-overhang padding extend past that on its own side.
+    const g = cardGeometry(VIDEO_RENDER);
     const FRAME_W = revealCanvas.width, FRAME_H = revealCanvas.height;
 
     // Export onto a standard 9:16 vertical canvas (720x1280 — Reels/TikTok/
@@ -1279,17 +1300,36 @@
     // testing to drop frames and shorten the clip again — the same problem
     // VIDEO_RENDER was introduced to fix above, just re-triggered by a
     // bigger output canvas instead of a bigger source canvas.)
+    // The margins are symmetric (same value on both sides of each axis) even
+    // though the platform UI they're dodging isn't — TikTok/Reels only draw
+    // heavy chrome on the bottom+right, not the top+left. An earlier version
+    // used the tighter, asymmetric margins each side actually needs, which
+    // technically cleared the UI but put the card visibly off-center —
+    // reported back as "the card is not centered." Using the larger margin
+    // on both sides of each axis keeps the same UI clearance (nothing gets
+    // less safe) while making the card sit dead-center, at the cost of a
+    // little unused padding on the sides that didn't need as much.
     const OUT_W = 720, OUT_H = 1280;
-    const SAFE_TOP = 127;
+    const SAFE_TOP = 227;
     const SAFE_BOTTOM = 227;
-    const SAFE_LEFT = 40;
+    const SAFE_LEFT = 113;
     const SAFE_RIGHT = 113;
     const safeW = OUT_W - SAFE_LEFT - SAFE_RIGHT;
     const safeH = OUT_H - SAFE_TOP - SAFE_BOTTOM;
-    const fitScale = Math.min(safeW / FRAME_W, safeH / FRAME_H);
+    // Fit against the visible card frame's own size (g.frameW/frameH), not
+    // the full lopsided texture bounds.
+    const fitScale = Math.min(safeW / g.frameW, safeH / g.frameH);
+    // Where the card frame's top-left should land so the FRAME itself sits
+    // centered in the safe zone...
+    const frameDrawX = SAFE_LEFT + (safeW - g.frameW * fitScale) / 2;
+    const frameDrawY = SAFE_TOP + (safeH - g.frameH * fitScale) / 2;
+    // ...then back out where the *texture's* own origin (0,0) lands, since
+    // the texture includes the extra top/right padding around that frame.
+    const textureDrawX = frameDrawX - g.frameX * fitScale;
+    const textureDrawY = frameDrawY - g.frameY * fitScale;
     const drawW = FRAME_W * fitScale, drawH = FRAME_H * fitScale;
-    const drawCx = SAFE_LEFT + (safeW - drawW) / 2 + drawW / 2;
-    const drawCy = SAFE_TOP + (safeH - drawH) / 2 + drawH / 2;
+    const drawCx = textureDrawX + drawW / 2;
+    const drawCy = textureDrawY + drawH / 2;
 
     const outCanvas = document.createElement("canvas");
     outCanvas.width = OUT_W; outCanvas.height = OUT_H;
