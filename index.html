@@ -111,6 +111,8 @@ h1,h2,h3{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;line-
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--orange-dk);}
 .btn-ghost{background:transparent;color:var(--teal);border:2.5px solid var(--teal);}
 .btn-ghost:hover{background:var(--teal);color:#fff;}
+.btn-secondary{background:var(--sun);color:var(--ink);box-shadow:0 5px 0 #C99A1E;}
+.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 7px 0 #C99A1E;}
 .price-tag{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:1.15rem;color:var(--teal);margin-top:22px;}
 .price-tag em{font-style:normal;font-size:.62em;color:#7A8E90;font-weight:700;letter-spacing:.06em;}
 .price-tag small{font-weight:600;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:#7A8E90;display:block;font-family:'Nunito Sans',sans-serif;}
@@ -465,6 +467,12 @@ footer .sicon:hover{background:var(--sun);border-color:var(--sun);color:var(--in
 footer .handle{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;
   font-size:1.02rem;color:#EAF6F6;letter-spacing:.01em;}
 footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
+
+/* try-it-teaser (added for the browser demo) */
+.try-it-teaser{background:var(--blush-lt); padding:64px 0; text-align:center;}
+.try-it-teaser .wrap{max-width:640px;}
+.try-it-teaser h2{font-size:clamp(1.7rem,4.2vw,2.3rem); font-weight:800; color:var(--teal); margin-bottom:10px;}
+.try-it-teaser p{color:#3C565B; font-weight:600; margin:0 0 20px;}
 </style>
 <script type="application/ld+json">
 {
@@ -501,6 +509,7 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
         <p class="hero-lede">Collect the food, the family, and the fun. Then watch your tita show up with the latest gossip and take it all down.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="#buy">Get the game</a>
+          <a class="btn btn-secondary" href="try-it.html">Try the demo</a>
           <a class="btn btn-ghost" href="how-to-play.html">How it plays</a>
         </div>
         <p class="price-tag">$35 <em>USD</em> <small>Limited first printing</small></p>
@@ -586,6 +595,15 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
     </div>
   </div>
 </section>
+<section class="try-it-teaser zig z-tsismis">
+  <div class="wrap">
+    <p class="eyebrow">Free preview</p>
+    <h2>Play a round before you buy.</h2>
+    <p>A free browser demo &mdash; solo against Tita AI, or pass the phone for two players. No download, no cards required.</p>
+    <a class="btn btn-primary" href="try-it.html">Try the demo &rarr;</a>
+  </div>
+</section>
+
 
 <section class="kultura zig z-kultura">
   <div class="wrap kultura-grid">
