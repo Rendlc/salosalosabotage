@@ -56,7 +56,12 @@
   html{-webkit-text-size-adjust:100%;}
   body{
     margin:0;
-    background:var(--paper);
+    /* A faint dot grid over the paper ground, the same texture device the game itself uses —
+       so the flat stretches between the hero, the embed and the footer don't read as bare
+       white paper. Warm-toned and subtle enough to sit behind cards and text without competing. */
+    background:
+      radial-gradient(circle, rgba(226,112,58,.07) 1px, transparent 1.3px) 0 0/18px 18px,
+      var(--paper);
     color:var(--ink);
     font-family:"Nunito Sans", ui-sans-serif, system-ui, sans-serif;
     line-height:1.5;
@@ -503,13 +508,13 @@
      orange, Pass & Play's is the sun yellow) instead of sitting on plain white, so the choice
      reads as two distinct, punchy options against the soft pink section behind them rather
      than two flat cards that blend into the page. */
-  #screen-mode .options {display:grid; gap:14px; margin-top:18px;}#game-embed .mode-card {border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.14); border:2px solid transparent; text-align:left;}#game-embed .mode-card h3 {margin:0 0 6px;}#game-embed .mode-card p {margin:0 0 12px; font-size:14px;}#game-embed .mode-card.mode-solo {
+  #screen-mode .options {display:grid; gap:14px; margin-top:18px;}#game-embed .mode-card {border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.14); border:2px solid transparent; text-align:left; display:flex; flex-direction:column;}#game-embed .mode-card h3 {margin:0 0 6px;}#game-embed .mode-card p {margin:0 0 12px; font-size:14px;}#game-embed .mode-card.mode-solo {
     background:linear-gradient(155deg, #F3C6A3 0%, #E4935E 100%);
     border-color:var(--orange-dk);
   }#game-embed .mode-card.mode-solo h3 {color:var(--orange-dk);}#game-embed .mode-card.mode-solo p {color:#7A3312;}#game-embed .mode-card.mode-pass {
     background:linear-gradient(155deg, #92CFCF 0%, #4FA9AB 100%);
     border-color:var(--teal-dk);
-  }#game-embed .mode-card.mode-pass h3 {color:var(--teal-dk);}#game-embed .mode-card.mode-pass p {color:#0D3D42;}#game-embed .mode-card .card-btn {width:100%;}#game-embed .mode-card.mode-solo .card-btn {background:var(--teal); box-shadow:0 4px 0 var(--teal-dk);}#game-embed .mode-card.mode-solo .card-btn:active {box-shadow:0 1px 0 var(--teal-dk);}#game-embed /* Board layout */
+  }#game-embed .mode-card.mode-pass h3 {color:var(--teal-dk);}#game-embed .mode-card.mode-pass p {color:#0D3D42;}#game-embed .mode-card .card-btn {width:100%; margin-top:auto;}#game-embed .mode-card.mode-solo .card-btn {background:var(--teal); box-shadow:0 4px 0 var(--teal-dk);}#game-embed .mode-card.mode-solo .card-btn:active {box-shadow:0 1px 0 var(--teal-dk);}#game-embed /* Board layout */
   .board {display:flex; flex-direction:column; gap:14px;}#game-embed .zone {background:#fff; border-radius:16px; padding:12px 14px; border:2px solid var(--blush);}#game-embed .zone-title {font-weight:800; color:var(--teal); font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}#game-embed .goal-pill {display:inline-block; margin-left:8px; font-size:10px; font-weight:800; letter-spacing:.2px; text-transform:none; color:var(--orange-ink); background:var(--blush-lt); border:1.5px solid var(--blush); border-radius:999px; padding:2px 9px; vertical-align:middle;}#game-embed .pile-row {display:flex; gap:10px; align-items:center;}#game-embed .pile {width:56px; height:78px; border-radius:8px; background:linear-gradient(135deg,var(--teal),var(--ink)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:800; text-align:center; flex-shrink:0; position:relative;}#game-embed .pile .count {position:absolute; bottom:2px; right:4px; background:var(--orange); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:11px;}#game-embed .discard-top {width:56px; height:78px; border-radius:8px; overflow:hidden; border:2px solid var(--orange); flex-shrink:0;}#game-embed .discard-top img {width:100%; height:100%; object-fit:cover;}#game-embed .collections {display:grid; grid-template-columns:1fr 1fr; gap:10px;}#game-embed .collection-box {background:var(--blush); border-radius:12px; padding:10px;}#game-embed .collection-box h4 {margin:0 0 6px; font-size:13px; color:var(--ink); display:flex; justify-content:space-between;}#game-embed .coll-cat {margin-bottom:8px;}#game-embed .coll-cat:last-child {margin-bottom:0;}#game-embed .coll-cat-label {font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}#game-embed .coll-thumbs {display:flex; gap:5px; flex-wrap:wrap;}#game-embed .coll-thumb-wrap {text-align:center; width:42px;}#game-embed /* The source art is a scan of the WHOLE physical card — illustration, name and rules text
      all baked into one image — so at full size (minicard, the reveal popup) showing the whole
      thing looks intentional. Shrunk down to a 42px collection chip, though, the illustration
@@ -836,8 +841,12 @@
        intentional choice screen instead of a stretched mobile layout. */
     #screen-mode .options {grid-template-columns:1fr 1fr; max-width:640px; margin-left:auto; margin-right:auto;}#game-embed /* The button is a native <button> (inline-block by default) sitting in a left-aligned card,
        so shrinking it to auto-width alone just left it hugging the left edge — display:block
-       plus auto side margins is what actually centers it under the card's centered heading/copy. */
-    .mode-card .card-btn {width:auto; min-width:180px; padding-left:22px; padding-right:22px; display:block; margin:0 auto;}#game-embed .battle-dialogue {font-size:16px;}#game-embed .minicard {width:176px;}#game-embed .minicard .art {height:212px;}#game-embed .minicard .name {font-size:14.5px;}#game-embed .minicard .fx {font-size:12px; max-height:52px;}#game-embed .hand {gap:12px;}#game-embed .coll-thumb-wrap {width:60px;}#game-embed .coll-thumb-clip {width:60px; height:82px;}#game-embed .collections.compact .coll-thumb-wrap {width:48px;}#game-embed .collections.compact .coll-thumb-clip {width:48px; height:65px;}#game-embed .steal-thumb {width:104px;}#game-embed .steal-thumb img {width:104px; height:142px;}#game-embed .steal-thumb-label {font-size:13px;}#game-embed .card-back {width:112px; height:154px;}#game-embed /* Desktop has plenty of vertical room for a card's art + description — no reason for this
+       plus auto side margins is what actually centers it under the card's centered heading/copy.
+       margin-top:auto (with .mode-card as a flex column and .options stretching both cards to
+       equal height) pins the button to the bottom of the card instead of right after the text,
+       so it lands on the same line in both cards even when their descriptions run different
+       lengths. */
+    .mode-card .card-btn {width:auto; min-width:180px; padding-left:22px; padding-right:22px; display:block; margin:auto auto 0;}#game-embed .battle-dialogue {font-size:16px;}#game-embed .minicard {width:176px;}#game-embed .minicard .art {height:212px;}#game-embed .minicard .name {font-size:14.5px;}#game-embed .minicard .fx {font-size:12px; max-height:52px;}#game-embed .hand {gap:12px;}#game-embed .coll-thumb-wrap {width:60px;}#game-embed .coll-thumb-clip {width:60px; height:82px;}#game-embed .collections.compact .coll-thumb-wrap {width:48px;}#game-embed .collections.compact .coll-thumb-clip {width:48px; height:65px;}#game-embed .steal-thumb {width:104px;}#game-embed .steal-thumb img {width:104px; height:142px;}#game-embed .steal-thumb-label {font-size:13px;}#game-embed .card-back {width:112px; height:154px;}#game-embed /* Desktop has plenty of vertical room for a card's art + description — no reason for this
        popup to scroll there the way it sometimes has to on a short mobile screen. */
     .modal-box.reveal-modal-box {width:min(90vw,460px); max-width:min(90vw,460px); max-height:none; overflow-y:visible;}#game-embed .reveal-card-img {max-width:300px;}#game-embed .reveal-name {font-size:24px;}#game-embed .reveal-fx {font-size:15px; max-width:360px;}#game-embed .intro-modal-box {width:min(90vw,460px); max-width:min(90vw,460px); padding:34px 30px 28px;}#game-embed /* Everything-visible-at-once desktop layout. Mobile deliberately scrolls (video, then
        dialogue, then collections, then hand) because there's no room to do otherwise on a

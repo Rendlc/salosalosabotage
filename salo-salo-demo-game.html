@@ -72,7 +72,7 @@
      reads as two distinct, punchy options against the soft pink section behind them rather
      than two flat cards that blend into the page. */
   #screen-mode .options{display:grid; gap:14px; margin-top:18px;}
-  .mode-card{border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.14); border:2px solid transparent; text-align:left;}
+  .mode-card{border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.14); border:2px solid transparent; text-align:left; display:flex; flex-direction:column;}
   .mode-card h3{margin:0 0 6px;}
   .mode-card p{margin:0 0 12px; font-size:14px;}
   .mode-card.mode-solo{
@@ -87,7 +87,7 @@
   }
   .mode-card.mode-pass h3{color:var(--teal-dk);}
   .mode-card.mode-pass p{color:#0D3D42;}
-  .mode-card .card-btn{width:100%;}
+  .mode-card .card-btn{width:100%; margin-top:auto;}
   .mode-card.mode-solo .card-btn{background:var(--teal); box-shadow:0 4px 0 var(--teal-dk);}
   .mode-card.mode-solo .card-btn:active{box-shadow:0 1px 0 var(--teal-dk);}
 
@@ -618,8 +618,12 @@
     #screen-mode .options{grid-template-columns:1fr 1fr; max-width:640px; margin-left:auto; margin-right:auto;}
     /* The button is a native <button> (inline-block by default) sitting in a left-aligned card,
        so shrinking it to auto-width alone just left it hugging the left edge — display:block
-       plus auto side margins is what actually centers it under the card's centered heading/copy. */
-    .mode-card .card-btn{width:auto; min-width:180px; padding-left:22px; padding-right:22px; display:block; margin:0 auto;}
+       plus auto side margins is what actually centers it under the card's centered heading/copy.
+       margin-top:auto (with .mode-card as a flex column and .options stretching both cards to
+       equal height) pins the button to the bottom of the card instead of right after the text,
+       so it lands on the same line in both cards even when their descriptions run different
+       lengths. */
+    .mode-card .card-btn{width:auto; min-width:180px; padding-left:22px; padding-right:22px; display:block; margin:auto auto 0;}
     .battle-dialogue{font-size:16px;}
     .minicard{width:176px;}
     .minicard .art{height:212px;}
