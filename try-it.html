@@ -578,7 +578,11 @@
   .hand-fab-wrap {
     position:fixed; left:50%; bottom:14px; z-index:55; transform:translateX(-50%);
     display:flex; flex-direction:column; align-items:center;
-  }#game-embed /* EVERY card currently in hand, fanned out and peeking above the pill — not just a sample of
+    transition:opacity .15s ease;
+  }#game-embed /* While a "here's what just happened" message is waiting on Continue, openHandDrawer() itself
+     refuses to reopen the drawer (see its comment) — this just makes that visible instead of
+     the tab looking fully live and quietly doing nothing when tapped. */
+  .hand-fab-wrap.gated { opacity:.45; pointer-events:none; }#game-embed /* EVERY card currently in hand, fanned out and peeking above the pill — not just a sample of
      the first few — so a glance actually tells you what's there instead of implying a hand
      size that isn't real. Tucked behind the pill (negative margin-bottom) so it reads as
      "cards held in the hand this tab represents" rather than a separate floating cluster.
@@ -1620,6 +1624,14 @@ function closeFirstDrawHint(){
 // on desktop too (where the CSS resets both back to a normal static section and hides the
 // tab/backdrop entirely) rather than needing a JS media-query check at every call site.
 function openHandDrawer(){
+  // gate() always closes the drawer the moment it's called (so a "what just happened" message
+  // can't be tapped past), but nothing stopped the FAB itself from being tapped again *during*
+  // that wait — reopening the drawer put its full-screen backdrop (higher z-index than the
+  // battle-actions area behind it) right on top of the Continue button, trapping it: cards in
+  // the drawer don't respond either since selectCard() itself bails out while gated, so the
+  // player was stuck seeing their hand with nothing on screen actually clickable. Simplest fix
+  // is to never let the drawer open in the first place while a Continue is pending.
+  if(isGated()) return;
   document.getElementById('zone-hand')?.classList.add('open');
   document.getElementById('hand-drawer-backdrop')?.classList.add('show');
 }
@@ -1688,6 +1700,9 @@ function gate(msg, nextFn){
   document.getElementById('battle-dialogue').innerHTML = msg || '';
   awaitingContinue = nextFn;
   renderBattleActions();
+  // Dim the hand tab itself while gated — openHandDrawer() already refuses to reopen it, but
+  // without this the tab still looks fully tappable, so a tap on it would silently do nothing.
+  document.getElementById('hand-fab-wrap')?.classList.add('gated');
   const isImpact = IMPACT_EMOJI.some(e=>(msg||'').includes(e));
   document.getElementById('battle-box').classList.toggle('battle-shake', isImpact);
   document.getElementById('battle-scene').classList.toggle('battle-shake', isImpact);
@@ -1700,6 +1715,7 @@ function proceedStep(){
   document.getElementById('battle-scene').classList.remove('battle-shake');
   awaitingContinue = null;
   renderBattleActions();
+  document.getElementById('hand-fab-wrap')?.classList.remove('gated');
   if(fn) fn();
 }
 
