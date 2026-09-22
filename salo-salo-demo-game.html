@@ -217,7 +217,7 @@
      cards there actually are. */
   .hand-fab-peek{display:flex; margin-bottom:-16px; cursor:pointer;}
   .hand-fab-peek .peek-card{
-    width:30px; height:41px; border-radius:5px; overflow:hidden; flex-shrink:0;
+    width:44px; height:60px; border-radius:6px; overflow:hidden; flex-shrink:0;
     background:#EFE6DD; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.2);
   }
   .hand-fab-peek .peek-card img{width:100%; height:100%; object-fit:contain; display:block;}
@@ -1584,13 +1584,20 @@ function renderHand(){
   if(peekEl){
     const n = hand.length;
     const mid = (n-1)/2;
-    const overlapPx = n<=3 ? 14 : n===4 ? 16 : 18;
+    // Bigger cards (44px) need less overlap to still fit under the pill than the old 30px
+    // ones did — keeping ~55-65% of every card's face visible instead of ~40-50%, since a
+    // sliver that small couldn't actually be read as "what card is this" at a glance.
+    const overlapPx = n<=3 ? 16 : n===4 ? 20 : 24;
     peekEl.innerHTML = hand.map((id,i)=>{
       const offset = i-mid;
       const rotate = offset*8;
       const dip = Math.abs(offset)*3;
       const marginLeft = i===0 ? 0 : -overlapPx;
-      return `<div class="peek-card" style="transform:rotate(${rotate}deg) translateY(${dip}px); z-index:${i}; margin-left:${marginLeft}px;"><img src="${ART[id]||''}" alt=""></div>`;
+      // Stack the fan like a real hand of cards: the center card sits on top and each card
+      // out toward either edge tucks a little further back, rather than whichever card was
+      // drawn last always covering everything to its left regardless of its fan position.
+      const z = n - Math.round(Math.abs(offset)*2);
+      return `<div class="peek-card" style="transform:rotate(${rotate}deg) translateY(${dip}px); z-index:${z}; margin-left:${marginLeft}px;"><img src="${ART[id]||''}" alt=""></div>`;
     }).join('');
   }
   // The drawer's own title said just "Your Hand" — the fab count is out of sight once the
@@ -2346,6 +2353,11 @@ function attemptEffect(id, who, target){
           discard.push(counterId);
           if(WILD_REFLECT_IDS.includes(counterId)){
             log('opp', `⚡ Tita AI plays ${byId[counterId].name} to replicate ${c.name} — right back at you!`);
+            // The plain-block branch below gets a dramatic "Tita AI counters!" reveal popup —
+            // a Wild reflect is the MORE consequential outcome (your own card turned back on
+            // you, potentially costing you the cards you were trying to take), but was only
+            // ever a quiet log line before this. Give it the same visible moment, not less.
+            showCardReveal(counterId, {banner:`⚡ Tita AI reflects with ${byId[counterId].name}!`, counter:true});
             resolveEffect(id, 'opp', 'you');
           } else {
             log('opp', `🛡️ Tita AI blocks with ${byId[counterId].name}! ${c.name} has no effect.`);
