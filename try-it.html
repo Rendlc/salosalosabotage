@@ -491,8 +491,17 @@
     font-family:inherit; font-weight:700; border:none; border-radius:40px; padding:12px 22px;
     background:var(--orange); color:#fff; cursor:pointer; box-shadow:0 4px 0 var(--orange-dk);
     transition:transform .08s ease; font-size:15px;
-  }#game-embed .card-btn:active {transform:translate(0,3px); box-shadow:0 1px 0 var(--orange-dk);}#game-embed .card-btn.secondary {background:var(--sun); color:var(--ink); box-shadow:0 4px 0 #C99A1E;}#game-embed .card-btn.secondary:active {box-shadow:0 1px 0 #C99A1E;}#game-embed .card-btn.ghost {background:transparent; color:var(--teal); box-shadow:none; border:2.5px solid var(--teal);}#game-embed .card-btn:disabled {opacity:.4; cursor:not-allowed; box-shadow:none;}#game-embed .card-btn.compact-btn {padding:9px 16px; font-size:13.5px;}#game-embed .center {text-align:center;}#game-embed .eyebrow {font-family:'Baloo 2','Nunito Sans',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.22em; text-transform:uppercase; color:var(--orange-ink);}#game-embed /* Mode select screen */
-  #screen-mode .options {display:grid; gap:14px; margin-top:18px;}#game-embed .mode-card {background:#fff; border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.08); border:2px solid var(--blush); text-align:left;}#game-embed .mode-card h3 {margin:0 0 6px; color:var(--teal);}#game-embed .mode-card p {margin:0 0 12px; font-size:14px; color:#444;}#game-embed /* Board layout */
+  }#game-embed .card-btn:active {transform:translate(0,3px); box-shadow:0 1px 0 var(--orange-dk);}#game-embed .card-btn.secondary {background:var(--sun); color:var(--ink); box-shadow:0 4px 0 #C99A1E;}#game-embed .card-btn.secondary:active {box-shadow:0 1px 0 #C99A1E;}#game-embed .card-btn.ghost {background:transparent; color:var(--teal); box-shadow:none; border:2.5px solid var(--teal);}#game-embed .card-btn:disabled {opacity:.4; cursor:not-allowed; box-shadow:none;}#game-embed .card-btn.compact-btn {padding:9px 16px; font-size:13.5px;}#game-embed .center {text-align:center;}#game-embed .eyebrow {font-family:'Baloo 2','Nunito Sans',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.22em; text-transform:uppercase; color:var(--orange-ink);}#game-embed /* Mode select screen — each card is color-blocked to match its own CTA button (Solo's is
+     orange, Pass & Play's is the sun yellow) instead of sitting on plain white, so the choice
+     reads as two distinct, punchy options against the soft pink section behind them rather
+     than two flat cards that blend into the page. */
+  #screen-mode .options {display:grid; gap:14px; margin-top:18px;}#game-embed .mode-card {border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.14); border:2px solid transparent; text-align:left;}#game-embed .mode-card h3 {margin:0 0 6px;}#game-embed .mode-card p {margin:0 0 12px; font-size:14px;}#game-embed .mode-card.mode-solo {
+    background:linear-gradient(155deg, #FFC896 0%, #F5975A 100%);
+    border-color:var(--orange-dk);
+  }#game-embed .mode-card.mode-solo h3 {color:var(--orange-dk);}#game-embed .mode-card.mode-solo p {color:#7A3312;}#game-embed .mode-card.mode-pass {
+    background:linear-gradient(155deg, #8FDCDD 0%, #4FB6B9 100%);
+    border-color:var(--teal-dk);
+  }#game-embed .mode-card.mode-pass h3 {color:var(--teal-dk);}#game-embed .mode-card.mode-pass p {color:#0D3D42;}#game-embed .mode-card .card-btn {width:100%;}#game-embed .mode-card.mode-solo .card-btn {background:var(--teal); box-shadow:0 4px 0 var(--teal-dk);}#game-embed .mode-card.mode-solo .card-btn:active {box-shadow:0 1px 0 var(--teal-dk);}#game-embed /* Board layout */
   .board {display:flex; flex-direction:column; gap:14px;}#game-embed .zone {background:#fff; border-radius:16px; padding:12px 14px; border:2px solid var(--blush);}#game-embed .zone-title {font-weight:800; color:var(--teal); font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}#game-embed .goal-pill {display:inline-block; margin-left:8px; font-size:10px; font-weight:800; letter-spacing:.2px; text-transform:none; color:var(--orange-ink); background:var(--blush-lt); border:1.5px solid var(--blush); border-radius:999px; padding:2px 9px; vertical-align:middle;}#game-embed .pile-row {display:flex; gap:10px; align-items:center;}#game-embed .pile {width:56px; height:78px; border-radius:8px; background:linear-gradient(135deg,var(--teal),var(--ink)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:800; text-align:center; flex-shrink:0; position:relative;}#game-embed .pile .count {position:absolute; bottom:2px; right:4px; background:var(--orange); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:11px;}#game-embed .discard-top {width:56px; height:78px; border-radius:8px; overflow:hidden; border:2px solid var(--orange); flex-shrink:0;}#game-embed .discard-top img {width:100%; height:100%; object-fit:cover;}#game-embed .collections {display:grid; grid-template-columns:1fr 1fr; gap:10px;}#game-embed .collection-box {background:var(--blush); border-radius:12px; padding:10px;}#game-embed .collection-box h4 {margin:0 0 6px; font-size:13px; color:var(--ink); display:flex; justify-content:space-between;}#game-embed .coll-cat {margin-bottom:8px;}#game-embed .coll-cat:last-child {margin-bottom:0;}#game-embed .coll-cat-label {font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}#game-embed .coll-thumbs {display:flex; gap:5px; flex-wrap:wrap;}#game-embed .coll-thumb-wrap {text-align:center; width:42px;}#game-embed /* background matches the card art's own cream-colored frame (not pure white) — the box's
      aspect ratio never lines up exactly with the card art's, so object-fit:contain always
      leaves a thin sliver of this background showing at the top/bottom or sides; a pure white
@@ -523,6 +532,21 @@
   }#game-embed .hand-fab:active {transform:translateX(-50%) translateY(2px);}#game-embed .hand-fab .fab-count {
     display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px;
     padding:0 5px; border-radius:999px; background:#fff; color:var(--orange-ink); font-size:12px;
+    transition:background .15s ease, color .15s ease;
+  }#game-embed /* Fired once whenever a new card lands in hand while the drawer is closed — a new card is
+     otherwise invisible until the player thinks to tap the tab, so the tab itself has to say
+     "something changed here" instead of just quietly updating its count. Scale-punches the
+     whole pill and flashes the count chip's color for a beat, then settles back to normal. */
+  .hand-fab.fab-bump { animation:handFabBump .6s cubic-bezier(.34,1.56,.64,1); }#game-embed .hand-fab.fab-bump .fab-count { animation:handFabCountFlash .6s ease; }
+  @keyframes handFabBump{
+    0%{ transform:translateX(-50%) scale(1); }
+    35%{ transform:translateX(-50%) scale(1.14); }
+    60%{ transform:translateX(-50%) scale(.97); }
+    100%{ transform:translateX(-50%) scale(1); }
+  }
+  @keyframes handFabCountFlash{
+    0%, 100%{ background:#fff; color:var(--orange-ink); }
+    40%{ background:var(--sun); color:var(--ink); }
   }#game-embed .hand-drawer-backdrop {
     position:fixed; inset:0; z-index:58; background:rgba(18,48,56,.45);
     opacity:0; pointer-events:none; transition:opacity .2s ease;
@@ -955,12 +979,12 @@
   <!-- MODE SELECT -->
   <div id="screen-mode">
     <div class="options">
-      <div class="mode-card">
+      <div class="mode-card mode-solo">
         <h3>🎮 Solo — play against Tita AI</h3>
         <p>Quick round against a scripted opponent. Good for a taste on your own.</p>
         <button class="card-btn" onclick="startGame('solo')">Play Solo</button>
       </div>
-      <div class="mode-card">
+      <div class="mode-card mode-pass">
         <h3>🤝 Pass &amp; Play — with a friend</h3>
         <p>Share this phone. Hands stay hidden between turns — tap "It's your turn" to reveal.</p>
         <button class="card-btn secondary" onclick="startGame('pass')">Play Pass &amp; Play</button>
@@ -1336,8 +1360,11 @@ let logLines = [];
 let illegit = {you:[], opp:[]}; // Unexpected Guest ids sitting in a family collection that don't count yet
 // Shows an extra "what do I do after I draw" hint under the Draw button until the human
 // actually plays or discards a card for the first time — first-time players know to draw,
-// but then stall not knowing draw→play/discard is the whole loop.
-let firstActionDone = false;
+// but then stall not knowing draw→play/discard is the whole loop. Tracked per player (not
+// just one flag) so that in pass-and-play, Player 2 — a separate first-timer who never saw
+// Player 1's screen — gets their own copy of this onboarding on their own first turn,
+// instead of it having already been silently used up by whatever Player 1 did first.
+let firstActionDone = {you:false, opp:false};
 // The welcome popup only needs to greet a player once per visit, not every "Play again".
 let introShown = false;
 // First-timers who've just been told "tap the card" still don't know WHICH of the two
@@ -1345,8 +1372,8 @@ let introShown = false;
 // Kultura cards (Utang na Loob, a Guest steal, etc.) fire off a power instead. This shows
 // one more explainer, once, the very first time a hand card is actually opened — resets
 // with firstActionDone so a fresh "Play again" (or the second pass-and-play player) sees
-// it too.
-let firstHandTapHintShown = false;
+// it too. Also tracked per player, same reasoning as firstActionDone above.
+let firstHandTapHintShown = {you:false, opp:false};
 let pendingHandModalCardId = null;
 
 function shuffle(arr){ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
@@ -1373,15 +1400,15 @@ function startGame(m){
   blockGuests=0; blockFun=0; utangFlag=null;
   illegit = {you:[], opp:[]};
   logLines = [];
-  firstActionDone = false;
-  firstHandTapHintShown = false;
+  firstActionDone = {you:false, opp:false};
+  firstHandTapHintShown = {you:false, opp:false};
   pendingHandModalCardId = null;
   document.getElementById('opp-label').innerHTML = (mode==='solo' ? 'Tita AI' : 'Player 2') + ' <span id="opp-total">0</span>/5';
   // In pass-and-play there's no single "you" on screen — two people share the device and swap
   // control — so the human side is named "Player 1" here too, matching "Player 2" instead of
   // addressing whoever's currently holding the phone as "you".
   document.getElementById('you-label').innerHTML = pSubj('you') + ' <span id="you-total">0</span>/5';
-  document.getElementById('scene-name-you').textContent = pSubj('you').toUpperCase();
+  document.getElementById('scene-name-you').textContent = pSubjCompact('you');
   document.getElementById('screen-mode').classList.add('hidden');
   document.getElementById('screen-win').classList.add('hidden');
   document.getElementById('screen-game').classList.remove('hidden');
@@ -1528,7 +1555,7 @@ function renderBattleActions(){
     el.innerHTML = `<button class="batn batn-continue" onclick="doDraw()" ${(drawnThisTurn||!canAct)?'disabled':''}>${drawnThisTurn ? 'Tap a card in your hand ↓' : 'Draw'}</button>`;
     // First-timers know to draw, then stall — spell out the rest of the loop until they've
     // actually played or discarded a card once.
-    if(!firstActionDone && current==='you'){
+    if(!firstActionDone[current] && canAct){
       el.innerHTML += `<div class="first-turn-hint">${drawnThisTurn
         ? 'Tap the new card below, then choose <b>Play</b> to use it or <b>Discard</b> to pass on it.'
         : 'Draw a card, then tap it in your hand to play it toward a Family/Food/Fun collection — or discard it.'}</div>`;
@@ -1666,7 +1693,7 @@ function catIcon(cat){ return cat==='family'?'👪':(cat==='food'?'🍲':'🎉')
 
 const CAT_LABEL = {family:'Family', food:'Food', fun:'Fun'};
 function renderCollections(){
-  document.getElementById('scene-name-opp').textContent = (mode==='solo' ? 'TITA AI' : 'PLAYER 2');
+  document.getElementById('scene-name-opp').textContent = pSubjCompact('opp');
   ['you','opp'].forEach(who=>{
     const c = players[who].coll;
     const total = c.family.length + c.food.length + c.fun.length - illegit[who].length;
@@ -1721,8 +1748,20 @@ function renderHand(){
     const targetId = recentlyDrawnIds[recentlyDrawnIds.length-1];
     const targetEl = handEl.querySelector(`[data-card-id="${targetId}"]`);
     if(targetEl) targetEl.scrollIntoView({behavior:'smooth', inline:'end', block:'nearest'});
+    // On mobile the hand is a closed bottom sheet the rest of the time — a new card landing
+    // there is otherwise invisible until the player thinks to tap the tab open. Punch the tab
+    // so a new card actually announces itself instead of just quietly updating the count.
+    bumpHandFab();
     recentlyDrawnIds = []; // one-shot: highlight/scroll only on the render right after the draw
   }
+}
+
+function bumpHandFab(){
+  const fab = document.getElementById('hand-fab');
+  if(!fab || fab.classList.contains('hidden')) return;
+  fab.classList.remove('fab-bump');
+  void fab.offsetWidth; // restart the animation even if it's still mid-flight from the last draw
+  fab.classList.add('fab-bump');
 }
 
 function updateHandScrollHint(){
@@ -1745,8 +1784,8 @@ function openHandModal(id){
   // First-ever tap on a hand card (this game/round): show the "two kinds of cards" guide
   // first, then hand off into the actual card once it's dismissed, instead of dropping a
   // first-timer straight into (say) Utang na Loob with no idea what Play will do to it.
-  if(!firstHandTapHintShown && current==='you'){
-    firstHandTapHintShown = true;
+  if(!firstHandTapHintShown[current] && (current==='you' || mode!=='solo')){
+    firstHandTapHintShown[current] = true;
     pendingHandModalCardId = id;
     playPopInAnimation(document.querySelector('#card-guide-modal .intro-modal-box'), 'select');
     document.getElementById('card-guide-modal').classList.remove('hidden');
@@ -1778,12 +1817,12 @@ function closeHandModal(){
 }
 function handModalPlay(){
   document.getElementById('hand-modal').classList.add('hidden');
-  firstActionDone = true;
+  firstActionDone[current] = true;
   doPlaySelected();
 }
 function handModalDiscard(){
   document.getElementById('hand-modal').classList.add('hidden');
-  firstActionDone = true;
+  firstActionDone[current] = true;
   doDiscardSelected();
 }
 
@@ -1835,6 +1874,16 @@ function pSubj(who){ // capitalized subject: "You" / "Player 1" / "Tita AI" / "P
   if(who==='you') return mode==='pass' ? 'Player 1' : 'You';
   return mode==='solo' ? 'Tita AI' : 'Player 2';
 }
+// The on-scene fighter plates have to fit over the battle art without eating into the faces
+// there — "YOU"/"TITA AI" already sit narrow and out of the way, but "PLAYER 1"/"PLAYER 2"
+// (this label's full form) are noticeably wider and were stretching the plate box further
+// in over the artwork. "P1"/"P2" reads fine at that badge size and keeps the plate exactly
+// as compact as solo's — everywhere else (the collection panel, turn banner, log) still
+// uses the full pSubj() name, where there's room for it.
+function pSubjCompact(who){
+  if(who==='you') return mode==='pass' ? 'P1' : 'YOU';
+  return mode==='solo' ? 'TITA AI' : 'P2';
+}
 function pSubjLC(who){ // lowercase mid-sentence subject/object: "you" / "Player 1" / "Tita AI" / "they"
   if(who==='you') return mode==='pass' ? 'Player 1' : 'you';
   return mode==='solo' ? 'Tita AI' : 'they';
@@ -1876,9 +1925,10 @@ function doDraw(){
     // played against you, just with the "You drew:" banner instead of "used against you", since
     // the player did draw it themselves. Every other draw stays the calm/info version.
     const isBadDraw = byId[id].instant==='loseFam' || byId[id].instant==='loseFood';
+    const drawBanner = `🃏 ${(current==='you'&&mode!=='pass') ? 'You' : pSubj(current)} drew:`;
     if(current==='you' || mode!=='solo') showCardReveal(id, isBadDraw
-      ? {banner:'🃏 You drew:', tone:'danger', danger:true}
-      : {banner:'🃏 You drew:', tone:'info'});
+      ? {banner:drawBanner, tone:'danger', danger:true}
+      : {banner:drawBanner, tone:'info'});
     gate(lastMsg, afterAction);
     return;
   }
@@ -1887,8 +1937,8 @@ function doDraw(){
   log(current, `${pSubj(current)} drew <b>${byId[id].name}</b>.`);
   recentlyDrawnIds = [id];
   render();
-  if(current==='you' && !firstActionDone) pendingFirstDrawHint = true; // chains in after this reveal closes
-  if(current==='you' || mode!=='solo') showCardReveal(id, {banner:'🃏 You drew:', tone:'info'}); // pop the card big so its ability text is actually readable
+  if((current==='you' || mode!=='solo') && !firstActionDone[current]) pendingFirstDrawHint = true; // chains in after this reveal closes
+  if(current==='you' || mode!=='solo') showCardReveal(id, {banner:`🃏 ${(current==='you'&&mode!=='pass') ? 'You' : pSubj(current)} drew:`, tone:'info'}); // pop the card big so its ability text is actually readable
 }
 
 function applyInstant(id, who){
