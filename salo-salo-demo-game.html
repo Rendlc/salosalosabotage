@@ -14,7 +14,15 @@
     --navy:#1B3A6B; --ink:#123038; --paper:#FFFBF6; --green:#5C8F6E; --card-bg:#fff;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;}
+  html,body{
+    margin:0;padding:0;color:var(--ink);font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;
+    /* A faint dot grid over the paper ground — cheap, self-contained texture so flat sections
+       (mode-select, win screen) don't read as bare white. Warm-toned and subtle enough to sit
+       behind cards and text without competing. */
+    background:
+      radial-gradient(circle, rgba(226,112,58,.07) 1px, transparent 1.3px) 0 0/18px 18px,
+      var(--paper);
+  }
   h1,h2,h3,.display{font-family:'Baloo 2','Nunito Sans',system-ui,sans-serif;}
   .anton{font-family:'Anton','Baloo 2',sans-serif; text-transform:uppercase; letter-spacing:.5px;}
   /* Zigzag banner edge — the site's own repeated device: an 18x11 triangle tiled repeat-x,
@@ -68,13 +76,13 @@
   .mode-card h3{margin:0 0 6px;}
   .mode-card p{margin:0 0 12px; font-size:14px;}
   .mode-card.mode-solo{
-    background:linear-gradient(155deg, #FFC896 0%, #F5975A 100%);
+    background:linear-gradient(155deg, #F3C6A3 0%, #E4935E 100%);
     border-color:var(--orange-dk);
   }
   .mode-card.mode-solo h3{color:var(--orange-dk);}
   .mode-card.mode-solo p{color:#7A3312;}
   .mode-card.mode-pass{
-    background:linear-gradient(155deg, #8FDCDD 0%, #4FB6B9 100%);
+    background:linear-gradient(155deg, #92CFCF 0%, #4FA9AB 100%);
     border-color:var(--teal-dk);
   }
   .mode-card.mode-pass h3{color:var(--teal-dk);}
@@ -206,7 +214,7 @@
   .minicard .body{padding:6px 7px 8px;}
   .minicard .type-tag{font-size:9px; font-weight:800; text-transform:uppercase; color:var(--orange); letter-spacing:.4px;}
   .minicard .name{font-size:12.5px; font-weight:800; line-height:1.2; margin:2px 0;}
-  .minicard .fx{font-size:10.5px; color:#555; line-height:1.25; max-height:44px; overflow:hidden;}
+  .minicard .fx{font-size:10.5px; color:#555; line-height:1.25; max-height:44px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;}
 
   .actions-row{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;}
   .log{background:var(--ink); color:#dff; border-radius:12px; padding:10px 14px; font-size:13px; max-height:120px; overflow-y:auto;}
@@ -285,6 +293,7 @@
   .reveal-type{font-size:10.5px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--teal);}
   .reveal-name{font-size:19px; font-weight:800; color:var(--ink); margin:2px 0 5px; font-family:'Baloo 2','Nunito Sans',sans-serif;}
   .reveal-fx{font-size:13.5px; color:#444; line-height:1.4; max-width:300px; margin:0 auto;}
+  .hand-modal-draw-hint{margin-top:12px; padding:10px 12px; background:var(--blush-lt); border:2px dashed var(--orange); border-radius:12px; color:var(--orange-ink); font-weight:700; font-size:13px; text-align:center;}
 
   /* Entrance animation: the box pops in slightly askew and settles a couple degrees off-center
      instead of snapping in flat and static. Counters get a bigger, snappier "surprise" version
@@ -595,6 +604,12 @@
   @media (min-width:900px){
     .wrap{max-width:min(94vw,1440px);}
     #screen-game.game-fullscreen{margin:0 -16px; width:calc(100% + 32px);}
+    /* Mode-select stays full-bleed on mobile (that's the natural tap-target width), but on a
+       wide desktop viewport a full-width card just stretches the CTA into an oddly long bar.
+       Side-by-side cards with a capped, centered track and an auto-width button read as an
+       intentional choice screen instead of a stretched mobile layout. */
+    #screen-mode .options{grid-template-columns:1fr 1fr; max-width:640px; margin-left:auto; margin-right:auto;}
+    .mode-card .card-btn{width:auto; min-width:180px; padding-left:22px; padding-right:22px;}
     .battle-dialogue{font-size:16px;}
     .minicard{width:176px;}
     .minicard .art{height:212px;}
@@ -607,7 +622,9 @@
     .steal-thumb img{width:104px; height:142px;}
     .steal-thumb-label{font-size:13px;}
     .card-back{width:112px; height:154px;}
-    .modal-box.reveal-modal-box{width:min(90vw,460px); max-width:min(90vw,460px);}
+    /* Desktop has plenty of vertical room for a card's art + description — no reason for this
+       popup to scroll there the way it sometimes has to on a short mobile screen. */
+    .modal-box.reveal-modal-box{width:min(90vw,460px); max-width:min(90vw,460px); max-height:none; overflow-y:visible;}
     .reveal-card-img{max-width:300px;}
     .reveal-name{font-size:24px;}
     .reveal-fx{font-size:15px; max-width:360px;}
@@ -824,7 +841,7 @@
   <!-- Mobile-only floating tab + backdrop for the hand bottom-sheet above (hidden on desktop,
        where the hand is just a normal always-visible section — see the desktop media query). -->
   <div class="hand-drawer-backdrop" id="hand-drawer-backdrop" onclick="closeHandDrawer()"></div>
-  <button class="hand-fab" id="hand-fab" onclick="openHandDrawer()">
+  <button class="hand-fab hidden" id="hand-fab" onclick="openHandDrawer()">
     ✋ Your Hand <span class="fab-count" id="hand-fab-count">0</span>
   </button>
 
@@ -939,10 +956,7 @@
   <div class="modal-box reveal-modal-box">
     <div class="reveal-scroll-inner">
       <div id="hand-modal-body"></div>
-      <div style="display:flex; gap:8px; margin-top:10px;">
-        <button class="card-btn compact-btn secondary" style="flex:1;" onclick="handModalDiscard()">Discard</button>
-        <button class="card-btn compact-btn" style="flex:1;" onclick="handModalPlay()">Play</button>
-      </div>
+      <div id="hand-modal-actions"></div>
       <button class="card-btn compact-btn ghost" style="margin-top:6px; width:100%;" onclick="closeHandModal()">Back to hand</button>
     </div>
   </div>
@@ -1487,6 +1501,14 @@ function closeCardGuideHint(){
   pendingHandModalCardId = null;
   if(id) showHandModalFor(id);
 }
+// A turn is: draw (hand goes to 4), then play or discard exactly one (hand settles back to 3).
+// Nothing previously stopped a player from skipping straight to play/discard on an un-drawn
+// hand — the Draw button just disabled itself once tapped, it never gated the *other* side of
+// the turn. That let a hand quietly shrink by one card every turn a draw was skipped (easy to
+// do when the hand view/drawer was left open from the previous turn and muscle memory says
+// "tap a card"), until the start-of-turn top-up silently papered over it a few turns later.
+// This gate is what actually enforces "draw first" instead of just suggesting it via button text.
+function mustDrawFirst(){ return !reflectMode && !drawnThisTurn; }
 function showHandModalFor(id){
   const c = byId[id];
   document.getElementById('hand-modal-body').innerHTML = `
@@ -1495,6 +1517,13 @@ function showHandModalFor(id){
     <div class="reveal-name">${c.name}</div>
     <div class="reveal-fx">${c.fx}</div>
   `;
+  const needsDraw = mustDrawFirst();
+  document.getElementById('hand-modal-actions').innerHTML = needsDraw
+    ? `<div class="hand-modal-draw-hint">🃏 Draw a card first — then you can play or discard.</div>`
+    : `<div style="display:flex; gap:8px; margin-top:10px;">
+        <button class="card-btn compact-btn secondary" style="flex:1;" onclick="handModalDiscard()">Discard</button>
+        <button class="card-btn compact-btn" style="flex:1;" onclick="handModalPlay()">Play</button>
+      </div>`;
   playPopInAnimation(document.querySelector('#hand-modal .reveal-modal-box'), 'select');
   document.getElementById('hand-modal').classList.remove('hidden');
 }
@@ -1504,11 +1533,13 @@ function closeHandModal(){
   render();
 }
 function handModalPlay(){
+  if(mustDrawFirst()) return; // defense in depth — the button shouldn't even be showing
   document.getElementById('hand-modal').classList.add('hidden');
   firstActionDone[current] = true;
   doPlaySelected();
 }
 function handModalDiscard(){
+  if(mustDrawFirst()) return;
   document.getElementById('hand-modal').classList.add('hidden');
   firstActionDone[current] = true;
   doDiscardSelected();
@@ -1644,7 +1675,7 @@ function applyInstant(id, who){
 }
 
 function doDiscardSelected(){
-  if(!selectedCard) return;
+  if(!selectedCard || mustDrawFirst()) return;
   const p = players[current];
   const idx = p.hand.indexOf(selectedCard);
   if(idx>-1){ p.hand.splice(idx,1); discard.push(selectedCard); log(current, `${pSubj(current)} discarded ${byId[selectedCard].name}.`); }
@@ -1659,10 +1690,10 @@ function doDiscardSelected(){
 // is resolving, per the existing reflectMode convention. Every picker below reads/writes through
 // this instead of hardcoding players.you/players.opp, so Player 2 gets the same choices Player 1
 // always got.
-function pickerActor(){ return reflectMode ? 'you' : current; }
+function pickerActor(){ return reflectMode ? reflectActor : current; }
 
 function doPlaySelected(){
-  if(!selectedCard) return;
+  if(!selectedCard || mustDrawFirst()) return;
   const c = byId[selectedCard];
   const actor = pickerActor(), target = otherOf(actor);
   if(c.special==='steal1'){
@@ -2062,15 +2093,15 @@ function playCard(id, who){
   attemptEffect(id, who, target);
 }
 
-// Kuya/Ate ("Respect the Hierarchy") let whoever PLAYS them enforce a directive on another
-// player — the card text has no "counter" concept, and always benefits its own player.
-// They used to also double as a reactive counter that could reflect an opponent's steal
-// back onto the person who played it — so playing Kuya to steal from Tita could end with
-// Tita's own Kuya sending YOUR card to HER instead. That's backwards from the card's intent,
-// so wild cards are no longer eligible as counters; only the dedicated Counter-type cards
-// (Mano Po!, Anting-Anting) can block/reflect another player's play.
+// Kuya/Ate ("Respect the Hierarchy") are Wild cards, not dedicated Counter cards — their own
+// text has no "counter" concept, they just enforce a directive on whoever they're played
+// against. But per the real rules, a Wild card can also double as a counter: held in reserve,
+// it mirrors whatever was just played right back at the attacker instead of blocking it
+// outright (resolveCounter() below already has this whole reflect path built out, picker and
+// all — isCounterCard is the only gate standing between a hand holding just a Wild card and
+// that prompt ever showing).
 const WILD_REFLECT_IDS = ['kuya','ate'];
-function isCounterCard(cardId){ return byId[cardId].type==='counter'; }
+function isCounterCard(cardId){ return byId[cardId].type==='counter' || WILD_REFLECT_IDS.includes(cardId); }
 
 // Bagyo, Filipino Time, and Brownout are genuinely table-wide (they hit everyone or lock a
 // whole category down), so there's no single "this happened to you" moment to spotlight.
@@ -2165,6 +2196,10 @@ function specialNeedsPicker(sp){ return sp==='steal1' || sp==='stealcat' || sp==
 
 let reflectMode = false;
 let reflectCardId = null;
+// Who is actually doing the reflecting — set alongside reflectMode. Used to be implicitly
+// "always you", which was fine back when only the solo human ever reached this path, but in
+// pass-and-play the defender reflecting a Wild card back can just as easily be Player 2.
+let reflectActor = null;
 function resolveCounter(useIt){
   document.getElementById('counter-modal').classList.add('hidden');
   const {id, who, target, doIt, counterId} = pendingCounter;
@@ -2183,8 +2218,9 @@ function resolveCounter(useIt){
       // it's the kind of card that needs a human choice (which card to steal, which category,
       // what to give up in Palit), route through the same picker a normal play would use —
       // otherwise it silently falls back to a random pick and the player never gets a say.
-      if(target==='you' && specialNeedsPicker(byId[id].special)){
+      if((target==='you' || mode==='pass') && specialNeedsPicker(byId[id].special)){
         reflectMode = true;
+        reflectActor = target;
         openReflectPicker(id);
         return;
       }
@@ -2205,31 +2241,35 @@ function resolveCounter(useIt){
 // picker's "confirm" step resolves the effect directly instead of routing through playCard.
 function openReflectPicker(id){
   reflectCardId = id;
+  const actor = reflectActor, target = otherOf(actor);
   const sp = byId[id].special;
   if(sp==='steal1'){
-    let cats = ['family','food','fun'].filter(cat=>players.opp.coll[cat].length && players.you.coll[cat].length<3);
+    let cats = ['family','food','fun'].filter(cat=>players[target].coll[cat].length && players[actor].coll[cat].length<3);
     if(blockGuests>0) cats = cats.filter(cat=>cat!=='family');
     if(cats.length){ openStealPicker(id); return; }
   } else if(sp==='stealcat'){
     if(agawEligibleCats().length){ openAgawPicker(id); return; }
   } else if(sp==='swaphand'){
-    let giveOptions = players.you.hand.slice();
+    let giveOptions = players[actor].hand.slice();
     if(blockGuests>0) giveOptions = giveOptions.filter(hid=>byId[hid].type!=='guest');
-    if(giveOptions.length && players.opp.hand.length){ openPalitPicker(id, giveOptions); return; }
+    if(giveOptions.length && players[target].hand.length){ openPalitPicker(id, giveOptions); return; }
   } else if(sp==='bagyo'){
-    const cats = ['family','food','fun'].filter(cat=>players.you.coll[cat].length || players.opp.coll[cat].length);
+    const cats = ['family','food','fun'].filter(cat=>players[actor].coll[cat].length || players[target].coll[cat].length);
     if(cats.length){ openBagyoPicker(id, cats); return; }
   }
   // nothing eligible to choose from — resolve with the normal fallback behavior
   reflectMode = false;
   reflectCardId = null;
-  resolveEffect(id, 'you', 'opp');
+  reflectActor = null;
+  resolveEffect(id, actor, target);
   gate(lastMsg, afterAction);
 }
 function finishReflectedEffect(id){
+  const actor = reflectActor, target = otherOf(actor);
   reflectMode = false;
   reflectCardId = null;
-  resolveEffect(id, 'you', 'opp');
+  reflectActor = null;
+  resolveEffect(id, actor, target);
   gate(lastMsg, afterAction);
 }
 
@@ -2570,6 +2610,10 @@ function scrollToTopOfBattle(){
 }
 
 function startAiTurn(topUpMsg){
+  // Same reasoning as the pass-mode privacy screens: a hand view left open across the handoff
+  // is exactly what invites tapping a card out of habit the moment it's actually your turn
+  // again, skipping the draw. Closing it here makes "her turn" visually unambiguous.
+  closeHandDrawer();
   // Auto-advances (gateAuto) rather than waiting on a click — nothing here needs the player's
   // approval, just a beat to register whose turn it is before she draws.
   if(topUpMsg){
