@@ -110,12 +110,19 @@
   .coll-cat-label{font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}
   .coll-thumbs{display:flex; gap:5px; flex-wrap:wrap;}
   .coll-thumb-wrap{text-align:center; width:42px;}
-  /* background matches the card art's own cream-colored frame (not pure white) — the box's
-     aspect ratio never lines up exactly with the card art's, so object-fit:contain always
-     leaves a thin sliver of this background showing at the top/bottom or sides; a pure white
-     background here made that sliver read as a mismatched white outline, especially once
-     these thumbnails got bigger on desktop. */
-  .coll-thumb{width:42px; height:58px; object-fit:contain; background:#EFE6DD; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12); display:block;}
+  /* The source art is a scan of the WHOLE physical card — illustration, name and rules text
+     all baked into one image — so at full size (minicard, the reveal popup) showing the whole
+     thing looks intentional. Shrunk down to a 42px collection chip, though, the illustration
+     itself only occupies the top ~55% of that image; the rest is print too small to read and
+     just reads as visual noise/dead space around a tiny picture. coll-thumb-clip is a fixed,
+     overflow-hidden window sized to the chip; the img inside it is scaled up and pinned to the
+     top so only the illustration (plus its background) fills the frame, with the card's name/
+     rules text zoomed past the bottom edge and cropped away instead of shrunk into mush. The
+     1.75x factor and top-anchored origin were picked to match this deck's card template, where
+     the art zone is consistently the top ~57% of the card — see nanay_raw.jpg/adobo_raw.jpg
+     for the source layout this was tuned against.  */
+  .coll-thumb-clip{width:42px; height:58px; overflow:hidden; background:#EFE6DD; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12);}
+  .coll-thumb{width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.75); transform-origin:50% 0%;}
   .coll-empty{font-size:11px; color:#998; padding:4px 0;}
 
   .steal-grid{display:flex; gap:8px; flex-wrap:wrap;}
@@ -542,7 +549,7 @@
   .collections.compact{gap:8px;}
   .collections.compact .collection-box{padding:8px;}
   .collections.compact .coll-thumb-wrap{width:34px;}
-  .collections.compact .coll-thumb{width:34px; height:46px;}
+  .collections.compact .coll-thumb-clip{width:34px; height:46px;}
   .zone-hand{flex-shrink:0;}
 
   /* pass and play cover */
@@ -609,15 +616,20 @@
        Side-by-side cards with a capped, centered track and an auto-width button read as an
        intentional choice screen instead of a stretched mobile layout. */
     #screen-mode .options{grid-template-columns:1fr 1fr; max-width:640px; margin-left:auto; margin-right:auto;}
-    .mode-card .card-btn{width:auto; min-width:180px; padding-left:22px; padding-right:22px;}
+    /* The button is a native <button> (inline-block by default) sitting in a left-aligned card,
+       so shrinking it to auto-width alone just left it hugging the left edge — display:block
+       plus auto side margins is what actually centers it under the card's centered heading/copy. */
+    .mode-card .card-btn{width:auto; min-width:180px; padding-left:22px; padding-right:22px; display:block; margin:0 auto;}
     .battle-dialogue{font-size:16px;}
     .minicard{width:176px;}
     .minicard .art{height:212px;}
     .minicard .name{font-size:14.5px;}
     .minicard .fx{font-size:12px; max-height:52px;}
     .hand{gap:12px;}
-    .coll-thumb{width:60px; height:82px;}
-    .collections.compact .coll-thumb{width:48px; height:65px;}
+    .coll-thumb-wrap{width:60px;}
+    .coll-thumb-clip{width:60px; height:82px;}
+    .collections.compact .coll-thumb-wrap{width:48px;}
+    .collections.compact .coll-thumb-clip{width:48px; height:65px;}
     .steal-thumb{width:104px;}
     .steal-thumb img{width:104px; height:142px;}
     .steal-thumb-label{font-size:13px;}
@@ -983,6 +995,7 @@
   <div class="modal-box">
     <h3 id="counter-title">Sabotage incoming!</h3>
     <p id="counter-body"></p>
+    <div id="counter-fx" class="hand-modal-draw-hint" style="display:none; border-style:solid; text-align:left; font-weight:400;"></div>
     <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
       <button class="card-btn" id="counter-yes" onclick="resolveCounter(true)">Play Counter</button>
       <button class="card-btn ghost" onclick="resolveCounter(false)">Let it happen</button>
@@ -1265,7 +1278,18 @@ function renderBattleActions(){
   }
 }
 let awaitingContinue = null;
+// True whenever the game is sitting on a "here's what just happened" message waiting for a
+// Continue tap (awaitingContinue holds the function that will actually finish the turn once
+// tapped). Nothing about `current` has changed yet at this point — it's still the acting
+// player's turn as far as the data is concerned — so without this check, a player could tap
+// straight into their still-open hand and play a SECOND card before the first one's Continue
+// was ever tapped, silently skipping past a turn boundary that was supposed to be there.
+function isGated(){ return awaitingContinue !== null; }
 function gate(msg, nextFn){
+  // A hand view left open into this "what just happened" moment is exactly what invites
+  // tapping straight into another card instead of reading the result and tapping Continue —
+  // same reasoning as closing it across a pass-mode/AI-turn handoff.
+  closeHandDrawer();
   render();
   document.getElementById('battle-dialogue').innerHTML = msg || '';
   awaitingContinue = nextFn;
@@ -1394,11 +1418,22 @@ function render(){
 function catIcon(cat){ return cat==='family'?'👪':(cat==='food'?'🍲':'🎉'); }
 
 const CAT_LABEL = {family:'Family', food:'Food', fun:'Fun'};
+// Counts only the cards actually still sitting in a category array right now, so a dud
+// ("Unexpected Guest") that gets stolen/swapped away later doesn't keep subtracting from the
+// total forever — illegit[who] is a running list of every dud id ever dealt to this player and
+// is never cleaned up when the card itself later leaves their collection by some other card's
+// effect, so blindly subtracting illegit[who].length (the old approach) could undercount a
+// player who is honestly sitting at 5 real cards, which silently blocked the win check too.
+function realCollectionTotal(who){
+  const c = players[who].coll;
+  return ['family','food','fun'].reduce((sum,cat)=>
+    sum + c[cat].length - c[cat].filter(id=>illegit[who].includes(id)).length, 0);
+}
 function renderCollections(){
   document.getElementById('scene-name-opp').textContent = pSubjCompact('opp');
   ['you','opp'].forEach(who=>{
     const c = players[who].coll;
-    const total = c.family.length + c.food.length + c.fun.length - illegit[who].length;
+    const total = realCollectionTotal(who);
     document.getElementById(who+'-total').textContent = total;
     const pct = Math.min(100, Math.round(total/5*100));
     document.getElementById('scene-hp-'+who).style.width = pct+'%';
@@ -1410,7 +1445,9 @@ function renderCollections(){
         const dud = illegit[who].includes(id);
         return `
         <div class="coll-thumb-wrap">
-          <img class="coll-thumb" src="${ART[id]||''}" alt="${byId[id].name}" title="${byId[id].name}" style="${dud?'opacity:.55;filter:grayscale(60%);':''}">
+          <div class="coll-thumb-clip">
+            <img class="coll-thumb" src="${ART[id]||''}" alt="${byId[id].name}" title="${byId[id].name}" style="${dud?'opacity:.55;filter:grayscale(60%);':''}">
+          </div>
           ${dud ? '<div class="coll-dud-label">doesn\'t count</div>' : ''}
         </div>`;
       }).join('');
@@ -1533,13 +1570,13 @@ function closeHandModal(){
   render();
 }
 function handModalPlay(){
-  if(mustDrawFirst()) return; // defense in depth — the button shouldn't even be showing
+  if(mustDrawFirst() || isGated()) return; // defense in depth — the button shouldn't even be showing
   document.getElementById('hand-modal').classList.add('hidden');
   firstActionDone[current] = true;
   doPlaySelected();
 }
 function handModalDiscard(){
-  if(mustDrawFirst()) return;
+  if(mustDrawFirst() || isGated()) return;
   document.getElementById('hand-modal').classList.add('hidden');
   firstActionDone[current] = true;
   doDiscardSelected();
@@ -1574,6 +1611,7 @@ function baonBonusKeep(){
 
 function selectCard(id){
   if(current!=='you' && mode==='solo') return;
+  if(isGated()) return; // a play from this turn is still being resolved/read — no second play yet
   selectedCard = id;
   render();
   openHandModal(id);
@@ -1675,7 +1713,7 @@ function applyInstant(id, who){
 }
 
 function doDiscardSelected(){
-  if(!selectedCard || mustDrawFirst()) return;
+  if(!selectedCard || mustDrawFirst() || isGated()) return;
   const p = players[current];
   const idx = p.hand.indexOf(selectedCard);
   if(idx>-1){ p.hand.splice(idx,1); discard.push(selectedCard); log(current, `${pSubj(current)} discarded ${byId[selectedCard].name}.`); }
@@ -1693,7 +1731,7 @@ function doDiscardSelected(){
 function pickerActor(){ return reflectMode ? reflectActor : current; }
 
 function doPlaySelected(){
-  if(!selectedCard || mustDrawFirst()) return;
+  if(!selectedCard || mustDrawFirst() || isGated()) return;
   const c = byId[selectedCard];
   const actor = pickerActor(), target = otherOf(actor);
   if(c.special==='steal1'){
@@ -2116,6 +2154,13 @@ function attemptEffect(id, who, target){
   const hasCounter = targetPlayer.hand.some(h=>isCounterCard(h));
   const isTableWide = TABLE_WIDE_SABEVENT_SPECIALS.includes(c.special);
 
+  // Always put a "who actually played this" line in the permanent log before anything else can
+  // happen to the card — a counter/reflect further down only logs its OWN action (e.g. "Tita AI
+  // plays Kuya to replicate Tita's Tea"), never the original play, so without this line the log
+  // history could read as if Tita AI had used a card the human actually played (reported as
+  // "I used Tita's Tea... and it registered that she used Tita's tea instead").
+  log(who, `${pSubj(who)} played <b>${c.name}</b>${isTableWide ? '' : ` against ${pSubjLC(target)}`}.`);
+
   // A targeted card that actually goes through (i.e. isn't countered) deserves its own visible,
   // unmistakably "this is happening to me" popup — distinct from a draw and from a counter
   // surprise. Whoever this shows to is always the person currently looking at the device: in
@@ -2169,6 +2214,13 @@ function attemptEffect(id, who, target){
         document.getElementById('counter-body').innerHTML = isWild
           ? `${byId[id].name} was just played against you. <b>${byId[counterId].name} is a Wild card — it can copy any move in the game, which means it can double as a counter too.</b> Play it now to mirror ${byId[id].name} right back at whoever played it, turning their own move against them.`
           : `${byId[id].name} was just played against you. Play ${byId[counterId].name} to cancel it?`;
+        // Naming the card isn't enough to make this an informed choice — reported as choosing
+        // to let a card "happen" or countering it with no idea what it actually does, only its
+        // title. Show the actual effect text right in the modal so the decision doesn't require
+        // already knowing the deck by heart.
+        const fxEl = document.getElementById('counter-fx');
+        fxEl.innerHTML = `<b>${byId[id].name}:</b> ${byId[id].fx}`;
+        fxEl.style.display = '';
         document.getElementById('counter-modal').classList.remove('hidden');
         pendingCounter.counterId = counterId;
         return;
@@ -2515,8 +2567,7 @@ function resolveEffect(id, who, target){
 }
 
 function checkWin(who){
-  const c = players[who].coll;
-  const total = c.family.length + c.food.length + c.fun.length - illegit[who].length;
+  const total = realCollectionTotal(who);
   if(total>=5){
     pendingWinner = who;
   }
