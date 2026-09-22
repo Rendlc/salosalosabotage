@@ -493,7 +493,12 @@
     transition:transform .08s ease; font-size:15px;
   }#game-embed .card-btn:active {transform:translate(0,3px); box-shadow:0 1px 0 var(--orange-dk);}#game-embed .card-btn.secondary {background:var(--sun); color:var(--ink); box-shadow:0 4px 0 #C99A1E;}#game-embed .card-btn.secondary:active {box-shadow:0 1px 0 #C99A1E;}#game-embed .card-btn.ghost {background:transparent; color:var(--teal); box-shadow:none; border:2.5px solid var(--teal);}#game-embed .card-btn:disabled {opacity:.4; cursor:not-allowed; box-shadow:none;}#game-embed .card-btn.compact-btn {padding:9px 16px; font-size:13.5px;}#game-embed .center {text-align:center;}#game-embed .eyebrow {font-family:'Baloo 2','Nunito Sans',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.22em; text-transform:uppercase; color:var(--orange-ink);}#game-embed /* Mode select screen */
   #screen-mode .options {display:grid; gap:14px; margin-top:18px;}#game-embed .mode-card {background:#fff; border-radius:16px; padding:18px; box-shadow:0 3px 0 rgba(0,0,0,.08); border:2px solid var(--blush); text-align:left;}#game-embed .mode-card h3 {margin:0 0 6px; color:var(--teal);}#game-embed .mode-card p {margin:0 0 12px; font-size:14px; color:#444;}#game-embed /* Board layout */
-  .board {display:flex; flex-direction:column; gap:14px;}#game-embed .zone {background:#fff; border-radius:16px; padding:12px 14px; border:2px solid var(--blush);}#game-embed .zone-title {font-weight:800; color:var(--teal); font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}#game-embed .goal-pill {display:inline-block; margin-left:8px; font-size:10px; font-weight:800; letter-spacing:.2px; text-transform:none; color:var(--orange-ink); background:var(--blush-lt); border:1.5px solid var(--blush); border-radius:999px; padding:2px 9px; vertical-align:middle;}#game-embed .pile-row {display:flex; gap:10px; align-items:center;}#game-embed .pile {width:56px; height:78px; border-radius:8px; background:linear-gradient(135deg,var(--teal),var(--ink)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:800; text-align:center; flex-shrink:0; position:relative;}#game-embed .pile .count {position:absolute; bottom:2px; right:4px; background:var(--orange); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:11px;}#game-embed .discard-top {width:56px; height:78px; border-radius:8px; overflow:hidden; border:2px solid var(--orange); flex-shrink:0;}#game-embed .discard-top img {width:100%; height:100%; object-fit:cover;}#game-embed .collections {display:grid; grid-template-columns:1fr 1fr; gap:10px;}#game-embed .collection-box {background:var(--blush); border-radius:12px; padding:10px;}#game-embed .collection-box h4 {margin:0 0 6px; font-size:13px; color:var(--ink); display:flex; justify-content:space-between;}#game-embed .coll-cat {margin-bottom:8px;}#game-embed .coll-cat:last-child {margin-bottom:0;}#game-embed .coll-cat-label {font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}#game-embed .coll-thumbs {display:flex; gap:5px; flex-wrap:wrap;}#game-embed .coll-thumb-wrap {text-align:center; width:42px;}#game-embed .coll-thumb {width:42px; height:58px; object-fit:contain; background:#fff; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12); display:block;}#game-embed .coll-empty {font-size:11px; color:#998; padding:4px 0;}#game-embed .steal-grid {display:flex; gap:8px; flex-wrap:wrap;}#game-embed .steal-thumb {cursor:pointer; text-align:center; width:70px; background:none; border:none; padding:0; font-family:inherit;}#game-embed .steal-thumb img {width:70px; height:96px; object-fit:contain; background:#fff; border:2px solid var(--ink); border-radius:9px; box-shadow:2px 2px 0 rgba(0,0,0,.15); display:block; transition:transform .1s;}#game-embed .steal-thumb:hover img {transform:translateY(-3px);}#game-embed .steal-thumb:disabled {cursor:not-allowed; opacity:.35;}#game-embed .steal-thumb.steal-selected img {outline:3px solid var(--orange); transform:translateY(-3px);}#game-embed .steal-thumb-label {font-size:10.5px; font-weight:800; margin-top:4px; color:var(--ink); line-height:1.2;}#game-embed .hand-wrap {position:relative;}#game-embed .hand {display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scroll-behavior:smooth;}#game-embed .hand-card {flex-shrink:0;}#game-embed .hand-card.just-drawn {animation:handNewPulse 1.1s ease 2;}
+  .board {display:flex; flex-direction:column; gap:14px;}#game-embed .zone {background:#fff; border-radius:16px; padding:12px 14px; border:2px solid var(--blush);}#game-embed .zone-title {font-weight:800; color:var(--teal); font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}#game-embed .goal-pill {display:inline-block; margin-left:8px; font-size:10px; font-weight:800; letter-spacing:.2px; text-transform:none; color:var(--orange-ink); background:var(--blush-lt); border:1.5px solid var(--blush); border-radius:999px; padding:2px 9px; vertical-align:middle;}#game-embed .pile-row {display:flex; gap:10px; align-items:center;}#game-embed .pile {width:56px; height:78px; border-radius:8px; background:linear-gradient(135deg,var(--teal),var(--ink)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:800; text-align:center; flex-shrink:0; position:relative;}#game-embed .pile .count {position:absolute; bottom:2px; right:4px; background:var(--orange); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:11px;}#game-embed .discard-top {width:56px; height:78px; border-radius:8px; overflow:hidden; border:2px solid var(--orange); flex-shrink:0;}#game-embed .discard-top img {width:100%; height:100%; object-fit:cover;}#game-embed .collections {display:grid; grid-template-columns:1fr 1fr; gap:10px;}#game-embed .collection-box {background:var(--blush); border-radius:12px; padding:10px;}#game-embed .collection-box h4 {margin:0 0 6px; font-size:13px; color:var(--ink); display:flex; justify-content:space-between;}#game-embed .coll-cat {margin-bottom:8px;}#game-embed .coll-cat:last-child {margin-bottom:0;}#game-embed .coll-cat-label {font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}#game-embed .coll-thumbs {display:flex; gap:5px; flex-wrap:wrap;}#game-embed .coll-thumb-wrap {text-align:center; width:42px;}#game-embed /* background matches the card art's own cream-colored frame (not pure white) — the box's
+     aspect ratio never lines up exactly with the card art's, so object-fit:contain always
+     leaves a thin sliver of this background showing at the top/bottom or sides; a pure white
+     background here made that sliver read as a mismatched white outline, especially once
+     these thumbnails got bigger on desktop. */
+  .coll-thumb {width:42px; height:58px; object-fit:contain; background:#EFE6DD; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12); display:block;}#game-embed .coll-empty {font-size:11px; color:#998; padding:4px 0;}#game-embed .steal-grid {display:flex; gap:8px; flex-wrap:wrap;}#game-embed .steal-thumb {cursor:pointer; text-align:center; width:70px; background:none; border:none; padding:0; font-family:inherit;}#game-embed .steal-thumb img {width:70px; height:96px; object-fit:contain; background:#EFE6DD; border:2px solid var(--ink); border-radius:9px; box-shadow:2px 2px 0 rgba(0,0,0,.15); display:block; transition:transform .1s;}#game-embed .steal-thumb:hover img {transform:translateY(-3px);}#game-embed .steal-thumb:disabled {cursor:not-allowed; opacity:.35;}#game-embed .steal-thumb.steal-selected img {outline:3px solid var(--orange); transform:translateY(-3px);}#game-embed .steal-thumb-label {font-size:10.5px; font-weight:800; margin-top:4px; color:var(--ink); line-height:1.2;}#game-embed .hand-wrap {position:relative;}#game-embed .hand {display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scroll-behavior:smooth;}#game-embed .hand-card {flex-shrink:0;}#game-embed .hand-card.just-drawn {animation:handNewPulse 1.1s ease 2;}
   @keyframes handNewPulse{0%,100%{box-shadow:2px 2px 0 rgba(0,0,0,.15);}50%{box-shadow:0 0 0 3px var(--sun), 2px 2px 0 rgba(0,0,0,.15);}}#game-embed .hand-scroll-hint {
     position:absolute; top:0; bottom:6px; right:0; width:38px;
     background:linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 70%);
@@ -556,7 +561,7 @@
     flex:1.5; background:#fff; border:3px solid var(--ink); border-radius:12px; padding:10px 12px;
     font-size:13.5px; font-weight:700; color:var(--ink); line-height:1.35; min-height:60px;
     display:flex; align-items:center;
-  }#game-embed .battle-dialogue b {color:var(--orange);}#game-embed #battle-dialogue {display:inline-flex; align-items:center; gap:8px;}#game-embed .dlg-card-thumb {width:38px; height:53px; object-fit:contain; background:#fff; border:2px solid var(--ink); border-radius:6px; box-shadow:1px 1px 0 rgba(0,0,0,.2); flex-shrink:0; cursor:pointer;}#game-embed /* Card reveal — deliberately big: this is the "read the actual card" view, so it fills
+  }#game-embed .battle-dialogue b {color:var(--orange);}#game-embed #battle-dialogue {display:inline-flex; align-items:center; gap:8px;}#game-embed .dlg-card-thumb {width:38px; height:53px; object-fit:contain; background:#EFE6DD; border:2px solid var(--ink); border-radius:6px; box-shadow:1px 1px 0 rgba(0,0,0,.2); flex-shrink:0; cursor:pointer;}#game-embed /* Card reveal — deliberately big: this is the "read the actual card" view, so it fills
      most of the screen instead of a small thumbnail. Still an in-page overlay, not a
      browser popup, so no permissions/blockers involved. */
   /* The card-popup box used for draws, hand cards, and counters — a live sunburst behind the
@@ -587,7 +592,7 @@
      instant the modal opens — sized to fit on one screen without scrolling on an ordinary
      phone, the card is still readable, just not blown up to the point Play/Discard get
      pushed off screen. */
-  .reveal-card-img {width:100%; max-width:180px; object-fit:contain; background:#fff; border:3px solid var(--ink); border-radius:16px; box-shadow:4px 4px 0 rgba(0,0,0,.2); display:block; margin:0 auto 8px;}#game-embed .reveal-type {font-size:10.5px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--teal);}#game-embed .reveal-name {font-size:19px; font-weight:800; color:var(--ink); margin:2px 0 5px; font-family:'Baloo 2','Nunito Sans',sans-serif;}#game-embed .reveal-fx {font-size:13.5px; color:#444; line-height:1.4; max-width:300px; margin:0 auto;}
+  .reveal-card-img {width:100%; max-width:180px; object-fit:contain; background:#EFE6DD; border:3px solid var(--ink); border-radius:16px; box-shadow:4px 4px 0 rgba(0,0,0,.2); display:block; margin:0 auto 8px;}#game-embed .reveal-type {font-size:10.5px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--teal);}#game-embed .reveal-name {font-size:19px; font-weight:800; color:var(--ink); margin:2px 0 5px; font-family:'Baloo 2','Nunito Sans',sans-serif;}#game-embed .reveal-fx {font-size:13.5px; color:#444; line-height:1.4; max-width:300px; margin:0 auto;}
 
   /* Entrance animation: the box pops in slightly askew and settles a couple degrees off-center
      instead of snapping in flat and static. Counters get a bigger, snappier "surprise" version
@@ -728,7 +733,15 @@
     position:absolute; top:68px; z-index:3;
     background:rgba(255,255,255,.82); border:2px solid var(--ink); border-radius:10px; padding:4px 8px;
     max-width:92px; box-shadow:2px 2px 0 rgba(0,0,0,.25);
-  }#game-embed .fighter-plate.fighter-you {left:8px;}#game-embed .fighter-plate.fighter-opp {right:8px; text-align:right;}#game-embed .fighter-name {font-size:10px; font-weight:800; color:var(--ink); letter-spacing:.3px;}#game-embed .fighter-hp {background:#ddd; border-radius:999px; height:6px; margin:3px 0 2px; overflow:hidden;}#game-embed .fighter-hp-fill {height:100%; border-radius:999px; transition:width .4s ease; width:0%;}#game-embed .fighter-hp-you {background:var(--sun);}#game-embed .fighter-hp-opp {background:var(--orange); margin-left:auto;}#game-embed .fighter-count {font-size:8.5px; color:#666; text-align:right;}#game-embed .fighter-plate.fighter-opp .fighter-count {text-align:right;}#game-embed .scene-turn-banner {
+  }#game-embed .fighter-plate.fighter-you {left:8px;}#game-embed .fighter-plate.fighter-opp {right:8px; text-align:right;}#game-embed .fighter-name {
+    font-size:10px; font-weight:800; color:var(--ink); letter-spacing:.3px;
+    /* Pass-and-play labels ("PLAYER 1"/"PLAYER 2") run longer than solo's ("YOU"/"TITA AI") —
+       never let the extra length wrap to a second line and grow the plate down over the
+       faces in the art below; truncate instead, which this width never actually needs to do
+       at normal font-scale, but keeps the layout honest if a device substitutes a wider
+       fallback font before the webfont loads. */
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }#game-embed .fighter-hp {background:#ddd; border-radius:999px; height:6px; margin:3px 0 2px; overflow:hidden;}#game-embed .fighter-hp-fill {height:100%; border-radius:999px; transition:width .4s ease; width:0%;}#game-embed .fighter-hp-you {background:var(--sun);}#game-embed .fighter-hp-opp {background:var(--orange); margin-left:auto;}#game-embed .fighter-count {font-size:8.5px; color:#666; text-align:right;}#game-embed .fighter-plate.fighter-opp .fighter-count {text-align:right;}#game-embed .scene-turn-banner {
     position:absolute; top:73px; left:50%; transform:translateX(-50%); z-index:3;
     text-align:center; font-weight:800; white-space:nowrap;
     color:#fff; font-size:10.5px; text-transform:uppercase; letter-spacing:.4px;
@@ -1578,6 +1591,9 @@ function showPassCover(){
   document.getElementById('pass-title').textContent = pSubj(current) + '’s turn';
   document.getElementById('pass-subtitle').textContent = 'Pass the phone, then tap below.';
   document.getElementById('passcover').classList.remove('hidden');
+  // Whoever's hand was open on mobile (the outgoing player's) shouldn't still be sitting there
+  // once the phone is being handed off — the next player gets a clean cover screen.
+  closeHandDrawer();
 }
 function revealTurn(){
   document.getElementById('passcover').classList.add('hidden');
@@ -1606,6 +1622,7 @@ function showReactionPass(target, onReady){
   document.getElementById('pass-title').textContent = pSubj(target) + '’s move to make';
   document.getElementById('pass-subtitle').textContent = `Pass the phone to ${pSubj(target)} — they’ll decide how to respond.`;
   document.getElementById('passcover').classList.remove('hidden');
+  closeHandDrawer();
 }
 function revealReaction(){
   document.getElementById('passcover').classList.add('hidden');
@@ -1897,45 +1914,55 @@ function doDiscardSelected(){
   endTurn();
 }
 
+// The human at the device right now is always whoever `pickerActor()` resolves to: `current`
+// during a normal play (in solo mode that's only ever 'you' — the AI has its own code path and
+// never reaches doPlaySelected; in pass-and-play it's whichever of the two people just tapped
+// Play), or always 'you' while a reflected effect (Mano Po!/Anting-Anting bouncing a play back)
+// is resolving, per the existing reflectMode convention. Every picker below reads/writes through
+// this instead of hardcoding players.you/players.opp, so Player 2 gets the same choices Player 1
+// always got.
+function pickerActor(){ return reflectMode ? 'you' : current; }
+
 function doPlaySelected(){
   if(!selectedCard) return;
   const c = byId[selectedCard];
-  if(current==='you' && c.special==='steal1'){
-    let cats = ['family','food','fun'].filter(cat=>players.opp.coll[cat].length && players.you.coll[cat].length<3);
+  const actor = pickerActor(), target = otherOf(actor);
+  if(c.special==='steal1'){
+    let cats = ['family','food','fun'].filter(cat=>players[target].coll[cat].length && players[actor].coll[cat].length<3);
     if(blockGuests>0) cats = cats.filter(cat=>cat!=='family');
     if(cats.length){
       openStealPicker(selectedCard);
       return;
     }
   }
-  if(current==='you' && c.special==='stealcat'){
+  if(c.special==='stealcat'){
     if(agawEligibleCats().length){
       openAgawPicker(selectedCard);
       return;
     }
   }
-  if(current==='you' && c.special==='bagyo'){
-    const cats = ['family','food','fun'].filter(cat=>players.you.coll[cat].length || players.opp.coll[cat].length);
+  if(c.special==='bagyo'){
+    const cats = ['family','food','fun'].filter(cat=>players[actor].coll[cat].length || players[target].coll[cat].length);
     if(cats.length){
       openBagyoPicker(selectedCard, cats);
       return;
     }
   }
-  if(current==='you' && c.special==='swaphand'){
-    let giveOptions = players.you.hand.filter(hid=>hid!==selectedCard);
+  if(c.special==='swaphand'){
+    let giveOptions = players[actor].hand.filter(hid=>hid!==selectedCard);
     if(blockGuests>0) giveOptions = giveOptions.filter(hid=>byId[hid].type!=='guest');
-    if(giveOptions.length && players.opp.hand.length){
+    if(giveOptions.length && players[target].hand.length){
       openPalitPicker(selectedCard, giveOptions);
       return;
     }
   }
-  if(current==='you' && c.special==='baon'){
+  if(c.special==='baon'){
     if(discard.length){
       openBaonPicker(selectedCard);
       return;
     }
   }
-  if(current==='you' && c.special==='utang'){
+  if(c.special==='utang'){
     openUtangPicker(selectedCard);
     return;
   }
@@ -1969,20 +1996,21 @@ let chosenSwapReceiveId = null;
 let pendingPalitReceiveCardId = null;
 function openPalitReceivePicker(cardId){
   pendingPalitReceiveCardId = cardId;
-  let eligible = players.opp.hand.slice();
+  const actor = pickerActor(), target = otherOf(actor);
+  let eligible = players[target].hand.slice();
   if(blockGuests>0) eligible = eligible.filter(hid=>byId[hid].type!=='guest');
   if(!eligible.length){
-    // Nothing eligible on her side right now — fall through to the normal no-swap message.
+    // Nothing eligible on the other side right now — fall through to the normal no-swap message.
     chosenSwapReceiveId = null;
     finishPalit(cardId);
     return;
   }
-  // Cap the fan at 3 cards (fanning her whole hand gets cramped, and 3 already sells "you can't
-  // tell which one you're grabbing") and shuffle which of her real cards land in which slot, so
+  // Cap the fan at 3 cards (fanning a whole hand gets cramped, and 3 already sells "you can't
+  // tell which one you're grabbing") and shuffle which real cards land in which slot, so
   // position on screen never hints at identity.
   const logoSrc = document.querySelector('.logo-img-float').src;
   const fanned = shuffle(eligible.slice()).slice(0,3);
-  document.getElementById('palit-receive-title').textContent = `Pick a card from ${mode==='solo'?'Tita AI':'Player 2'}’s hand — you won’t know which until you flip it`;
+  document.getElementById('palit-receive-title').textContent = `Pick a card from ${mode==='solo'?'Tita AI':pSubj(target)}’s hand — you won’t know which until you flip it`;
   document.getElementById('palit-receive-options').innerHTML = fanned.map(hid=>`
     <button class="card-fan-btn" onclick="pickPalitReceive('${hid}')">
       <div class="card-back"><img class="card-back-logo" src="${logoSrc}" alt=""></div>
@@ -2002,13 +2030,14 @@ function cancelPalitReceive(){
 }
 function finishPalit(cardId){
   if(reflectMode){ finishReflectedEffect(cardId); return; }
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 
 let chosenBagyoCat = null;
 function openBagyoPicker(cardId, cats){
+  const actor = pickerActor(), target = otherOf(actor);
   document.getElementById('bagyo-options').innerHTML = cats.map(cat=>{
-    const mine = players.you.coll[cat].length, theirs = players.opp.coll[cat].length;
+    const mine = players[actor].coll[cat].length, theirs = players[target].coll[cat].length;
     return `<button class="bagyo-opt" onclick="pickBagyo('${cardId}','${cat}')">${catIcon(cat)} ${CAT_LABEL[cat]}<br><span style="font-weight:400;font-size:12px;">yours: ${mine} · theirs: ${theirs}</span></button>`;
   }).join('');
   document.getElementById('bagyo-modal').classList.remove('hidden');
@@ -2017,7 +2046,7 @@ function pickBagyo(cardId, cat){
   chosenBagyoCat = cat;
   document.getElementById('bagyo-modal').classList.add('hidden');
   if(reflectMode){ finishReflectedEffect(cardId); return; }
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 let chosenUtangCat = null;
 function openUtangPicker(cardId){
@@ -2029,7 +2058,7 @@ function openUtangPicker(cardId){
 function pickUtang(cardId, cat){
   chosenUtangCat = cat;
   document.getElementById('utang-modal').classList.add('hidden');
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 function cancelUtang(){
   document.getElementById('utang-modal').classList.add('hidden');
@@ -2042,11 +2071,12 @@ function cancelBagyo(){
 
 let chosenStealCardId = null;
 function openStealPicker(cardId){
-  let cats = ['family','food','fun'].filter(cat=>players.opp.coll[cat].length && players.you.coll[cat].length<3);
+  const actor = pickerActor(), target = otherOf(actor);
+  let cats = ['family','food','fun'].filter(cat=>players[target].coll[cat].length && players[actor].coll[cat].length<3);
   if(blockGuests>0) cats = cats.filter(cat=>cat!=='family');
   document.getElementById('steal-title').textContent = `Tap a card to steal it with ${byId[cardId].name}`;
   document.getElementById('steal-options').innerHTML = cats.map(cat=>{
-    const thumbs = players.opp.coll[cat].map(id=>`
+    const thumbs = players[target].coll[cat].map(id=>`
       <button class="steal-thumb" onclick="pickSteal('${cardId}','${id}')">
         <img src="${ART[id]||''}" alt="${byId[id].name}">
         <div class="steal-thumb-label">${byId[id].name}</div>
@@ -2062,7 +2092,7 @@ function pickSteal(cardId, stolenId){
   chosenStealCardId = stolenId;
   document.getElementById('steal-modal').classList.add('hidden');
   if(reflectMode){ finishReflectedEffect(cardId); return; }
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 function cancelSteal(){
   document.getElementById('steal-modal').classList.add('hidden');
@@ -2133,7 +2163,10 @@ function finishElectric(who, yCard, oCard){
   log('sys', msg);
   selectedCard=null;
   checkWin(who);
-  if(who==='opp'){
+  // gateAuto's auto-advance is an AI-turn convenience (see its own comment) — Player 2 in
+  // pass-and-play is a human on the same device as Player 1 and gets the same paced Continue
+  // flow 'you' always has, not the AI's auto-advance.
+  if(who==='opp' && mode==='solo'){
     gateAuto(lastMsg, afterAction);
   } else {
     render();
@@ -2147,7 +2180,8 @@ function finishElectric(who, yCard, oCard){
 // receiving collection past the 3-card cap.
 let chosenStealCardIds = [];
 function agawEligibleCats(){
-  let cats = ['family','food','fun'].filter(cat=>players.opp.coll[cat].length && players.you.coll[cat].length<3);
+  const actor = pickerActor(), target = otherOf(actor);
+  let cats = ['family','food','fun'].filter(cat=>players[target].coll[cat].length && players[actor].coll[cat].length<3);
   if(blockGuests>0) cats = cats.filter(cat=>cat!=='family');
   return cats;
 }
@@ -2158,12 +2192,13 @@ function openAgawPicker(cardId){
   document.getElementById('steal-modal').classList.remove('hidden');
 }
 function renderAgawOptions(cardId){
+  const actor = pickerActor(), target = otherOf(actor);
   const cats = agawEligibleCats();
-  const activeCat = chosenStealCardIds.length ? ['family','food','fun'].find(cc=>players.opp.coll[cc].includes(chosenStealCardIds[0])) : null;
+  const activeCat = chosenStealCardIds.length ? ['family','food','fun'].find(cc=>players[target].coll[cc].includes(chosenStealCardIds[0])) : null;
   const catsHtml = cats.map(cat=>{
-    const maxTake = 3 - players.you.coll[cat].length;
+    const maxTake = 3 - players[actor].coll[cat].length;
     const lockedOut = activeCat && cat!==activeCat;
-    const thumbs = players.opp.coll[cat].map(id=>{
+    const thumbs = players[target].coll[cat].map(id=>{
       const sel = chosenStealCardIds.includes(id);
       const capReached = !sel && activeCat===cat && chosenStealCardIds.length>=maxTake;
       return `<button class="steal-thumb ${sel?'steal-selected':''}" ${(lockedOut||capReached)?'disabled':''} onclick="toggleAgawPick('${cardId}','${id}')">
@@ -2192,7 +2227,7 @@ function confirmAgaw(cardId){
   if(!chosenStealCardIds.length) return;
   document.getElementById('steal-modal').classList.add('hidden');
   if(reflectMode){ finishReflectedEffect(cardId); return; }
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 
 // Baon: "pick one card from the last 10 discarded" — a deliberate choice, not a random
@@ -2220,7 +2255,7 @@ function openBaonPicker(cardId){
 function pickBaon(cardId, pickedId){
   chosenBaonId = pickedId;
   document.getElementById('steal-modal').classList.add('hidden');
-  playCard(cardId, 'you');
+  playCard(cardId, pickerActor());
 }
 
 function playCard(id, who){
@@ -2245,7 +2280,7 @@ function playCard(id, who){
       discard.push(id);
       log(who, `${pSubj(who)} already ${pHas(who)} 3 ${CAT_LABEL[cat]} cards (the real game caps each category at 3) — <b>${c.name}</b> is discarded instead.`);
       selectedCard=null;
-      if(who==='opp'){ gateAuto(lastMsg, afterAction); } else { render(); afterAction(); }
+      if(who==='opp' && mode==='solo'){ gateAuto(lastMsg, afterAction); } else { render(); afterAction(); }
       return;
     }
     p.hand.splice(idx,1);
@@ -2271,7 +2306,7 @@ function playCard(id, who){
     }
     selectedCard=null;
     checkWin(who);
-    if(who==='opp'){
+    if(who==='opp' && mode==='solo'){
       gateAuto(lastMsg, afterAction);
     } else {
       render();
@@ -2482,8 +2517,13 @@ function resolveEffect(id, who, target){
         else log('sys', `${youText} tried ${c.name}, but there's nothing ${targText} can take right now.`);
         break;
       }
+      // chosenStealCardId only ever holds a value when a human actually used the picker (set in
+      // pickSteal right before this runs, in the same synchronous call chain, then cleared right
+      // below) — it's never touched by the AI's own logic, so checking it directly here (instead
+      // of re-deriving "was this a human pick" from `who`) is what lets Player 2's picks in
+      // pass-and-play take effect exactly like Player 1's always have.
       let cat = null, stolen = null;
-      if(who==='you' && chosenStealCardId && !(blockGuests>0 && ['family','food','fun'].find(cc=>T.coll[cc].includes(chosenStealCardId))==='family')){
+      if(chosenStealCardId && !(blockGuests>0 && ['family','food','fun'].find(cc=>T.coll[cc].includes(chosenStealCardId))==='family')){
         cat = ['family','food','fun'].find(cc=>T.coll[cc].includes(chosenStealCardId));
         if(cat) stolen = chosenStealCardId;
       }
@@ -2506,7 +2546,7 @@ function resolveEffect(id, who, target){
         break;
       }
       let cat = null, stolenIds = [];
-      if(who==='you' && chosenStealCardIds.length){
+      if(chosenStealCardIds.length){
         const pickedCat = ['family','food','fun'].find(cc=>T.coll[cc].includes(chosenStealCardIds[0]));
         if(pickedCat && cats.includes(pickedCat)){
           cat = pickedCat;
@@ -2536,22 +2576,22 @@ function resolveEffect(id, who, target){
       const tEligible = T.hand.map((hid,i)=>i).filter(i=>blockGuests===0 || byId[T.hand[i]].type!=='guest');
       if(P.hand.length && T.hand.length && pEligible.length && tEligible.length){
         let pi = pEligible[Math.floor(Math.random()*pEligible.length)];
-        if(who==='you' && chosenSwapGiveId){
+        if(chosenSwapGiveId){
           const found = P.hand.indexOf(chosenSwapGiveId);
           if(found>-1 && pEligible.includes(found)) pi = found;
         }
         chosenSwapGiveId = null;
         let ti = tEligible[Math.floor(Math.random()*tEligible.length)];
-        if(who==='you' && chosenSwapReceiveId){
+        if(chosenSwapReceiveId){
           const found = T.hand.indexOf(chosenSwapReceiveId);
           if(found>-1 && tEligible.includes(found)) ti = found;
         }
         chosenSwapReceiveId = null;
         const pc = P.hand[pi], tc = T.hand[ti];
         P.hand[pi] = tc; T.hand[ti] = pc;
-        if(who==='you'){
+        if(who==='you' && mode!=='pass'){
           log(who, `🔀 You used Palit — you gave up <b>${byId[pc].name}</b> and got <b>${byId[tc].name}</b> from ${targText} in return.`);
-        } else if(target==='you'){
+        } else if(target==='you' && mode!=='pass'){
           log(who, `🔀 ${youText} used Palit — she took your <b>${byId[tc].name}</b> and gave you her <b>${byId[pc].name}</b> in its place.`);
         } else {
           log(who, `🔀 ${youText} used Palit to swap with ${targText}: ${byId[pc].name} for ${byId[tc].name}.`);
@@ -2589,10 +2629,11 @@ function resolveEffect(id, who, target){
     }
     case 'bagyo': {
       let cat;
-      if(who==='you' && chosenBagyoCat){
+      if(chosenBagyoCat){
         cat = chosenBagyoCat;
-      } else if(who==='opp'){
-        // AI picks the category that hurts the human most relative to itself
+      } else if(who==='opp' && mode==='solo'){
+        // AI (never a human, so it never sets chosenBagyoCat) picks the category that hurts
+        // the human most relative to itself
         cat = ['family','food','fun'].sort((a,b)=>
           (players.you.coll[b].length - players.opp.coll[b].length) -
           (players.you.coll[a].length - players.opp.coll[a].length)
@@ -2634,10 +2675,11 @@ function resolveEffect(id, who, target){
     }
     case 'utang': {
       let cat;
-      if(who==='you' && chosenUtangCat){
+      if(chosenUtangCat){
         cat = chosenUtangCat;
       } else {
-        // AI (and Player 2 in pass-and-play, who doesn't get the picker yet) picks for itself
+        // Only the AI ever falls through to here — every human actor (Player 1 or Player 2)
+        // now gets the category picker via doPlaySelected.
         cat = pickRandom(['family','food','fun']);
       }
       chosenUtangCat = null;
@@ -2655,16 +2697,17 @@ function resolveEffect(id, who, target){
         break;
       }
       let pick = null;
-      if(who==='you' && chosenBaonId && eligible.includes(chosenBaonId)) pick = chosenBaonId;
+      if(chosenBaonId && eligible.includes(chosenBaonId)) pick = chosenBaonId;
       chosenBaonId = null;
       if(!pick) pick = pickRandom(eligible);
       discard.splice(discard.indexOf(pick),1);
       P.hand.push(pick);
       log(who, `🥡 ${youText} dug through the leftovers (Baon) and grabbed <b>${byId[pick].name}</b> back.`);
-      if(who==='you'){
+      if(who==='you' || mode==='pass'){
         // Baon nets the hand back up to where it was before playing it, so without a bonus
-        // action the turn would end sitting on 4 cards. Instead, let the player use the card
-        // they just dug up right away — same as tapping it fresh from their hand.
+        // action the turn would end sitting on 4 cards. Instead, let whichever human just played
+        // it use the card they dug up right away — same as tapping it fresh from their hand.
+        // (Only reachable for a human: the AI, 'opp' in solo mode, never lands here.)
         gate(lastMsg, ()=>openBaonBonusModal(pick));
         return;
       }
@@ -2678,7 +2721,7 @@ function resolveEffect(id, who, target){
         log(who, topUpMessage(who, topUp));
         if(who==='you') recentlyDrawnIds = topUp.slice();
       }
-      if(who==='opp'){
+      if(who==='opp' && mode==='solo'){
         gateAuto(lastMsg, aiDrawStep);
       } else {
         gate(lastMsg, ()=>{});
@@ -2686,7 +2729,7 @@ function resolveEffect(id, who, target){
       return; // skip normal endTurn, same player continues
     }
   }
-  if(who==='opp'){
+  if(who==='opp' && mode==='solo'){
     gateAuto(lastMsg, afterAction);
   } else {
     gate(lastMsg, afterAction);
