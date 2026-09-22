@@ -108,8 +108,22 @@
   .coll-cat{margin-bottom:8px;}
   .coll-cat:last-child{margin-bottom:0;}
   .coll-cat-label{font-size:11px; font-weight:800; color:var(--ink); margin-bottom:4px; opacity:.7;}
-  .coll-thumbs{display:flex; gap:5px; flex-wrap:wrap;}
-  .coll-thumb-wrap{text-align:center; width:70px;}
+  /* Fanned, overlapping row instead of a flex-wrap grid — once thumbnails got bigger (below)
+     to stop cropping the art, wrapping to new rows for every 2-3 cards made the collection
+     panel (and the whole page under it) scroll much further than it used to. Overlapping them
+     like a hand of cards keeps a whole category to one row no matter how many cards are in it:
+     each card after the first pulls left under the one before it (negative margin, tuned per
+     breakpoint below to roughly half that breakpoint's card width), with a slight alternating
+     tilt for a hand-of-cards feel. Paint order already puts later cards on top of earlier ones
+     (normal DOM/stacking order), so the most recently added card to a category is always the
+     one shown face-forward. Tapping/hovering a card brings it fully forward so an overlapped
+     one can still be read in full. */
+  .coll-thumbs{display:flex; padding:4px 4px 6px 2px; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .coll-thumb-wrap{text-align:center; width:70px; flex-shrink:0; position:relative; transition:transform .15s ease;}
+  .coll-thumb-wrap:nth-child(odd){transform:rotate(-3deg);}
+  .coll-thumb-wrap:nth-child(even){transform:rotate(3deg);}
+  .coll-thumb-wrap:hover, .coll-thumb-wrap:focus-within{transform:translateY(-10px) rotate(0deg); z-index:5;}
+  .coll-thumb-wrap + .coll-thumb-wrap{margin-left:-36px;}
   /* The source art is a scan of the WHOLE physical card — illustration, name and rules text
      all baked into one image. An earlier version zoomed/cropped this thumbnail into just the
      top of that scan so the illustration wouldn't get lost at a tiny 42px size — but that
@@ -119,8 +133,15 @@
      ratio as the card scan itself, so there's essentially no letterboxing either) at a size
      that matches the already-proven-legible .steal-thumb picker cards elsewhere in the game,
      the whole card — illustration and all — reads fine. */
-  .coll-thumb-clip{width:70px; height:96px; overflow:hidden; background:#EFE6DD; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12);}
+  .coll-thumb-clip{position:relative; width:70px; height:96px; overflow:hidden; background:#EFE6DD; border-radius:6px; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.12);}
   .coll-thumb{width:100%; height:100%; object-fit:contain; display:block;}
+  /* Moved onto the card face itself (was a separate line of text below the thumb) — with cards
+     now overlapping, a label below one card would sit on top of the card fanned out next to it. */
+  .coll-dud-label{
+    position:absolute; left:0; right:0; bottom:0; background:rgba(18,48,56,.78); color:#fff;
+    font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:.2px;
+    text-align:center; padding:2px 0;
+  }
   .coll-empty{font-size:11px; color:#998; padding:4px 0;}
 
   .steal-grid{display:flex; gap:8px; flex-wrap:wrap;}
@@ -137,14 +158,25 @@
   .hand-card.just-drawn{animation:handNewPulse 1.1s ease 2;}
   @keyframes handNewPulse{0%,100%{box-shadow:2px 2px 0 rgba(0,0,0,.15);}50%{box-shadow:0 0 0 3px var(--sun), 2px 2px 0 rgba(0,0,0,.15);}}
   .hand-scroll-hint{
-    position:absolute; top:0; bottom:6px; right:0; width:38px;
-    background:linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 70%);
-    display:flex; align-items:center; justify-content:flex-end;
+    position:absolute; top:0; bottom:6px; right:0; width:52px;
+    background:linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 60%);
+    display:flex; align-items:center; justify-content:flex-end; gap:2px;
     pointer-events:none; opacity:0; transition:opacity .2s ease;
   }
   .hand-scroll-hint.show{opacity:1;}
   .hand-scroll-hint .chev{font-size:18px; color:var(--teal); font-weight:900; animation:handHintBob 1.1s ease-in-out infinite;}
   @keyframes handHintBob{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+  /* "+N" — how many cards are currently scrolled out of view — instead of leaving it to the
+     bouncing chevron alone to communicate that. A vague "swipe, maybe?" arrow is easy to miss
+     or ignore; a concrete number is not. */
+  .hand-more-badge{
+    display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px;
+    padding:0 5px; border-radius:999px; background:var(--orange); color:#fff;
+    font-size:10.5px; font-weight:800; font-family:'Baloo 2','Nunito Sans',sans-serif;
+    box-shadow:0 1px 0 var(--orange-dk);
+  }
+  .hand-more-badge:empty{display:none;}
+  .hand-zone-title-count{font-weight:700; opacity:.55; font-size:.85em;}
 
   .game-lower{padding-bottom:14px;}
 
@@ -156,15 +188,35 @@
      #hand content up over the board rather than sending the player somewhere else on the
      page. Desktop already shows the hand alongside everything else with no scrolling at all
      (see the two-column layout further down), so all of this is reset away there. */
-  .hand-fab{
+  /* Wraps the peek fan + the pill together so both share one fixed position — the peek cards
+     tuck up behind the pill (negative margin pulls them down into it) instead of the two being
+     positioned independently. */
+  .hand-fab-wrap{
     position:fixed; left:50%; bottom:14px; z-index:55; transform:translateX(-50%);
-    display:flex; align-items:center; gap:8px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  /* The actual top few cards in hand, fanned out and peeking above the pill — a glance is
+     enough to remember roughly what's there without opening the drawer at all. Tucked behind
+     the pill (negative margin-bottom) so it reads as "cards held in the hand this tab
+     represents" rather than a separate floating cluster. */
+  .hand-fab-peek{display:flex; margin-bottom:-16px; cursor:pointer;}
+  .hand-fab-peek .peek-card{
+    width:30px; height:41px; border-radius:5px; overflow:hidden; flex-shrink:0;
+    background:#EFE6DD; border:1.5px solid var(--ink); box-shadow:1px 1px 0 rgba(0,0,0,.2);
+  }
+  .hand-fab-peek .peek-card img{width:100%; height:100%; object-fit:contain; display:block;}
+  .hand-fab-peek .peek-card + .peek-card{margin-left:-13px;}
+  .hand-fab-peek .peek-card:nth-child(1){transform:rotate(-9deg) translateY(3px);}
+  .hand-fab-peek .peek-card:nth-child(2){transform:rotate(0deg) translateY(-3px); z-index:1;}
+  .hand-fab-peek .peek-card:nth-child(3){transform:rotate(9deg) translateY(3px);}
+  .hand-fab{
+    position:relative; z-index:1; display:flex; align-items:center; gap:8px;
     font-family:'Baloo 2','Nunito Sans',sans-serif; font-weight:800; font-size:14px;
     color:#fff; background:var(--orange); border:none; border-radius:999px;
     padding:12px 20px 12px 18px; cursor:pointer;
     box-shadow:0 3px 0 var(--orange-dk), 0 8px 18px rgba(18,48,56,.32);
   }
-  .hand-fab:active{transform:translateX(-50%) translateY(2px);}
+  .hand-fab:active{transform:translateY(2px);}
   .hand-fab .fab-count{
     display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px;
     padding:0 5px; border-radius:999px; background:#fff; color:var(--orange-ink); font-size:12px;
@@ -177,10 +229,10 @@
   .hand-fab.fab-bump{ animation:handFabBump .6s cubic-bezier(.34,1.56,.64,1); }
   .hand-fab.fab-bump .fab-count{ animation:handFabCountFlash .6s ease; }
   @keyframes handFabBump{
-    0%{ transform:translateX(-50%) scale(1); }
-    35%{ transform:translateX(-50%) scale(1.14); }
-    60%{ transform:translateX(-50%) scale(.97); }
-    100%{ transform:translateX(-50%) scale(1); }
+    0%{ transform:scale(1); }
+    35%{ transform:scale(1.14); }
+    60%{ transform:scale(.97); }
+    100%{ transform:scale(1); }
   }
   @keyframes handFabCountFlash{
     0%, 100%{ background:#fff; color:var(--orange-ink); }
@@ -563,6 +615,7 @@
   .collections.compact .collection-box{padding:8px;}
   .collections.compact .coll-thumb-wrap{width:64px;}
   .collections.compact .coll-thumb-clip{width:64px; height:88px;}
+  .collections.compact .coll-thumb-wrap + .coll-thumb-wrap{margin-left:-32px;}
   .zone-hand{flex-shrink:0;}
 
   /* pass and play cover */
@@ -645,8 +698,10 @@
     .hand{gap:12px;}
     .coll-thumb-wrap{width:104px;}
     .coll-thumb-clip{width:104px; height:142px;}
+    .coll-thumb-wrap + .coll-thumb-wrap{margin-left:-52px;}
     .collections.compact .coll-thumb-wrap{width:84px;}
     .collections.compact .coll-thumb-clip{width:84px; height:114px;}
+    .collections.compact .coll-thumb-wrap + .coll-thumb-wrap{margin-left:-42px;}
     .steal-thumb{width:104px;}
     .steal-thumb img{width:104px; height:142px;}
     .steal-thumb-label{font-size:13px;}
@@ -709,7 +764,7 @@
     /* Desktop already shows the hand alongside the board with room to spare (see the
        two-column layout above) — the mobile bottom-sheet treatment below is undone here
        so the hand goes back to being a normal, always-visible section of the page. */
-    .hand-fab, .hand-drawer-backdrop, .hand-drawer-close, .hand-drawer-grip{display:none;}
+    .hand-fab-wrap, .hand-drawer-backdrop, .hand-drawer-close, .hand-drawer-grip{display:none;}
     .zone.zone-hand{
       position:static; transform:none; z-index:auto; max-height:none;
       background:none; border-radius:0; box-shadow:none; padding:0; margin:0;
@@ -868,7 +923,10 @@
         <div class="zone-title" id="hand-zone-title">Your Hand</div>
         <div class="hand-wrap">
           <div class="hand" id="hand"></div>
-          <div class="hand-scroll-hint" id="hand-scroll-hint"><span class="chev">›</span></div>
+          <div class="hand-scroll-hint" id="hand-scroll-hint">
+            <span class="hand-more-badge" id="hand-more-badge"></span>
+            <span class="chev">›</span>
+          </div>
         </div>
       </div>
     </div>
@@ -878,9 +936,15 @@
   <!-- Mobile-only floating tab + backdrop for the hand bottom-sheet above (hidden on desktop,
        where the hand is just a normal always-visible section — see the desktop media query). -->
   <div class="hand-drawer-backdrop" id="hand-drawer-backdrop" onclick="closeHandDrawer()"></div>
-  <button class="hand-fab hidden" id="hand-fab" onclick="openHandDrawer()">
-    ✋ Your Hand <span class="fab-count" id="hand-fab-count">0</span>
-  </button>
+  <div class="hand-fab-wrap hidden" id="hand-fab-wrap">
+    <!-- The tops of your actual cards, peeking out from behind the tab — a glance at this
+         (without even tapping) is the "what's in my hand again?" reminder that a bare count
+         number on the pill below couldn't give on its own. -->
+    <div class="hand-fab-peek" id="hand-fab-peek" onclick="openHandDrawer()"></div>
+    <button class="hand-fab" id="hand-fab" onclick="openHandDrawer()">
+      ✋ Your Hand <span class="fab-count" id="hand-fab-count">0</span>
+    </button>
+  </div>
 
   <!-- WIN SCREEN -->
   <div id="screen-win" class="hidden">
@@ -1152,7 +1216,7 @@ function startGame(m){
   document.getElementById('screen-mode').classList.add('hidden');
   document.getElementById('screen-win').classList.add('hidden');
   document.getElementById('screen-game').classList.remove('hidden');
-  document.getElementById('hand-fab')?.classList.remove('hidden');
+  document.getElementById('hand-fab-wrap')?.classList.remove('hidden');
   closeHandDrawer();
   // The big pink hero header is great for mode-select/win, but once play is on, the compact
   // in-game topbar (with the persistent logo) is all the branding a mobile screen has room for.
@@ -1425,7 +1489,7 @@ function render(){
     turnPillEl.textContent = turnLabel;
     turnPillEl.classList.toggle('opp-turn', current!=='you');
   }
-  document.getElementById('hand-zone-title').textContent = (mode==='pass') ? (pSubj(current) + '’s Hand') : 'Your Hand';
+  document.getElementById('hand-zone-title').innerHTML = ((mode==='pass') ? (pSubj(current) + '’s Hand') : 'Your Hand') + ' <span class="hand-zone-title-count" id="hand-zone-title-count"></span>';
   document.getElementById('draw-count').textContent = deck.length;
 
   // discard top
@@ -1474,8 +1538,8 @@ function renderCollections(){
         <div class="coll-thumb-wrap">
           <div class="coll-thumb-clip">
             <img class="coll-thumb" src="${ART[id]||''}" alt="${byId[id].name}" title="${byId[id].name}" style="${dud?'opacity:.55;filter:grayscale(60%);':''}">
+            ${dud ? '<div class="coll-dud-label">doesn\'t count</div>' : ''}
           </div>
-          ${dud ? '<div class="coll-dud-label">doesn\'t count</div>' : ''}
         </div>`;
       }).join('');
       return `<div class="coll-cat">
@@ -1496,6 +1560,18 @@ function renderHand(){
   const hand = mode==='solo' ? players.you.hand : players[current].hand;
   const fabCount = document.getElementById('hand-fab-count');
   if(fabCount) fabCount.textContent = hand.length;
+  // Peek fan behind the FAB: the actual top few cards in hand, so there's something to
+  // recognize at a glance before ever opening the drawer.
+  const peekEl = document.getElementById('hand-fab-peek');
+  if(peekEl){
+    peekEl.innerHTML = hand.slice(0,3).map(id=>
+      `<div class="peek-card"><img src="${ART[id]||''}" alt=""></div>`
+    ).join('');
+  }
+  // The drawer's own title said just "Your Hand" — the fab count is out of sight once the
+  // drawer is open, so the total wasn't visible anywhere while actually looking at the cards.
+  const titleCountEl = document.getElementById('hand-zone-title-count');
+  if(titleCountEl) titleCountEl.textContent = hand.length ? `(${hand.length})` : '';
   handEl.innerHTML = hand.map((id,idx)=>{
     const c = byId[id];
     const sel = selectedCard===id ? 'selected':'';
@@ -1524,7 +1600,8 @@ function renderHand(){
 
 function bumpHandFab(){
   const fab = document.getElementById('hand-fab');
-  if(!fab || fab.classList.contains('hidden')) return;
+  const wrap = document.getElementById('hand-fab-wrap');
+  if(!fab || !wrap || wrap.classList.contains('hidden')) return;
   fab.classList.remove('fab-bump');
   void fab.offsetWidth; // restart the animation even if it's still mid-flight from the last draw
   fab.classList.add('fab-bump');
@@ -1533,10 +1610,23 @@ function bumpHandFab(){
 function updateHandScrollHint(){
   const handEl = document.getElementById('hand');
   const hint = document.getElementById('hand-scroll-hint');
+  const badge = document.getElementById('hand-more-badge');
   if(!handEl || !hint) return;
   const checkOverflow = ()=>{
     const canScrollMore = handEl.scrollWidth - handEl.clientWidth - handEl.scrollLeft > 8;
     hint.classList.toggle('show', canScrollMore);
+    if(badge){
+      // How many cards currently sit past the visible right edge — a concrete "+2" reads as
+      // unambiguous instruction where the bouncing chevron alone was easy to miss or shrug off.
+      if(canScrollMore){
+        const containerRight = handEl.getBoundingClientRect().right;
+        const hiddenCount = Array.from(handEl.querySelectorAll('.hand-card'))
+          .filter(card => card.getBoundingClientRect().left >= containerRight - 6).length;
+        badge.textContent = hiddenCount > 0 ? ('+' + hiddenCount) : '';
+      } else {
+        badge.textContent = '';
+      }
+    }
   };
   checkOverflow();
   handEl.onscroll = checkOverflow;
@@ -2763,7 +2853,7 @@ function aiPlayStep(){
 function showWin(who){
   document.getElementById('screen-game').classList.add('hidden');
   document.getElementById('screen-win').classList.remove('hidden');
-  document.getElementById('hand-fab')?.classList.add('hidden');
+  document.getElementById('hand-fab-wrap')?.classList.add('hidden');
   closeHandDrawer();
   document.getElementById('page-header')?.classList.remove('hidden');
   document.getElementById('page-header-zig')?.classList.remove('hidden');
