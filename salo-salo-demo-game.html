@@ -452,6 +452,26 @@
   .battle-actions.single{display:flex; flex-direction:column; gap:4px;}
   .first-turn-hint{font-size:10.5px; font-weight:600; color:#D9EDEA; line-height:1.3; text-align:center; padding:0 2px;}
   .first-turn-hint b{color:var(--sun);}
+  /* First thing a new player sees is a full battle scene, a turn banner, a goal card and a
+     collection grid all at once — the Draw button (plain text hint aside) wasn't winning that
+     fight for attention. This sits right above the button, in flow, so it's never mispositioned
+     across breakpoints, and both bounces AND makes the button itself pulse so the eye lands on
+     Draw within the first second rather than having to read anything first. */
+  .draw-callout{
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    background:var(--sun); color:var(--ink); font-family:'Baloo 2','Nunito Sans',sans-serif;
+    font-weight:800; font-size:12.5px; padding:6px 12px; border-radius:999px;
+    box-shadow:0 2px 0 #C99A1E; animation:drawCalloutBounce 1.2s ease-in-out infinite;
+    white-space:nowrap;
+  }
+  .draw-callout-arrow{font-size:14px; animation:drawCalloutArrow 1.2s ease-in-out infinite;}
+  @keyframes drawCalloutBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+  @keyframes drawCalloutArrow{0%,100%{transform:translateY(0);}50%{transform:translateY(2px);}}
+  .batn-continue.draw-pulse{ animation:drawBtnPulse 1.4s ease-in-out infinite; }
+  @keyframes drawBtnPulse{
+    0%,100%{ box-shadow:2px 2px 0 rgba(0,0,0,.3), 0 0 0 0 rgba(246,196,69,.6); }
+    50%{ box-shadow:2px 2px 0 rgba(0,0,0,.3), 0 0 0 8px rgba(246,196,69,0); }
+  }
   .batn{
     font-family:inherit; border:none; border-radius:10px; font-weight:800; font-size:12px;
     color:#fff; cursor:pointer; box-shadow:2px 2px 0 rgba(0,0,0,.3); padding:4px 4px;
@@ -1385,13 +1405,19 @@ function renderBattleActions(){
     // having them here too was the "two places to click Play" confusion that got reported.
     // Draw stays here since it isn't tied to a selected card.
     el.className = 'battle-actions single';
-    el.innerHTML = `<button class="batn batn-continue" onclick="doDraw()" ${(drawnThisTurn||!canAct)?'disabled':''}>${drawnThisTurn ? 'Tap a card in your hand ↓' : 'Draw'}</button>`;
+    // Landing on the battle screen for the first time throws a lot at once — full scene, turn
+    // banner, goal card, collection grid — and the Draw button was losing that fight for
+    // attention with just a quiet text hint next to it. Before the very first draw of a
+    // player's turn, a bouncing callout sits right above the button and the button itself
+    // pulses, so the eye lands there before there's anything to read.
+    const showDrawCallout = !firstActionDone[current] && !drawnThisTurn && canAct;
+    el.innerHTML = (showDrawCallout ? `<div class="draw-callout"><span class="draw-callout-arrow">👇</span>Tap to draw your first card!</div>` : '')
+      + `<button class="batn batn-continue${showDrawCallout ? ' draw-pulse' : ''}" onclick="doDraw()" ${(drawnThisTurn||!canAct)?'disabled':''}>${drawnThisTurn ? 'Tap a card in your hand ↓' : 'Draw'}</button>`;
     // First-timers know to draw, then stall — spell out the rest of the loop until they've
-    // actually played or discarded a card once.
-    if(!firstActionDone[current] && canAct){
-      el.innerHTML += `<div class="first-turn-hint">${drawnThisTurn
-        ? 'Tap the new card below, then choose <b>Play</b> to use it or <b>Discard</b> to pass on it.'
-        : 'Draw a card, then tap it in your hand to play it toward a Family/Food/Fun collection — or discard it.'}</div>`;
+    // actually played or discarded a card once. Skipped pre-draw now that the callout above
+    // already says "tap Draw" — this text used to say the same thing twice over.
+    if(!firstActionDone[current] && canAct && drawnThisTurn){
+      el.innerHTML += `<div class="first-turn-hint">Tap the new card below, then choose <b>Play</b> to use it or <b>Discard</b> to pass on it.</div>`;
     }
   }
 }
@@ -1467,11 +1493,16 @@ function showPassCover(){
   document.getElementById('pass-subtitle').textContent = 'Pass the phone, then tap below.';
   document.getElementById('passcover').classList.remove('hidden');
   // Whoever's hand was open on mobile (the outgoing player's) shouldn't still be sitting there
-  // once the phone is being handed off — the next player gets a clean cover screen.
+  // once the phone is being handed off — the next player gets a clean cover screen. Closing the
+  // drawer alone wasn't enough though — the floating hand tab (and the card-fan peeking behind
+  // it) stayed on screen the whole time the phone was being passed, showing whoever picks it up
+  // next exactly what's in the outgoing player's hand before they've even tapped "I'm ready".
   closeHandDrawer();
+  document.getElementById('hand-fab-wrap')?.classList.add('hidden');
 }
 function revealTurn(){
   document.getElementById('passcover').classList.add('hidden');
+  document.getElementById('hand-fab-wrap')?.classList.remove('hidden');
   if(pendingTopUpMsg){
     // the top-up cards are already in hand (added in endTurn) — highlight them now that this player can see their hand
     recentlyDrawnIds = players[current].hand.slice(-3);
@@ -1498,9 +1529,11 @@ function showReactionPass(target, onReady){
   document.getElementById('pass-subtitle').textContent = `Pass the phone to ${pSubj(target)} — they’ll decide how to respond.`;
   document.getElementById('passcover').classList.remove('hidden');
   closeHandDrawer();
+  document.getElementById('hand-fab-wrap')?.classList.add('hidden');
 }
 function revealReaction(){
   document.getElementById('passcover').classList.add('hidden');
+  document.getElementById('hand-fab-wrap')?.classList.remove('hidden');
   const fn = pendingReactionReveal;
   pendingReactionReveal = null;
   if(fn) fn();
