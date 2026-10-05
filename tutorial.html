@@ -361,8 +361,9 @@ function render(opts={}){
   const o = collRows('opp'), y = collRows('you');
   const dragOK = c => st && st.wait && st.wait.dst && matcher(st.wait.tap)('hand:'+c);
   const spread = S.spread.length ? `<div class="spread">${S.spread.map(id=>cardEl(id,{tap:'spread:'+id,cap:true})).join('')}</div>` : '';
+  const asideTap = !!(st && st.wait && st.wait.tap==='aside' && S.aside.length);
   const tray = (S.aside.length || S.spread.length) ?
-    `<div class="tray"><span class="tl">Set aside (${S.aside.length}/5)</span>${S.aside.map(id=>cardEl(id)).join('')}</div>` : '';
+    `<div class="tray" ${asideTap?'data-tap="aside"':''}><span class="tl">Set aside (${S.aside.length}/5)${asideTap?' &middot; tap to put them back':''}</span>${S.aside.map(id=>cardEl(id)).join('')}</div>` : '';
   const dTop = S.discard[S.discard.length-1];
   const piles = `<div class="piles">
     <div class="pile" data-pile="disc" data-drop="disc"><div class="pbox disc">${dTop?cardEl(dTop):'DIS-<br>CARD'}</div><div class="plabel">Regular discard<small>reshuffled when empty</small></div></div>
@@ -686,11 +687,11 @@ const STEPS = [
     await sleep(200);
   }}},
 
- {type:'act', lesson:'Setup', title:'Shuffle the five back in', go:'Shuffle again',
+ {type:'act', lesson:'Setup', title:'Put the five back', go:'Put them back',
   quip:"Back in the deck. Nobody knows when they'll show up.",
-  ask:"Tap the <b>draw pile</b> to shuffle the five back in. Now they can ambush anyone, any time.",
-  banner:'Tap the draw pile to shuffle the five back in', nudge:'Tap the draw pile.',
-  wait:{tap:'deck', async run(){ S.aside = []; render(); await sleep(1300); await shuffleAnim(2); }}},
+  ask:"Tap the <b>five set-aside cards</b> to slide them back into the draw pile. Now they can ambush anyone, any time.",
+  banner:'Tap the five set-aside cards to put them back', nudge:'Tap the glowing set-aside cards.',
+  wait:{tap:'aside', async run(){ S.aside = []; render(); await sleep(1500); await shuffleAnim(2); }}},
 
  {type:'modal', lesson:'Setup', title:'Set the table', diagram:'table', nextLabel:'Start my turn',
   quip:"Three piles, one rule: nobody touches the lechon.",
