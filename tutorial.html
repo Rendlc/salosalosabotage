@@ -298,7 +298,7 @@ function blank(){
     discard:[], event:null, unwelcome:[], welcomed:[], att:{}, sel:null, incoming:null, focus:null };
 }
 let S = blank(), cur = 0, snaps = [];
-let SPAWN = {}, FRESH = new Set(), INFLIGHT = new Set(), FLYING = 0, LOCK = false, SUPPRESS = false;
+let FLIPDUR = {}, SPAWN = {}, FRESH = new Set(), INFLIGHT = new Set(), FLYING = 0, LOCK = false, SUPPRESS = false;
 window.__busy = ()=> FLYING>0 || LOCK || $('#shuf').classList.contains('show');
 
 /* ---------- helpers: geometry + flight ---------- */
@@ -395,14 +395,14 @@ function render(opts={}){
   document.querySelectorAll('#board .card[data-id]').forEach(el=>{
     const id = el.dataset.id; seen[id] = 1;
     if(!anim) return;
-    if(toggled && el.closest('.hand')) return;
+    if(el.closest('.hand') && (toggled || (up && !SPAWN[id] && !FRESH.has(id)))) return;
     const to = rectOf(el); if(!to.w) return;
     let from = SPAWN[id] || old[id];
     if(!from && FRESH.has(id)) from = el.closest('.z-opp') ? backsRect() : deckRect();
     if(!from) return;
     if(Math.abs(from.l-to.l)<3 && Math.abs(from.t-to.t)<3 && Math.abs(from.w-to.w)<3) return;
     el.classList.add('vanish');
-    fly(id, from, to, {dur:620});
+    fly(id, from, to, {dur:FLIPDUR[id]||620});
   });
   if(anim){
     let k = 0;
@@ -412,7 +412,7 @@ function render(opts={}){
       fly(id, old[id], to, {dur:560, shrink:true, fade:true, delay:(k++)*80});
     });
   }
-  SPAWN = {}; FRESH.clear();
+  SPAWN = {}; FRESH.clear(); FLIPDUR = {};
 }
 function matcher(x){
   if(typeof x==='function') return x;
@@ -714,9 +714,9 @@ const STEPS = [
     if(dst!=='row:food') return "Lumpia has a <b>Food</b> banner, so it belongs in the Food row. Match the banner to the row.";
     rm(S.hand,'lumpia'); S.sel=null; S.you.food.push('lumpia'); }}},
 
- {type:'modal', lesson:"Tita AI's turn", title:'Pass. Her turn.', who:'tita', nextLabel:'Watch her play',
+ {type:'modal', lesson:"Tita AI's turn", title:'Tita AI plays Pancit', who:'tita', cards:['pancit'], nextLabel:'Watch her play',
   quip:"I draw. I play. I make eye contact the whole time.",
-  body:"You played one card, so you're back to three. That's the rhythm: <b>draw one, play one, pass.</b>",
+  body:"You played one card, so your turn is over. Tita AI draws one and plays <b>Pancit Palabok</b> into <b>her</b> Food row. Same rhythm for everyone: <b>draw one, play one, pass.</b>",
   after(){ S.opp.food.push('pancit'); S.oppHand = 3; FRESH.add('pancit'); }},
 
  drawStep('tatay',{lesson:'Turn two', banner:'Your turn: tap the draw pile',
@@ -733,10 +733,13 @@ const STEPS = [
   },
   apply(id){ rm(S.hand,id); S.you.family.push(id); S.sel=null; }}),
 
- {type:'modal', lesson:'Unexpected Guest', title:'Surprise guest', dlg:'bad', who:'tita', cards:['boypren'], nextLabel:'Oh no',
-  quip:"Meet someone. Nobody asked. Sunglasses indoors.",
-  body:"The Boypren takes a Family seat but <b>doesn't count</b>. Remove him, or welcome him in with a <b>Kapwa</b>.",
-  after(){ S.you.family.push('boypren'); S.unwelcome=['boypren']; FRESH.add('boypren'); SPAWN.boypren = backsRect(); S.oppHand = 3; }},
+ {type:'modal', lesson:'Unexpected Guest', title:'Tita AI blocks you', dlg:'bad', who:'tita', cards:['boypren'], nextLabel:'Find a way out',
+  quip:"Sunglasses indoors. Nobody invited him.",
+  body:"Tita AI isn't building her own table this time. She played an <b>Unexpected Guest</b> onto <b>your</b> Family row as a blocker. The Boypren takes a seat but <b>doesn't count</b>, so Family is stuck until you remove him or welcome him with a <b>Kapwa</b>. Your move: work out how to unblock it.",
+  after(){ S.you.family.push('boypren'); S.unwelcome=['boypren']; FRESH.add('boypren'); S.oppHand = 3;
+    const z = rectOf($('.z-opp')); const w = 104, h = 142;
+    SPAWN.boypren = {l: z.l + z.w/2 - w/2, t: Math.max(z.t + 6, 70), w, h}; FLIPDUR.boypren = 1500;
+    setTimeout(()=>{ const zy=$('.z-you'); if(zy){ zy.classList.add('hurt'); setTimeout(()=>zy.classList.remove('hurt'),600); } }, 1450); }},
 
  drawStep('kapwa',{lesson:'Unexpected Guest', banner:'Find a way out: tap the draw pile',
   title:'Kapwa!', quip:"Sometimes the answer to chaos is “sige, kain ka na.”", body:"Kapwa means shared humanity. It turns trouble into a blessing."}),
@@ -749,11 +752,15 @@ const STEPS = [
 
  {type:'modal', lesson:'Unexpected Guest', title:'Now he counts', cards:['kapwa','boypren'], nextLabel:'Next →',
   quip:"He's family now. He'll be asked to do the dishes.",
-  body:"<b>Kapwa isn't discarded.</b> It stays with him so everyone can see he's a legit guest.",
-  after(){ S.opp.family.push('lolo'); FRESH.add('lolo'); }},
+  body:"<b>Kapwa isn't discarded.</b> It stays with him so everyone can see he's a legit guest."},
+
+ {type:'modal', lesson:"Tita AI's turn", title:'Tita AI seats Lolo', who:'tita', cards:['lolo'], nextLabel:'Watch her play',
+  quip:"Lolo sits down like he owns the place. He does.",
+  body:"Her turn again. She draws and plays <b>Lolo</b> into her Family row. That's one step closer to her nine, and a card sitting face up for you to hit.",
+  after(){ S.opp.family.push('lolo'); FRESH.add('lolo'); S.oppHand = 3; }},
 
  drawStep('titastea',{lesson:'Sabotage', banner:'Your turn: tap the draw pile',
-  title:'Tita’s Tea', quip:"Tita AI seated her Lolo like nothing happened.", body:"Target a player and they discard one Guest card."}),
+  title:'Tita’s Tea', quip:"Lolo is sitting there, face up, being smug.", body:"Target a player and they discard one Guest card."}),
 
  {type:'act', lesson:'Sabotage', title:'Spill the tea', go:'Got it',
   quip:"Tita doesn't spill tea. Tita aims.",
@@ -761,9 +768,9 @@ const STEPS = [
   banner:'Drag Tita’s Tea onto her Lolo', banner2:'Now tap her Lolo', nudge:'Drag Tita’s Tea onto her Lolo.',
   wait:{tap:'hand:titastea', dst:'opp:lolo', then(){ rm(S.hand,'titastea'); S.sel=null; rm(S.opp.family,'lolo'); toDisc('lolo','titastea'); }}},
 
- {type:'modal', lesson:'Counters', title:'She’s coming for you', dlg:'bad', who:'tita', cards:['agaw'], nextLabel:'Counter it!',
+ {type:'modal', lesson:'Counters', title:'Tita AI plays Agaw', dlg:'bad', who:'tita', cards:['agaw'], nextLabel:'Counter it!',
   quip:"Lolo goes back to his nap. Now I'm reaching across the table.",
-  body:"Agaw grabs a card from your collection. <b>Counters interrupt</b>, even on her turn.",
+  body:"Her turn, and she's coming for you. <b>Agaw</b> grabs a card from your face-up collection. But <b>counters interrupt</b>, even on her turn. Check your hand.",
   after(){ S.incoming = 'agaw'; S.oppHand = 3; }},
 
  {type:'act', lesson:'Counters', title:'Counter it', go:'Got it', turn:'Quick! Interrupt her',
@@ -811,7 +818,7 @@ const STEPS = [
   ask:"You have <b>3 Food, 2 Family and 3 Fun</b> down. Same rhythm as always: <b>draw first</b>.",
   enter(){
     S.you = {food:['lumpia','pancit','sinigang'], family:['tatay','lola'], fun:['karaoke','barrelman','sungka']};
-    S.unwelcome=[]; S.welcomed=[]; S.att={}; S.hand=['adobo','manopo','kapwa']; S.opp={food:['adobo'],family:[],fun:[]}; S.sel=null; S.incoming=null; S.oppHand=3;
+    S.unwelcome=[]; S.welcomed=[]; S.att={}; S.hand=['adobo','manopo','kapwa']; S.opp={food:[],family:['lolo'],fun:[]}; S.sel=null; S.incoming=null; S.oppHand=3;
   },
   title:'Nanay!', quip:"Of course it's Nanay. She was always going to show up.", body:"Four cards in your hand. One of them finishes your nine."}),
 
