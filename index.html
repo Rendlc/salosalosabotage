@@ -314,6 +314,62 @@ h1,h2,h3{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;line-
   .einfo span{font-size:.83rem;}
 }
 
+/* TOUR CARDS */
+.eventpanel .events.tour{gap:14px;}
+.gig{position:relative;display:flex;align-items:stretch;gap:16px;text-align:left;
+  background:#fff;border-radius:16px;padding:14px 16px 14px 14px;
+  box-shadow:0 6px 18px rgba(60,30,30,.10);border:2px solid transparent;
+  transition:transform .18s ease,box-shadow .18s ease;}
+.gig:hover{transform:translateY(-3px) rotate(-.4deg);box-shadow:0 12px 26px rgba(60,30,30,.16);}
+.cal{flex-shrink:0;width:68px;border-radius:12px;overflow:hidden;text-align:center;
+  background:var(--paper);box-shadow:inset 0 0 0 2px rgba(18,48,56,.10);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;}
+.cal i{display:block;width:100%;font-style:normal;font-weight:800;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;background:var(--teal);padding:4px 0 3px;}
+.cal b{display:block;font-weight:800;font-size:2.05rem;line-height:1;color:var(--ink);margin-top:6px;}
+.cal em{display:block;font-style:normal;font-weight:700;font-size:.74rem;letter-spacing:.08em;
+  text-transform:uppercase;color:#7A6460;margin:2px 0 7px;}
+.ginfo{display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.ginfo b{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;
+  font-size:1.22rem;line-height:1.1;color:var(--ink);}
+.gwhere{font-weight:700;font-size:.95rem;color:var(--teal-dk);margin-top:1px;}
+.gwhen{font-size:.86rem;font-weight:600;color:#6B5450;margin-top:3px;}
+.gtag{align-self:flex-start;font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;
+  font-weight:800;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px 2px;border-radius:20px;margin-bottom:5px;}
+.gperks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.gperks s{text-decoration:none;font-weight:800;font-size:.76rem;color:var(--orange-ink);
+  background:#FFF0E6;border:1.5px dashed rgba(226,112,58,.55);padding:3px 9px;border-radius:20px;}
+/* confirmed: hero card */
+.gig-hot{background:linear-gradient(135deg,#FFF6EC 0%,#FFE9D6 100%);border-color:var(--orange);
+  box-shadow:0 10px 26px rgba(226,112,58,.28);}
+.gig-hot .cal i{background:var(--orange);}
+.gig-hot .cal{box-shadow:inset 0 0 0 2px rgba(226,112,58,.35);}
+.gtag.hot{background:var(--orange);color:#fff;}
+.gtag.pend{background:#fff;color:var(--orange-ink);box-shadow:inset 0 0 0 1.5px var(--orange);}
+.gtag.hot::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--sun);margin-right:6px;vertical-align:1px;animation:gpulse 1.6s ease-in-out infinite;}
+@keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(246,196,69,.9);}60%{box-shadow:0 0 0 6px rgba(246,196,69,0);}}
+/* tentative */
+.gig-tent{border-style:dashed;border-color:rgba(28,110,120,.45);}
+.gtag.tent{background:#E3EEEF;color:var(--teal-dk);}
+/* shipping */
+.gig-ship{background:linear-gradient(135deg,#FFF9E6 0%,#FDEFC2 100%);}
+.cal-box{background:var(--sun);color:var(--ink);justify-content:center;box-shadow:none;}
+.cal-box svg{width:30px;height:30px;margin-top:4px;}
+.cal-box em{color:var(--ink);margin:3px 0 0;}
+.gtag.ship{background:var(--ink);color:var(--sun);}
+@media(max-width:860px){
+  .gig{gap:12px;padding:12px 13px 12px 12px;}
+  .cal{width:58px;}
+  .cal b{font-size:1.7rem;}
+  .ginfo b{font-size:1.08rem;}
+  .gwhere{font-size:.88rem;}
+  .gwhen{font-size:.82rem;}
+}
+@media(prefers-reduced-motion:reduce){.gig,.gig:hover{transition:none;transform:none;}.gtag.hot::before{animation:none;}}
+
 /* SPECS */
 .specs{background:var(--sun);color:var(--ink);padding:52px 0;}
 .spec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center;}
@@ -696,12 +752,32 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
 
     <div class="eventpanel">
       <div class="ephead"><span>Where to find us</span></div>
-      <div class="events">
-        <div class="event">
-          <span class="ebadge tbd">Soon</span>
-          <div class="einfo">
-            <b>Next pop-up: dates coming soon</b>
-            <span>The game is sold in person at pop-ups. Follow along and you&rsquo;ll hear first.</span>
+      <div class="events tour">
+        <div class="gig gig-tent">
+          <div class="cal"><i>Oct</i><b>18</b><em>Sun</em></div>
+          <div class="ginfo">
+            <span class="gtag tent">Tentative</span>
+            <b>Brossard, Quebec</b>
+            <span class="gwhere">Cafe Kuya &middot; Greater Montreal</span>
+            <span class="gwhen">Afternoon game demo. Final time coming soon.</span>
+          </div>
+        </div>
+        <div class="gig gig-hot">
+          <div class="cal"><i>Oct</i><b>24</b><em>Sat</em></div>
+          <div class="ginfo">
+            <span class="gtag pend">Tentative</span>
+            <b>Carson, CA</b>
+            <span class="gwhere">Teofilo Coffee Company</span>
+            <span class="gwhen">2 to 4 PM &middot; 714 E Carson St</span>
+            <span class="gperks"><s>Play a free round</s><s>Games $35</s></span>
+          </div>
+        </div>
+        <div class="gig gig-ship">
+          <div class="cal cal-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 7.5 12 12l9-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><em>Soon</em></div>
+          <div class="ginfo">
+            <span class="gtag ship">Coming soon</span>
+            <b>Shipped to your door</b>
+            <span class="gwhen">Online orders open soon. US shipping from $8.</span>
           </div>
         </div>
       </div>
