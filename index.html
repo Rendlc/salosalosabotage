@@ -314,7 +314,48 @@ h1,h2,h3{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;line-
   .einfo span{font-size:.83rem;}
 }
 
+/* ORDER ONLINE */
+.order{max-width:640px;margin:0 auto 38px;background:#fff;border-radius:22px;padding:24px 22px 20px;
+  box-shadow:0 10px 28px rgba(60,30,30,.14);border:2px solid var(--orange);}
+.order-head{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+.order-head b{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:1.45rem;color:var(--teal);line-height:1.1;}
+.order-sub{font-size:.92rem;font-weight:600;color:#6B5450;margin:0 0 18px !important;max-width:none !important;}
+.qty{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.qopt{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;
+  background:var(--paper);border:2.5px solid rgba(28,110,120,.25);border-radius:16px;padding:16px 8px 14px;
+  color:var(--ink);transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;}
+.qopt:hover,.qopt:focus-visible{transform:translateY(-3px);border-color:var(--orange);box-shadow:0 6px 0 var(--orange-dk);outline:none;}
+.qopt .qn{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:2.3rem;line-height:1;color:var(--orange);}
+.qopt .ql{font-weight:800;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-dk);}
+.qopt .qt{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:1.15rem;color:var(--ink);margin-top:6px;}
+.qopt .qs{font-size:.74rem;font-weight:600;color:#7A6460;}
+.qopt .qbtn{margin-top:10px;font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:700;font-size:.92rem;
+  background:var(--orange);color:#fff;border-radius:30px;padding:6px 16px 5px;box-shadow:0 3px 0 var(--orange-dk);}
+.qopt.pop{border-color:var(--orange);background:linear-gradient(160deg,#FFF6EC,#FFE9D6);}
+.qopt.pop::before{content:"Gift one";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--sun);color:var(--ink);padding:3px 10px 2px;border-radius:20px;white-space:nowrap;}
+.order-trust{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin-top:16px;font-size:.8rem;font-weight:700;color:#6B5450;}
+.order-trust span::before{content:"\2713";color:var(--teal);margin-right:5px;font-weight:800;}
+.order-more{font-size:.82rem;font-weight:600;color:#7A6460;margin:12px 0 0 !important;}
+.order-more a{color:var(--teal);font-weight:700;}
+@media(max-width:560px){
+  .order{padding:20px 14px 16px;}
+  .qty{gap:8px;}
+  .qopt{padding:14px 4px 12px;}
+  .qopt .qn{font-size:1.9rem;}
+  .qopt .qbtn{font-size:.8rem;padding:5px 11px 4px;}
+  .qopt .qs{font-size:.68rem;}
+}
+
 /* TOUR CARDS */
+a.gig{text-decoration:none;color:inherit;cursor:pointer;}
+a.gig:focus-visible{outline:3px solid var(--teal);outline-offset:3px;}
+.gperks s.go{background:var(--orange);color:#fff;border:1.5px solid var(--orange);}
+.gig.gig-now{background:linear-gradient(135deg,#F1FAF9 0%,#DDEFEE 100%);}
+.cal.cal-box.cal-cup{background:var(--teal);color:#fff;}
+.cal.cal-box.cal-cup em{color:#fff;}
+.gtag.now{background:var(--teal);color:#fff;}
 .eventpanel .events.tour{gap:14px;}
 .gig{position:relative;display:flex;align-items:stretch;gap:16px;text-align:left;
   background:#fff;border-radius:16px;padding:14px 16px 14px 14px;
@@ -750,17 +791,52 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
     <div class="pricebox"><b>$35</b><span>USD per game</span></div>
     <p class="cta-lead">Printed in a small first run in Richmond, California on FSC-certified recycled paper with soy-based inks.</p>
 
+    <!-- ONLINE ORDERS (paused until after the Oct 24 pop-up). To turn on: remove this comment wrapper, restore hero button href to #order.
+    <div class="order" id="order">
+      <div class="order-head"><span class="gtag hot">Now shipping</span><b>Order online</b></div>
+      <p class="order-sub">Pick how many. You&rsquo;ll check out securely with Square.</p>
+      <div class="qty">
+        <a class="qopt" href="https://square.link/u/5D1UT8Ll" rel="noopener">
+          <span class="qn">1</span><span class="ql">game</span>
+          <span class="qt">$43</span><span class="qs">$35 + $8 shipping</span>
+          <span class="qbtn">Buy now</span>
+        </a>
+        <a class="qopt pop" href="https://square.link/u/65asv0Q9" rel="noopener">
+          <span class="qn">2</span><span class="ql">games</span>
+          <span class="qt">$81</span><span class="qs">$70 + $11 shipping</span>
+          <span class="qbtn">Buy now</span>
+        </a>
+        <a class="qopt" href="https://square.link/u/sJBqBFFO" rel="noopener">
+          <span class="qn">3</span><span class="ql">games</span>
+          <span class="qt">$119</span><span class="qs">$105 + $14 shipping</span>
+          <span class="qbtn">Buy now</span>
+        </a>
+      </div>
+      <div class="order-trust"><span>Tax included</span><span>USPS Ground Advantage</span><span>US addresses only</span></div>
+      <p class="order-more">Need more than 3, or shipping outside the US? <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">Message us</a>.</p>
+    </div>
+    -->
+
     <div class="eventpanel">
       <div class="ephead"><span>Where to find us</span></div>
       <div class="events tour">
-        <div class="gig gig-hot">
+        <a class="gig gig-hot" href="reserve.html" aria-label="Reserve a copy for pickup at Teofilo Coffee Company, Saturday Oct 24">
           <div class="cal"><i>Oct</i><b>24</b><em>Sat</em></div>
           <div class="ginfo">
             <span class="gtag hot">Reservations open</span>
             <b>Carson, CA</b>
             <span class="gwhere">Teofilo Coffee Company</span>
             <span class="gwhen">Kape at Kwento &middot; 1 to 4 PM &middot; 714 E Carson St</span>
-            <span class="gperks"><s>Play a free round</s><s>Games $35</s></span>
+            <span class="gperks"><s>Play a free round</s><s>Games $35</s><s class="go">Reserve yours &rarr;</s></span>
+          </div>
+        </a>
+        <div class="gig gig-now">
+          <div class="cal cal-box cal-cup" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5c-.8 1 .8 2 0 3M12 3.5c-.8 1 .8 2 0 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><em>Now</em></div>
+          <div class="ginfo">
+            <span class="gtag now">On the shelf now</span>
+            <b>Cerritos, CA</b>
+            <span class="gwhere">Seven Syllables Coffee</span>
+            <span class="gwhen">Pick up a copy while you grab a coffee &middot; limited quantity</span>
           </div>
         </div>
         <div class="gig gig-ship">
@@ -768,7 +844,7 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
           <div class="ginfo">
             <span class="gtag ship">Coming soon</span>
             <b>Shipped to your door</b>
-            <span class="gwhen">Online orders open soon. US shipping from $8.</span>
+            <span class="gwhen">Online orders open after the Oct 24 pop-up. US shipping from $8.</span>
           </div>
         </div>
       </div>
@@ -782,7 +858,7 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
         </div>
       </div>
     </div>
-    <p class="cta-note">Reserve a copy for pickup on Oct 24, or play a round of the demo first.</p>
+    <p class="cta-note">Reserve a copy for pickup on Oct 24, find it at Seven Syllables Coffee in Cerritos, or play a round of the demo first.</p>
 
     <div class="btn-row" style="justify-content:center;">
       <a class="btn btn-primary" href="reserve.html">Reserve a copy</a>
