@@ -67,7 +67,22 @@ footer{padding:34px 0 46px;font-size:15px;color:var(--muted)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
 footer a{color:var(--teal)}
 
+.h2{font-size:clamp(28px,4vw,38px);margin-top:8px}
+.lede{max-width:62ch;color:var(--muted);font-size:18px;margin:12px 0 8px}
+.moment{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;margin-top:36px}
+.moment:nth-of-type(even) img{order:2}
+.moment img{border-radius:14px;border:1px solid var(--line)}
+.moment h3{font-size:24px;margin:8px 0 8px;color:var(--teal)}
+.moment p{margin:0;color:var(--ink)}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sun);font-weight:900}
+.season{margin:28px 0 0}
+.season img{border-radius:14px;border:1px solid var(--line)}
+.season figcaption{font-size:15px;color:var(--muted);margin-top:8px}
+.wip{margin-top:22px;background:#fff4d6;border-left:4px solid var(--sun);padding:10px 14px;border-radius:8px;font-size:15px}
+.wip-hero{display:inline-block;font-size:14px;font-weight:700;color:var(--sun);border:1.5px solid #f4b73166;border-radius:999px;padding:4px 12px}
 @media (max-width:760px){
+  .moment{grid-template-columns:1fr;gap:14px}
+  .moment:nth-of-type(even) img{order:0}
   .hero .wrap,.signup .wrap,.shots{grid-template-columns:1fr}
   .how{grid-template-columns:1fr}
   .logo img{height:62px}
@@ -89,24 +104,38 @@ footer a{color:var(--teal)}
     <h1>Kuwento Quest</h1>
     <p>A story game where children and grown-ups learn Tagalog and Baybayin side by side. Each of you has a role, so you need each other to finish the story.</p>
     <p>We're still building it. Join the list and we'll let you know when your family can play at home.</p>
+    <p class="wip-hero">Early preview: artwork and audio are not final.</p>
     <a class="btn" href="#join">Keep me posted</a>
   </div>
   <img src="kq-title.jpg" alt="Kuwento Quest title screen: a bahay kubo under a full moon and a starry night sky" width="1100" height="606">
 </div></div>
 
 <section><div class="wrap">
-  <div class="eyebrow">How it plays</div>
-  <h2 style="font-size:clamp(28px,4vw,38px);margin-top:8px">Everyone plays. Nobody just watches.</h2>
+  <div class="eyebrow">Learning together</div>
+  <h2 class="h2">You're not watching your child play. You're playing too.</h2>
+  <p class="lede">A lot of learning apps hand your child a screen and leave you on the side. In Kuwento Quest, the story needs both of you, and you learn the words right alongside your child.</p>
+
+  <div class="moment">
+    <img src="kq-learn-too.jpg" alt="Lola tells Nanay: I taught you some words when you were small, but the old writing I never got to teach anyone" loading="lazy" width="900" height="738">
+    <div><span class="num">1</span><h3>You get to be the learner, too</h3><p>In the story, Lola never taught Nanay the old writing. So you start where many of us actually are: knowing a few words, missing the rest. Your child sees you learning, not just checking their work.</p></div>
+  </div>
+  <div class="moment">
+    <img src="kq-read-aloud.jpg" alt="Lola's notebook shows the word baul in Baybayin and English letters, with how to say it, and a button: I said it out loud" loading="lazy" width="900" height="605">
+    <div><span class="num">2</span><h3>Your child hears the words from you</h3><p>Lola's notebook gives you each word, in Baybayin and in English letters, with how to say it. You read it out loud, and your child hears Tagalog in your voice, not a recording.</p></div>
+  </div>
+  <div class="moment">
+    <img src="kq-guess.jpg" alt="Together, you guess what baul means from a clue: basket, chest, or bed" loading="lazy" width="900" height="636">
+    <div><span class="num">3</span><h3>You figure it out together</h3><p>Then you both guess what the word means from the picture and a clue. Wrong guesses are part of the game, so your child watches you try, miss, and try again. That's the lesson under the lesson.</p></div>
+  </div>
+
+  <h2 class="h2" style="margin-top:56px">Everyone has a job</h2>
   <div class="how">
     <div><h3>Seer</h3><p>Usually a younger child. Finds what's hidden in the pictures.</p></div>
     <div><h3>Scribe</h3><p>Usually an older child. Decodes Lola's Baybayin pages and writes first.</p></div>
-    <div><h3>Word Keeper</h3><p>Usually a grown-up. Reads Lola's notebook out loud and learns the words right alongside the children.</p></div>
+    <div><h3>Word Keeper</h3><p>Usually a grown-up. Reads Lola's notebook out loud and learns alongside the children.</p></div>
   </div>
-  <div class="shots">
-    <figure><img src="kq-scene.jpg" alt="A scene from Chapter 1 at Lola's porch, with Tala asking what Lola brought out" loading="lazy" width="1100" height="1167"><figcaption>Chapter 1: The Night the Moon Was Swallowed. Find what Lola brought out, then say the words together.</figcaption></figure>
-    <figure><img src="kq-chapters.jpg" alt="Six chapters of Season 1, each a story from the Philippines" loading="lazy" width="1100" height="828"><figcaption>Season 1 has six chapters, each a story from the Philippines. Lola's notebook carries over, so you read a little more each time.</figcaption></figure>
-  </div>
-  <p class="note">This is an early preview. Artwork and audio are still in progress.</p>
+  <figure class="season"><img src="kq-chapters.jpg" alt="Six chapters of Season 1, each a story from the Philippines" loading="lazy" width="1100" height="828"><figcaption>Season 1 has six chapters, each a story from the Philippines. Every word you say together stays in Lola's notebook, so your family reads a little more each chapter.</figcaption></figure>
+  <p class="wip"><b>Early preview.</b> The artwork and audio you see here are not final.</p>
 </div></section>
 
 <section class="signup" id="join"><div class="wrap">
