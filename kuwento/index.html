@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kuwento Quest | A story game from Salita</title>
+<meta name="description" content="Kuwento Quest is a story game where children and grown-ups learn Tagalog and Baybayin side by side. Get a sneak peek and join the list for launch news.">
+<meta property="og:title" content="Kuwento Quest | A story game from Salita">
+<meta property="og:description" content="Story adventures where children and grown-ups learn Tagalog side by side. Join the list for launch news.">
+<meta property="og:image" content="https://salosalosabotage.com/kuwento/kq-title.jpg">
+<link rel="icon" href="salita-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700;6..12,900&display=swap">
+<style>
+:root{
+  --paper:#FBF8F1; --ink:#14313D; --muted:#4D6872; --teal:#1D5B74; --teal-deep:#0F3F52;
+  --sun:#F4B731; --coral:#E0583F; --night:#0B1630; --moon:#F3F1E4; --line:rgba(20,49,61,.14);
+  --display:"Fraunces", Georgia, serif; --body:"Nunito Sans", system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.12;margin:0;text-wrap:balance}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:900;color:var(--coral)}
+header.top{padding:18px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo img{height:78px;width:auto}
+.pill{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:var(--sun);color:var(--ink);padding:6px 14px;border-radius:999px}
+
+.hero{background:var(--night);color:var(--moon);padding:48px 0 56px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,64px);margin:10px 0 14px}
+.hero p{margin:0 0 14px;color:#cfd3e6;max-width:46ch}
+.hero .eyebrow{color:var(--sun)}
+.hero img{border-radius:18px;box-shadow:0 24px 60px #0009}
+.btn{display:inline-block;background:var(--sun);color:var(--ink);font-weight:900;text-decoration:none;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer;font-family:var(--body)}
+.btn:hover{filter:brightness(1.05)}
+
+section{padding:56px 0}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
+.how div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.how h3{font-size:21px;margin-bottom:6px;color:var(--teal)}
+.how p{margin:0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+.shots figure{margin:0}
+.shots img{border-radius:14px;border:1px solid var(--line)}
+.shots figcaption{font-size:15px;color:var(--muted);margin-top:8px}
+.note{margin-top:18px;font-size:15px;color:var(--muted)}
+
+.signup{background:var(--teal-deep);color:var(--moon)}
+.signup .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.signup h2{font-size:clamp(30px,4vw,40px);margin:8px 0 12px}
+.signup p{color:#d6e3e8;margin:0 0 10px}
+.signup .eyebrow{color:var(--sun)}
+form{background:var(--paper);color:var(--ink);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:14px}
+label{font-weight:900;font-size:15px;display:block;margin-bottom:5px}
+label small{font-weight:400;color:var(--muted)}
+input,select{width:100%;font:inherit;padding:12px 14px;border:1.5px solid #c9d3d6;border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:3px solid var(--sun);outline-offset:1px;border-color:var(--teal)}
+form .fine{font-size:13px;color:var(--muted);margin:0}
+form .msg{font-weight:700;margin:0}
+form .msg.ok{color:var(--teal)} form .msg.err{color:#b8381f}
+.hp{position:absolute;left:-9999px}
+
+footer{padding:34px 0 46px;font-size:15px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{color:var(--teal)}
+
+@media (max-width:760px){
+  .hero .wrap,.signup .wrap,.shots{grid-template-columns:1fr}
+  .how{grid-template-columns:1fr}
+  .logo img{height:62px}
+  section{padding:42px 0}
+  .hero{padding:32px 0 40px}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="logo" href="#top" aria-label="Salita"><img src="salita-logo.png" alt="Salita! logo: a colorful jeepney flying a Philippine flag" width="156" height="156"></a>
+  <span class="pill">Sneak peek</span>
+</div></header>
+
+<div class="hero" id="top"><div class="wrap">
+  <div>
+    <div class="eyebrow">From the world of When Lola Speaks</div>
+    <h1>Kuwento Quest</h1>
+    <p>A story game where children and grown-ups learn Tagalog and Baybayin side by side. Each of you has a role, so you need each other to finish the story.</p>
+    <p>We're still building it. Join the list and we'll let you know when your family can play at home.</p>
+    <a class="btn" href="#join">Keep me posted</a>
+  </div>
+  <img src="kq-title.jpg" alt="Kuwento Quest title screen: a bahay kubo under a full moon and a starry night sky" width="1100" height="606">
+</div></div>
+
+<section><div class="wrap">
+  <div class="eyebrow">How it plays</div>
+  <h2 style="font-size:clamp(28px,4vw,38px);margin-top:8px">Everyone plays. Nobody just watches.</h2>
+  <div class="how">
+    <div><h3>Seer</h3><p>Usually a younger child. Finds what's hidden in the pictures.</p></div>
+    <div><h3>Scribe</h3><p>Usually an older child. Decodes Lola's Baybayin pages and writes first.</p></div>
+    <div><h3>Word Keeper</h3><p>Usually a grown-up. Reads Lola's notebook out loud and learns the words right alongside the children.</p></div>
+  </div>
+  <div class="shots">
+    <figure><img src="kq-scene.jpg" alt="A scene from Chapter 1 at Lola's porch, with Tala asking what Lola brought out" loading="lazy" width="1100" height="1167"><figcaption>Chapter 1: The Night the Moon Was Swallowed. Find what Lola brought out, then say the words together.</figcaption></figure>
+    <figure><img src="kq-chapters.jpg" alt="Six chapters of Season 1, each a story from the Philippines" loading="lazy" width="1100" height="828"><figcaption>Season 1 has six chapters, each a story from the Philippines. Lola's notebook carries over, so you read a little more each time.</figcaption></figure>
+  </div>
+  <p class="note">This is an early preview. Artwork and audio are still in progress.</p>
+</div></section>
+
+<section class="signup" id="join"><div class="wrap">
+  <div>
+    <div class="eyebrow">Join the list</div>
+    <h2>Be the first to play at home</h2>
+    <p>We'll email you when Kuwento Quest is ready, plus the occasional new story or printable. No spam, and you can leave anytime.</p>
+  </div>
+  <form id="kqform" action="https://formspree.io/f/mqpzbgqn" method="POST" novalidate>
+    <input type="hidden" name="_subject" value="Kuwento Quest list sign-up">
+    <input type="hidden" name="list" value="Kuwento Quest">
+    <input type="hidden" name="source" value="salosalosabotage.com/kuwento">
+    <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div><label for="kq-name">Your name</label><input id="kq-name" name="name" type="text" autocomplete="name" required></div>
+    <div><label for="kq-email">Email</label><input id="kq-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+    <div><label for="kq-age">Children's ages <small>(optional)</small></label>
+      <select id="kq-age" name="children_ages">
+        <option value="">Choose one</option>
+        <option>Under 6</option><option>6 to 8</option><option>9 and up</option><option>A mix of ages</option><option>No children, just curious</option>
+      </select></div>
+    <button class="btn" type="submit" id="kq-btn">Keep me posted</button>
+    <p class="msg" id="kq-msg" role="status" aria-live="polite"></p>
+    <p class="fine">We only use your email for Salita news.</p>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <span>Kuwento Quest is made by Salita Digital Publishing, LLC, the publisher of When Lola Speaks and Salo Salo Sabotage.</span>
+  <a href="/">Play Salo Salo Sabotage</a>
+</div></footer>
+
+<script>
+(function(){
+  var f=document.getElementById('kqform'),m=document.getElementById('kq-msg'),b=document.getElementById('kq-btn');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=f.name.value.trim(),em=f.email.value.trim();
+    if(!n){m.className='msg err';m.textContent='Please add your name.';f.name.focus();return}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){m.className='msg err';m.textContent='Please add a valid email.';f.email.focus();return}
+    b.disabled=true;b.textContent='Sending...';m.className='msg';m.textContent='';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){if(!r.ok)throw 0;
+        f.reset();m.className='msg ok';m.textContent='Salamat! You’re on the list. We’ll be in touch.';b.textContent='You’re on the list';})
+      .catch(function(){m.className='msg err';m.textContent='That didn’t go through. Please try again in a moment.';b.disabled=false;b.textContent='Keep me posted';});
+  });
+})();
+</script>
+</body>
+</html>
