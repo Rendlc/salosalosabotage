@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://salosalosabotage.com/kuwento/kq-title.jpg">
 <link rel="icon" href="salita-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700;6..12,900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tagalog&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700;6..12,900&display=swap">
 <style>
 :root{
   --paper:#FBF8F1; --ink:#14313D; --muted:#4D6872; --teal:#1D5B74; --teal-deep:#0F3F52;
@@ -84,7 +84,39 @@ footer a{color:var(--teal)}
 .season figcaption{font-size:15px;color:var(--muted);margin-top:8px}
 .wip{margin-top:22px;background:#fff4d6;border-left:4px solid var(--sun);padding:10px 14px;border-radius:8px;font-size:15px}
 .wip-hero{display:inline-block;font-size:14px;font-weight:700;color:var(--sun);border:1.5px solid #f4b73166;border-radius:999px;padding:4px 12px}
+.verbs{list-style:none;padding:0;margin:18px 0 14px;display:flex;flex-wrap:wrap;gap:10px}
+.verbs li{display:flex;align-items:center;gap:8px;background:#ffffff12;border:1px solid #ffffff22;border-radius:999px;padding:7px 14px 7px 8px;font-weight:800;color:var(--moon)}
+.verbs .ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--sun)}
+.verbs svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero p.small{font-size:14px;color:#aeb4d6;margin:0 0 18px}
+.quote{background:var(--night);color:var(--moon);padding:48px 0}
+.quote .wrap{display:flex;align-items:center;gap:32px;justify-content:center}
+.quote img{width:120px;height:auto;border-radius:20px;border:3px solid var(--moon)}
+.quote blockquote{margin:0;max-width:640px}
+.quote .bay{font-family:"Noto Sans Tagalog",serif;font-size:30px;color:var(--sun);letter-spacing:.1em}
+.quote p{font-family:var(--display);font-size:clamp(26px,3.6vw,38px);line-height:1.2;margin:6px 0 10px}
+.bayw{font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#aeb4d6;margin-left:8px}
+.quote cite{font-style:normal;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#aeb4d6;font-weight:900}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px}
+.role{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center;border-top:6px solid var(--teal)}
+.r-seer{border-top-color:#4fc1b4}.r-scribe{border-top-color:#a78bfa}.r-keeper{border-top-color:#ef8a5f}
+.role img{width:96px;height:auto;border-radius:16px;margin:0 auto 10px}
+.role h3{font-size:22px}
+.role p{margin:4px 0 10px;color:var(--muted);font-size:16px}
+.role span{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;background:var(--paper);padding:4px 10px;border-radius:999px}
+.season{display:grid;grid-template-columns:1fr 1.3fr;gap:32px;align-items:center;margin-top:56px}
+.season img{border-radius:14px;border:1px solid var(--line)}
+.season h3{font-size:28px;margin:6px 0 8px}
+.season p{color:var(--muted);margin:0 0 18px}
 @media (max-width:760px){
+  .roles{grid-template-columns:1fr;gap:12px}
+  .role{display:grid;grid-template-columns:72px 1fr;gap:4px 14px;text-align:left;align-items:center;padding:12px 14px}
+  .role img{width:72px;margin:0;grid-row:span 3}
+  .role p{margin:0}
+  .role span{justify-self:start}
+  .season{grid-template-columns:1fr}
+  .quote .wrap{flex-direction:column;text-align:center;gap:16px}
+  .quote img{width:96px}
   .moment{grid-template-columns:1fr;gap:14px}
   .moment:nth-of-type(even) img{order:0}
   .hero .wrap,.signup .wrap,.shots{grid-template-columns:1fr}
@@ -106,10 +138,9 @@ footer a{color:var(--teal)}
   <div>
     <div class="eyebrow">From the world of When Lola Speaks</div>
     <h1>Kuwento Quest</h1>
-    <p>A story game where children and grown-ups learn Tagalog and Baybayin side by side. Each of you has a role, so you need each other to finish the story.</p>
-    <p>Play the opening of Chapter 1 right now, together, on any phone or tablet. Then join the list to hear when the full game is ready.</p>
-    <p class="touch">&#9757; <b>Best on a phone or tablet.</b> It’s interactive: you tap to find things in the pictures and trace Baybayin letters with your finger, so you need a touch screen.</p>
-    <p class="wip-hero">Early preview: artwork and audio are not final.</p>
+    <p>A story game where children and grown-ups learn Tagalog and Baybayin side by side.</p>
+    <ul class="verbs"><li><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 11V5a2 2 0 1 1 4 0v5l4.2.9a2 2 0 0 1 1.6 2.3l-.9 5A2 2 0 0 1 16 20h-5a2 2 0 0 1-1.6-.8L5.6 14a1.6 1.6 0 0 1 2.4-2.1L9 13"/></svg></span>Tap</li><li><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>Say it</li><li><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><path d="M12 17.2v.1"/></svg></span>Guess</li><li><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 20c3-1 4-6 7-6s2 4 5 4 3-5 4-7"/><path d="M15 4l5 5-9 9H6v-5z"/></svg></span>Trace</li></ul>
+    <p class="small">Interactive, so play on a phone or tablet. Early preview: art and audio aren't final.</p>
     <div class="ctas"><a class="btn" href="play/">Play the sneak peek</a><a class="btn ghost" href="#join">Keep me posted</a></div>
   </div>
   <img src="kq-title.jpg" alt="Kuwento Quest title screen: a bahay kubo under a full moon and a starry night sky" width="1100" height="606">
@@ -117,32 +148,46 @@ footer a{color:var(--teal)}
 
 <section><div class="wrap">
   <div class="eyebrow">Learning together</div>
-  <h2 class="h2">You're not watching your child play. You're playing too.</h2>
-  <p class="lede">A lot of learning apps hand your child a screen and leave you on the side. In Kuwento Quest, the story needs both of you, and you learn the words right alongside your child.</p>
+  <h2 class="h2">You're not watching your child play.<br>You're playing too.</h2>
 
   <div class="moment">
-    <img src="kq-learn-too.jpg" alt="Lola tells Nanay: I taught you some words when you were small, but the old writing I never got to teach anyone" loading="lazy" width="900" height="738">
-    <div><span class="num">1</span><h3>You get to be the learner, too</h3><p>In the story, Lola never taught Nanay the old writing. So you start where many of us actually are: knowing a few words, missing the rest. Your child sees you learning, not just checking their work.</p></div>
+    <img src="kq-learn-too.jpg" alt="Lola tells Nanay: I taught you some words when you were small, but the old writing I never got to teach anyone" width="900" height="738">
+    <div><span class="num">1</span><h3>You get to be the learner, too</h3><p>Lola never taught Nanay the old writing. So you start where many of us are: a few words, missing the rest.</p></div>
   </div>
   <div class="moment">
-    <img src="kq-read-aloud.jpg" alt="Lola's notebook shows the word baul in Baybayin and English letters, with how to say it, and a button: I said it out loud" loading="lazy" width="900" height="605">
-    <div><span class="num">2</span><h3>Your child hears the words from you</h3><p>Lola's notebook gives you each word, in Baybayin and in English letters, with how to say it. You read it out loud, and your child hears Tagalog in your voice, not a recording.</p></div>
+    <img src="kq-read-aloud.jpg" alt="Lola's notebook shows the word baul in Baybayin and English letters, with how to say it" width="900" height="605">
+    <div><span class="num">2</span><h3>They hear it in your voice</h3><p>You read each word out loud from Lola's notebook. Your child hears Tagalog from you, not a recording.</p></div>
   </div>
   <div class="moment">
-    <img src="kq-guess.jpg" alt="Together, you guess what baul means from a clue: basket, chest, or bed" loading="lazy" width="900" height="636">
-    <div><span class="num">3</span><h3>You figure it out together</h3><p>Then you both guess what the word means from the picture and a clue. Wrong guesses are part of the game, so your child watches you try, miss, and try again. That's the lesson under the lesson.</p></div>
+    <img src="kq-guess.jpg" alt="Together, you guess what baul means from a clue: basket, chest, or bed" width="900" height="636">
+    <div><span class="num">3</span><h3>You figure it out together</h3><p>Wrong guesses are part of the game. Your child watches you try, miss, and try again.</p></div>
+  </div>
+</div></section>
+
+<section class="quote"><div class="wrap">
+  <img src="beecow.jpg" alt="Bee-cow, a friendly bee and cow character" width="200" height="229">
+  <blockquote>
+    <span class="bay" aria-hidden="true">&#x1710;&#x170E;&#x1712;&#x1706;</span> <span class="bayw">salita, word</span><span hidden></span>
+    <p>&ldquo;A word is strongest when two people say it together.&rdquo;</p>
+    <cite>Bee-cow, Chapter 1</cite>
+  </blockquote>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Everyone has a job</div>
+  <h2 class="h2">Three roles. You need each other.</h2>
+  <div class="roles">
+    <div class="role r-seer"><img src="role-seer.jpg" alt="" width="196" height="232"><h3>Seer</h3><p>Finds what's hidden in the pictures.</p><span>Younger child</span></div>
+    <div class="role r-scribe"><img src="role-scribe.jpg" alt="" width="196" height="232"><h3>Scribe</h3><p>Decodes Lola's Baybayin and writes first.</p><span>Older child</span></div>
+    <div class="role r-keeper"><img src="role-keeper.jpg" alt="" width="196" height="232"><h3>Word Keeper</h3><p>Reads Lola's notebook out loud.</p><span>Grown-up</span></div>
   </div>
 
-  <h2 class="h2" style="margin-top:56px">Everyone has a job</h2>
-  <div class="how">
-    <div><h3>Seer</h3><p>Usually a younger child. Finds what's hidden in the pictures.</p></div>
-    <div><h3>Scribe</h3><p>Usually an older child. Decodes Lola's Baybayin pages and writes first.</p></div>
-    <div><h3>Word Keeper</h3><p>Usually a grown-up. Reads Lola's notebook out loud and learns alongside the children.</p></div>
+  <div class="season">
+    <div class="season-txt"><div class="eyebrow">Season 1</div><h3>Six stories from the Philippines</h3><p>Every word you say stays in Lola's notebook, so your family reads a little more each chapter.</p>
+    <a class="btn" href="play/">Play the sneak peek together</a></div>
+    <img src="kq-chapters.jpg" alt="Six chapters of Season 1, each a story from the Philippines" width="1100" height="828">
   </div>
-  <figure class="season"><img src="kq-chapters.jpg" alt="Six chapters of Season 1, each a story from the Philippines" loading="lazy" width="1100" height="828"><figcaption>Season 1 has six chapters, each a story from the Philippines. Every word you say together stays in Lola's notebook, so your family reads a little more each chapter.</figcaption></figure>
-  <p style="margin-top:26px"><a class="btn" href="play/">Play the sneak peek together</a></p>
-  <p class="touch dark">&#9757; <b>Use a phone or tablet.</b> You’ll tap the pictures and trace Baybayin letters with your finger.</p>
-  <p class="wip"><b>Early preview.</b> The artwork and audio you see here are not final.</p>
+  <p class="wip"><b>Early preview.</b> Artwork and audio are not final. Play on a phone or tablet so you can trace with your finger.</p>
 </div></section>
 
 <section class="signup" id="join"><div class="wrap">
