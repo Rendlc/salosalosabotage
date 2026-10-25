@@ -401,6 +401,9 @@ a.gig:focus-visible{outline:3px solid var(--teal);outline-offset:3px;}
 .cal-box svg{width:30px;height:30px;margin-top:4px;}
 .cal-box em{color:var(--ink);margin:3px 0 0;}
 .gtag.ship{background:var(--ink);color:var(--sun);}
+.gbtn{align-self:flex-start;margin-top:9px;font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:700;font-size:.95rem;
+  padding:7px 18px;border-radius:40px;text-decoration:none;background:var(--orange);color:#fff;box-shadow:0 4px 0 var(--orange-dk);transition:transform .16s,box-shadow .16s;}
+.gbtn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--orange-dk);}
 @media(max-width:860px){
   .gig{gap:12px;padding:12px 13px 12px 12px;}
   .cal{width:58px;}
@@ -584,8 +587,8 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
     "@type":"Offer",
     "price":"35.00",
     "priceCurrency":"USD",
-    "availability":"https://schema.org/InStoreOnly",
-    "url":"https://salosalosabotage.com/"
+    "availability":"https://schema.org/InStock",
+    "url":"https://salosalosabotage.com/shop.html"
   },
   "audience":{"@type":"PeopleAudience","suggestedMinAge":8},
   "numberOfPlayers":{"@type":"QuantitativeValue","minValue":2,"maxValue":5},
@@ -605,7 +608,7 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
       <div class="hero-rest">
         <p class="hero-lede">Collect the food, the family, and the fun. Then watch your tita show up with the latest gossip and take it all down.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#buy">Find the game</a>
+          <a class="btn btn-primary" href="shop.html">Order online</a>
           <a class="btn btn-secondary" href="try-it.html">Try the demo</a>
           <a class="btn btn-ghost" href="how-to-play.html">How it plays</a>
         </div>
@@ -820,16 +823,6 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
     <div class="eventpanel">
       <div class="ephead"><span>Where to find us</span></div>
       <div class="events tour">
-        <a class="gig gig-hot" href="reserve.html" aria-label="Reserve a copy for pickup at Teofilo Coffee Company, Saturday Oct 24">
-          <div class="cal"><i>Oct</i><b>24</b><em>Sat</em></div>
-          <div class="ginfo">
-            <span class="gtag hot">Reservations open</span>
-            <b>Carson, CA</b>
-            <span class="gwhere">Teofilo Coffee Company</span>
-            <span class="gwhen">Kape at Kwento &middot; 1 to 4 PM &middot; 714 E Carson St</span>
-            <span class="gperks"><s>Play a free round</s><s>Games $35</s><s class="go">Reserve yours &rarr;</s></span>
-          </div>
-        </a>
         <div class="gig gig-now">
           <div class="cal cal-box cal-cup" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5c-.8 1 .8 2 0 3M12 3.5c-.8 1 .8 2 0 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><em>Now</em></div>
           <div class="ginfo">
@@ -840,11 +833,12 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
           </div>
         </div>
         <div class="gig gig-ship">
-          <div class="cal cal-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 7.5 12 12l9-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><em>Soon</em></div>
+          <div class="cal cal-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 7.5 12 12l9-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><em>Now</em></div>
           <div class="ginfo">
-            <span class="gtag ship">Coming soon</span>
-            <b>Shipped to your door</b>
-            <span class="gwhen">Online orders open after the Oct 24 pop-up. US shipping from $8.</span>
+            <span class="gtag hot">Now</span>
+            <b>Shipped to your door.</b>
+            <span class="gwhen">US shipping from $8.</span>
+            <a class="gbtn" href="shop.html">Order online</a>
           </div>
         </div>
       </div>
@@ -858,10 +852,10 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
         </div>
       </div>
     </div>
-    <p class="cta-note">Reserve a copy for pickup on Oct 24, find it at Seven Syllables Coffee in Cerritos, or play a round of the demo first.</p>
+    <p class="cta-note">Order online, find it at Seven Syllables Coffee in Cerritos, or play a round of the demo first.</p>
 
     <div class="btn-row" style="justify-content:center;">
-      <a class="btn btn-primary" href="reserve.html">Reserve a copy</a>
+      <a class="btn btn-primary" href="shop.html">Order online</a>
       <a class="btn btn-ghost" href="try-it.html">Try the demo</a>
       <a class="btn btn-ghost" href="how-to-play.html">Read the rules</a>
     </div>
