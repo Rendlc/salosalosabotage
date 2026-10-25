@@ -101,6 +101,7 @@ html:not(.js) .step{visibility:hidden;}
 .qty{min-width:2ch;font:800 4rem/1 'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;color:var(--teal);}
 .total{margin:14px 0 0;font-weight:700;font-size:1.05rem;color:var(--ink);}
 .total b{font-family:'Baloo 2','Trebuchet MS',Verdana,system-ui,sans-serif;font-weight:800;font-size:1.3rem;color:var(--orange-ink);}
+.calc{margin:4px 0 0;font-size:.9rem;font-weight:600;color:#3D5A60;}
 .more{margin:8px 0 0;font-size:.92rem;font-weight:700;color:#3D5A60;}
 .more a{color:var(--teal);}
 .more[hidden]{display:none;}
@@ -204,7 +205,8 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
         <span class="qty" id="qty" aria-live="polite">1</span>
         <button class="step" type="button" id="plus" aria-label="One more game">+</button>
       </div>
-      <p class="total" id="total" aria-live="polite">1 game: $35 + $5.95 shipping = <b>$40.95</b></p>
+      <p class="total" id="total" aria-live="polite">1 game: <b>$35</b></p>
+      <p class="calc">Shipping and any sales tax are calculated at checkout.</p>
       <p class="more" id="more" hidden>Need more than 6? DM <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">@salosalosabotage</a> on Instagram.</p>
       <a class="order-btn" id="order" href="https://salita-digital-publishing-llc.square.site/product/salo-salo-sabotage/LYEXYKLAQNOYVDIHIYTC57KJ" rel="noopener">Order now</a>
     </div>
@@ -241,9 +243,9 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
 
   function money(x){return '$'+(Math.round(x*100)/100).toFixed(2).replace(/\.00$/,'');}
   function render(){
-    var base=35*n, ship=n===1?5.95:0;
+    var base=35*n;
     qty.textContent=n;
-    total.innerHTML=n+(n===1?' game':' games')+': '+money(base)+' + '+(ship?money(ship)+' shipping':'free shipping')+' = <b>'+money(base+ship)+'</b>';
+    total.innerHTML=(n===1?'1 game':n+' games')+': <b>'+money(base)+'</b>';
     order.href=URL;qty.classList.remove('bump');void qty.offsetWidth;qty.classList.add('bump');
     minus.disabled=n<=1;
     plus.disabled=n>=MAX;
