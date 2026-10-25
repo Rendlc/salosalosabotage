@@ -167,11 +167,11 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
         <span class="qty" id="qty" aria-live="polite">1</span>
         <button class="step" type="button" id="plus" aria-label="One more game">+</button>
       </div>
-      <p class="total" id="total" aria-live="polite">1 game: $35 + $8 shipping = <b>$43</b></p>
-      <p class="more" id="more" hidden>Need more than 3? DM <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">@salosalosabotage</a> on Instagram.</p>
-      <a class="order-btn" id="order" href="https://square.link/u/5D1UT8Ll" rel="noopener">Order now</a>
+      <p class="total" id="total" aria-live="polite">1 game: $35 + $5.95 shipping = <b>$40.95</b></p>
+      <p class="more" id="more" hidden>Need more than 6? DM <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">@salosalosabotage</a> on Instagram.</p>
+      <a class="order-btn" id="order" href="https://salita-digital-publishing-llc.square.site/product/salo-salo-sabotage/LYEXYKLAQNOYVDIHIYTC57KJ" rel="noopener">Order now</a>
     </div>
-    <p class="fine">Sales tax is included in the $35 price. You&rsquo;ll enter your shipping address at checkout. Sending it as a gift? Enter your recipient&rsquo;s address. Want 4 or more? DM <a href="https://www.instagram.com/salosalosabotage/" target="_blank" rel="noopener">@salosalosabotage</a> on Instagram.</p>
+    <p class="fine">Pick your quantity again on the next page, where you check out securely with Square. Shipping is $5.95 for one game and free when you order two or more. Sales tax is included in the $35 price where it applies (California). You&rsquo;ll enter your shipping address at checkout. Sending it as a gift? Enter your recipient&rsquo;s address.</p>
     <p class="pickup">Online orders are shipped to you. There is no pickup for online orders. You can also buy the game in person at <a href="https://www.google.com/maps/search/?api=1&amp;query=Seven+Syllables+Coffee+13307+Artesia+Blvd+Cerritos+CA" target="_blank" rel="noopener">Seven Syllables Coffee</a>, 13307 Artesia Blvd, Cerritos.</p>
   </div>
 </main>
@@ -191,26 +191,24 @@ footer .followline{font-size:.9rem;color:#9FB6BA;font-weight:600;margin:0;}
 
 <script>
 (function(){
-  var OPTS={
-    1:{url:'https://square.link/u/5D1UT8Ll',base:35,ship:8,total:43},
-    2:{url:'https://square.link/u/65asv0Q9',base:70,ship:11,total:81},
-    3:{url:'https://square.link/u/sJBqBFFO',base:105,ship:14,total:119}
-  };
+  var URL='https://salita-digital-publishing-llc.square.site/product/salo-salo-sabotage/LYEXYKLAQNOYVDIHIYTC57KJ';
+  var MAX=6;
   var n=1;
   var qty=document.getElementById('qty'),total=document.getElementById('total'),more=document.getElementById('more');
   var minus=document.getElementById('minus'),plus=document.getElementById('plus'),order=document.getElementById('order');
 
+  function money(x){return '$'+(Math.round(x*100)/100).toFixed(2).replace(/\.00$/,'');}
   function render(){
-    var o=OPTS[n];
+    var base=35*n, ship=n===1?5.95:0;
     qty.textContent=n;
-    total.innerHTML=n+(n===1?' game':' games')+': $'+o.base+' + $'+o.ship+' shipping = <b>$'+o.total+'</b>';
-    order.href=o.url;
+    total.innerHTML=n+(n===1?' game':' games')+': '+money(base)+' + '+(ship?money(ship)+' shipping':'free shipping')+' = <b>'+money(base+ship)+'</b>';
+    order.href=URL;
     minus.disabled=n<=1;
-    plus.disabled=n>=3;
-    more.hidden=n<3;
+    plus.disabled=n>=MAX;
+    more.hidden=n<MAX;
   }
   minus.addEventListener('click',function(){if(n>1){n--;render();}});
-  plus.addEventListener('click',function(){if(n<3){n++;render();}});
+  plus.addEventListener('click',function(){if(n<MAX){n++;render();}});
   render();
 })();
 </script>
